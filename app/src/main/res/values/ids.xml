@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="icon_home" type="id" />
+    <item name="icon_go" type="id" />
+    <item name="icon_left" type="id" />
+    <item name="icon_right" type="id" />
+</resources>

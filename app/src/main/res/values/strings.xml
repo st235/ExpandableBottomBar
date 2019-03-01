@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ExpandableBottonBar</string>
+    <string name="text">Home</string>
+    <string name="text2">Likes</string>
+    <string name="text3">Bookmarks</string>
+    <string name="text4">Settings</string>
+</resources>
