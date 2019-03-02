@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ExpandableBottomBar">
-        <attr name="inactiveBackgroundColor" format="color" />
-        <attr name="backgroundCornerRadius" format="dimension" />
-        <attr name="backgroundOpacity" format="float" />
+        <attr name="itemInactiveBackgroundColor" format="color" />
+        <attr name="itemBackgroundCornerRadius" format="dimension" />
+        <attr name="itemBackgroundOpacity" format="float" />
         <attr name="transitionDuration" format="integer" />
         <attr name="elevation" format="dimension" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="backgroundCornerRadius" format="dimension" />
+
+        <attr name="item_vertical_margin" format="dimension" />
+        <attr name="item_horizontal_margin" format="dimension" />
+        <attr name="item_vertical_padding" format="dimension" />
+        <attr name="item_horizontal_padding" format="dimension" />
     </declare-styleable>
+
+    <attr name="expandableButtonBarDefaultStyle" format="reference" />
 </resources>

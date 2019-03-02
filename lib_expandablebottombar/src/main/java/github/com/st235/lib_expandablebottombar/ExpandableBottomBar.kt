@@ -9,7 +9,6 @@ import android.support.annotation.IdRes
 import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintSet
 import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.AppCompatImageView
 import android.support.v7.widget.AppCompatTextView
 import android.text.Spannable
@@ -20,10 +19,10 @@ import android.transition.TransitionManager
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
+import github.com.st235.lib_expandablebottombar.utils.applyForApiMAndHigher
 import github.com.st235.lib_expandablebottombar.utils.createChain
 import github.com.st235.lib_expandablebottombar.utils.toPx
 
@@ -35,11 +34,15 @@ internal const val IMAGE_TAG = "tag.image"
 typealias OnItemClickListener = (v: View, menuItem: ExpandableBottomBarMenuItem) -> Unit
 
 class ExpandableBottomBar @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.expandableButtonBarDefaultStyle
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private var backgroundOpacity: Float = 0F
     private var backgroundCornerRadius: Float = 0F
+    private var menuItemHorizontalMargin: Int = 0
+    private var menuItemVerticalMargin: Int = 0
+    private var menuHorizontalPadding: Int = 0
+    private var menuVerticalPadding: Int = 0
     @ColorInt private var inactiveBackgroundColor: Int = Color.BLACK
     private val backgroundStates
             = arrayOf(intArrayOf(android.R.attr.state_selected),
@@ -52,21 +55,35 @@ class ExpandableBottomBar @JvmOverloads constructor(
     var onItemClickListener: OnItemClickListener? = null
 
     init {
-        initAttrs(context, attrs)
+        initAttrs(context, attrs, defStyleAttr)
     }
 
-
-    private fun initAttrs(context: Context, attrs: AttributeSet?) {
+    private fun initAttrs(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
         if (attrs == null) {
             return
         }
 
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableBottomBar)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableBottomBar,
+            defStyleAttr, R.style.ExpandableBottomBar)
 
-        backgroundOpacity = typedArray.getFloat(R.styleable.ExpandableBottomBar_backgroundOpacity, 0.2F)
-        backgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_backgroundCornerRadius, 30F.toPx())
-        inactiveBackgroundColor = typedArray.getColor(R.styleable.ExpandableBottomBar_inactiveBackgroundColor, Color.BLACK)
+        backgroundOpacity = typedArray.getFloat(R.styleable.ExpandableBottomBar_itemBackgroundOpacity, 0.2F)
+        backgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_itemBackgroundCornerRadius, 30F.toPx())
+        inactiveBackgroundColor = typedArray.getColor(R.styleable.ExpandableBottomBar_itemInactiveBackgroundColor, Color.BLACK)
         transitionDuration = typedArray.getInt(R.styleable.ExpandableBottomBar_transitionDuration, 100)
+        menuItemHorizontalMargin = typedArray.getDimension(R.styleable.ExpandableBottomBar_item_horizontal_margin, 5F.toPx()).toInt()
+        menuItemVerticalMargin = typedArray.getDimension(R.styleable.ExpandableBottomBar_item_vertical_margin, 5F.toPx()).toInt()
+        menuHorizontalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_item_horizontal_padding, 15F.toPx()).toInt()
+        menuVerticalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_item_vertical_padding, 10F.toPx()).toInt()
+
+        val backgroundColor = typedArray.getColor(R.styleable.ExpandableBottomBar_backgroundColor, Color.WHITE)
+        val backgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_backgroundCornerRadius, 0F)
+
+        background =
+            DrawableHelper.createShapeDrawable(backgroundColor, backgroundCornerRadius, 1.0F)
+
+        applyForApiMAndHigher {
+            elevation = typedArray.getDimension(R.styleable.ExpandableBottomBar_elevation, 16F.toPx())
+        }
 
         typedArray.recycle()
     }
@@ -80,21 +97,20 @@ class ExpandableBottomBar @JvmOverloads constructor(
             val item = items[i]
             val itemView = createItem(item)
 
-            val prevId = if (i - 1 < 0) firstItemId else items[i - 1].itemId
-            val nextId = if (i + 1 >= items.size) lastItemId else items[i + 1].itemId
+            val prevIconId = if (i - 1 < 0) firstItemId else items[i - 1].itemId
+            val nextIconId = if (i + 1 >= items.size) lastItemId else items[i + 1].itemId
 
-            addViewInternal(itemView, prevId, nextId)
+            addItemInternal(itemView, prevIconId, nextIconId)
         }
     }
 
-    private fun onItemClick(
-            activeItemId: Int,
-            activeItemView: View,
-            activeIconView: AppCompatImageView,
-            activeTextView: TextView,
-            activeColor: Int
+    private fun onItemClickInternal(
+        activeMenuItem: ExpandableBottomBarMenuItem,
+        activeItemView: View,
+        activeIconView: AppCompatImageView,
+        activeTextView: TextView
     ) {
-        if (selectedItemId == activeItemId) {
+        if (selectedItemId == activeMenuItem.itemId) {
             return
         }
 
@@ -103,28 +119,24 @@ class ExpandableBottomBar @JvmOverloads constructor(
         val set = ConstraintSet()
         set.clone(this)
 
+        selectItem(activeMenuItem, activeItemView, activeIconView, activeTextView)
+
         val previouslyItemView = findViewById<LinearLayout>(selectedItemId)
         val previouslyTextView = previouslyItemView.findViewWithTag<View>(TEXT_TAG) as TextView
-        val previouslyActiveIconView = previouslyItemView.findViewWithTag<View>(IMAGE_TAG) as ImageView
+        val previouslyActiveIconView = previouslyItemView.findViewWithTag<View>(IMAGE_TAG) as AppCompatImageView
 
-        activeItemView.background = DrawableHelper.createShapeDrawable(activeColor, backgroundCornerRadius, backgroundOpacity)
-        activeIconView.isSelected = true
-        activeTextView.isSelected = true
-        activeTextView.visibility = View.VISIBLE
+        deselectItem(previouslyItemView, previouslyActiveIconView, previouslyTextView)
 
-        previouslyItemView.background = null
-        previouslyTextView.visibility = View.GONE
-        previouslyTextView.isSelected = false
-        previouslyActiveIconView.isSelected = false
-
-        selectedItemId = activeItemId
+        selectedItemId = activeMenuItem.itemId
         set.applyTo(this)
     }
 
     private fun createItem(menuItem: ExpandableBottomBarMenuItem): View {
-        val item = LinearLayout(context).apply {
+        val itemView = LinearLayout(context).apply {
             id = menuItem.itemId
             orientation = LinearLayout.HORIZONTAL
+            setPadding(menuHorizontalPadding, menuVerticalPadding,
+                    menuHorizontalPadding, menuVerticalPadding)
         }
 
         val colors = intArrayOf(menuItem.activeColor, inactiveBackgroundColor)
@@ -132,11 +144,10 @@ class ExpandableBottomBar @JvmOverloads constructor(
 
         val iconView = AppCompatImageView(context).apply {
             tag = IMAGE_TAG
-            setImageDrawable(DrawableHelper.createDrawable(context, menuItem.iconId,
-                    selectedStateColorList))
+            setImageDrawable(DrawableHelper.createDrawable(context, menuItem.iconId, selectedStateColorList))
         }
 
-        val text = AppCompatTextView(context).apply {
+        val textView = AppCompatTextView(context).apply {
             val rawText = SpannableString(resources.getString(menuItem.textId))
             rawText.setSpan(StyleSpan(BOLD), 0, rawText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             setTextColor(selectedStateColorList)
@@ -144,72 +155,92 @@ class ExpandableBottomBar @JvmOverloads constructor(
             tag = TEXT_TAG
             gravity = Gravity.CENTER
             visibility = View.GONE
+            textSize = 15F
         }
 
-        if (selectedItemId == menuItem.itemId) {
-            item.background = DrawableHelper.createShapeDrawable(menuItem.activeColor, backgroundCornerRadius, backgroundOpacity)
-            text.visibility = View.VISIBLE
-            text.isSelected = true
-            val drawable = ContextCompat.getDrawable(context, menuItem.iconId)
-            iconView.isSelected = true
-            iconView.setImageDrawable(drawable)
-        }
-
-        val textLp = LinearLayout.LayoutParams(
+        val textLayoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.MATCH_PARENT
         ).apply {
             gravity = Gravity.CENTER
-            setMargins(6.toPx(), 0, 0, 0)
+            setMargins(8.toPx(), 0, 0, 0)
         }
 
-        with(item) {
+        if (selectedItemId == menuItem.itemId) {
+            selectItem(menuItem, itemView, iconView, textView)
+        }
+
+        with(itemView) {
             addView(iconView)
-            addView(text, textLp)
+            addView(textView, textLayoutParams)
             setOnClickListener {
-                onItemClick(menuItem.itemId, item, iconView, text, menuItem.activeColor)
-                onItemClickListener?.invoke(item, menuItem)
+                onItemClickInternal(menuItem, itemView, iconView, textView)
+                onItemClickListener?.invoke(itemView, menuItem)
             }
         }
 
-        return item
+        return itemView
     }
 
-    private fun addViewInternal(
-        icon: View,
-        previousId: Int,
-        nextId: Int
+    private fun addItemInternal(
+        itemView: View,
+        previousIconId: Int,
+        nextIconId: Int
     ) {
         val lp = ConstraintLayout.LayoutParams(
             ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT
         )
 
-        icon.setPadding(15.toPx(), 10.toPx(), 15.toPx(), 10.toPx())
-        lp.setMargins(5.toPx(), 5.toPx(), 5.toPx(), 5.toPx())
+        lp.setMargins(menuItemHorizontalMargin, menuItemVerticalMargin,
+                menuItemHorizontalMargin, menuItemVerticalMargin)
 
-        addView(icon, lp)
+        addView(itemView, lp)
 
         val cl = ConstraintSet()
         cl.clone(this)
 
-        cl.connect(icon.id, ConstraintSet.TOP, id, ConstraintSet.TOP)
-        cl.connect(icon.id, ConstraintSet.BOTTOM, id, ConstraintSet.BOTTOM)
+        cl.connect(itemView.id, ConstraintSet.TOP, id, ConstraintSet.TOP)
+        cl.connect(itemView.id, ConstraintSet.BOTTOM, id, ConstraintSet.BOTTOM)
 
-        if (previousId == icon.id) {
-            cl.connect(icon.id, ConstraintSet.START, id, ConstraintSet.START)
+        if (previousIconId == itemView.id) {
+            cl.connect(itemView.id, ConstraintSet.START, id, ConstraintSet.START)
         } else {
-            cl.connect(icon.id, ConstraintSet.START, previousId, ConstraintSet.END)
-            cl.createChain(previousId, icon.id, ConstraintSet.CHAIN_PACKED)
+            cl.connect(itemView.id, ConstraintSet.START, previousIconId, ConstraintSet.END)
+            cl.createChain(previousIconId, itemView.id, ConstraintSet.CHAIN_PACKED)
         }
 
-        if (nextId == icon.id) {
-            cl.connect(icon.id, ConstraintSet.END, id, ConstraintSet.END)
+        if (nextIconId == itemView.id) {
+            cl.connect(itemView.id, ConstraintSet.END, id, ConstraintSet.END)
         } else {
-            cl.connect(icon.id, ConstraintSet.END, nextId, ConstraintSet.START)
-            cl.createChain(icon.id, nextId, ConstraintSet.CHAIN_PACKED)
+            cl.connect(itemView.id, ConstraintSet.END, nextIconId, ConstraintSet.START)
+            cl.createChain(itemView.id, nextIconId, ConstraintSet.CHAIN_PACKED)
         }
 
         cl.applyTo(this)
+    }
+
+    private fun deselectItem(
+        itemView: View,
+        iconView: AppCompatImageView,
+        textView: TextView
+    ) {
+        itemView.background = null
+        textView.visibility = View.GONE
+        textView.isSelected = false
+        iconView.isSelected = false
+    }
+
+    private fun selectItem(
+        menuItem: ExpandableBottomBarMenuItem,
+        itemView: View,
+        iconView: AppCompatImageView,
+        textView: TextView
+    ) {
+        itemView.background =
+            DrawableHelper.createShapeDrawable(menuItem.activeColor, backgroundCornerRadius, backgroundOpacity)
+        textView.visibility = View.VISIBLE
+        textView.isSelected = true
+        iconView.isSelected = true
     }
 
     private fun applyTransition() {

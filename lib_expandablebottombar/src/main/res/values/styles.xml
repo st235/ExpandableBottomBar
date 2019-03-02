@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ExpandableBottomBar">
+        <item name="backgroundColor">#FFF</item>
+        <item name="backgroundCornerRadius">0dp</item>
+        <item name="itemInactiveBackgroundColor">#000</item>
+        <item name="itemBackgroundCornerRadius">30dp</item>
+        <item name="itemBackgroundOpacity">0.2</item>
+        <item name="transitionDuration">100</item>
+        <item name="item_vertical_margin">24dp</item>
+        <item name="item_horizontal_margin">5dp</item>
+        <item name="item_vertical_padding">10dp</item>
+        <item name="item_horizontal_padding">15dp</item>
+    </style>
+</resources>
