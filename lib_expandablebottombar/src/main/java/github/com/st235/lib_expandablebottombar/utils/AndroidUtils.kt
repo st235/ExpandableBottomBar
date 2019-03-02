@@ -4,7 +4,7 @@ import android.os.Build
 
 typealias Scope = () -> Unit
 
-fun applyForApiMAndHigher(scope: Scope) {
+internal inline fun applyForApiMAndHigher(scope: Scope) {
     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
         scope()
     }
