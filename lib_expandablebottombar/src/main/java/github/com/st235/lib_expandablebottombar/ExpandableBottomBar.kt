@@ -15,11 +15,11 @@ import github.com.st235.lib_expandablebottombar.utils.*
 
 internal const val ITEM_NOT_SELECTED = -1
 
-internal const val TEXT_TAG = "tag.text"
-internal const val IMAGE_TAG = "tag.image"
-
 typealias OnItemClickListener = (v: View, menuItem: ExpandableBottomBarMenuItem) -> Unit
 
+/**
+ * Widget, which implements bottom bar navigation pattern
+ */
 class ExpandableBottomBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.expandableButtonBarDefaultStyle
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
@@ -32,8 +32,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
     private var menuVerticalPadding: Int = 0
     @ColorInt private var inactiveBackgroundColor: Int = Color.BLACK
     private val backgroundStates
-            = arrayOf(intArrayOf(android.R.attr.state_selected),
-            intArrayOf(-android.R.attr.state_selected))
+            = arrayOf(intArrayOf(android.R.attr.state_selected), intArrayOf(-android.R.attr.state_selected))
 
     private var transitionDuration: Int = 0
 
@@ -76,6 +75,11 @@ class ExpandableBottomBar @JvmOverloads constructor(
         typedArray.recycle()
     }
 
+    /**
+     * Adds passed items to widget
+     *
+     * @param items - bottom bar menu items
+     */
     fun addItems(items: List<ExpandableBottomBarMenuItem>) {
         val firstItemId = items.first().itemId
         val lastItemId = items.last().itemId
@@ -97,6 +101,11 @@ class ExpandableBottomBar @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Programmatically select item
+     *
+     * @param id - identifier of menu item, which should be selected
+     */
     fun select(@IdRes id: Int) {
         val itemToSelect = viewControllers.getValue(id)
         onItemSelected(itemToSelect.menuItem)
