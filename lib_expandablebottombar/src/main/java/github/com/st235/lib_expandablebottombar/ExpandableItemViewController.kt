@@ -29,14 +29,14 @@ internal class ExpandableItemViewController(
     private val backgroundOpacity: Float
 ) {
 
-    fun deselectItem() {
+    fun deselect() {
         itemView.background = null
         textView.visibility = View.GONE
         textView.isSelected = false
         iconView.isSelected = false
     }
 
-    fun selectItem() {
+    fun select() {
         itemView.background =
             DrawableHelper.createShapeDrawable(
                 menuItem.activeColor,
@@ -132,7 +132,6 @@ internal class ExpandableItemViewController(
             }
 
             val iconView = AppCompatImageView(context).apply {
-                tag = IMAGE_TAG
                 setImageDrawable(
                     DrawableHelper.createDrawable(
                         context,
@@ -147,7 +146,6 @@ internal class ExpandableItemViewController(
                 rawText.setSpan(StyleSpan(Typeface.BOLD), 0, rawText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
                 setTextColor(backgroundColorSelector)
                 text = rawText
-                tag = TEXT_TAG
                 gravity = Gravity.CENTER
                 visibility = View.GONE
                 textSize = 15F

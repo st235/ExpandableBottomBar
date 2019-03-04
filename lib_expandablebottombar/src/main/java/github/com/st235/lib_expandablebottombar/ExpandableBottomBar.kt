@@ -127,7 +127,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
                 .build(context)
 
         if (selectedItemId == menuItem.itemId) {
-            viewController.selectItem()
+            viewController.select()
         }
 
         return viewController
@@ -143,8 +143,8 @@ class ExpandableBottomBar @JvmOverloads constructor(
         val set = ConstraintSet()
         set.clone(this)
 
-        viewControllers.getValue(activeMenuItem.itemId).selectItem()
-        viewControllers.getValue(selectedItemId).deselectItem()
+        viewControllers.getValue(activeMenuItem.itemId).select()
+        viewControllers.getValue(selectedItemId).deselect()
         selectedItemId = activeMenuItem.itemId
 
         set.applyTo(this)
