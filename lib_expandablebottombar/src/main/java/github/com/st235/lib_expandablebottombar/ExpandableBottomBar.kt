@@ -30,7 +30,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
     private var menuItemVerticalMargin: Int = 0
     private var menuHorizontalPadding: Int = 0
     private var menuVerticalPadding: Int = 0
-    @ColorInt private var inactiveBackgroundColor: Int = Color.BLACK
+    @ColorInt private var itemInactiveColor: Int = Color.BLACK
     private val backgroundStates
             = arrayOf(intArrayOf(android.R.attr.state_selected), intArrayOf(-android.R.attr.state_selected))
 
@@ -55,8 +55,8 @@ class ExpandableBottomBar @JvmOverloads constructor(
 
         backgroundOpacity = typedArray.getFloat(R.styleable.ExpandableBottomBar_itemBackgroundOpacity, 0.2F)
         backgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_itemBackgroundCornerRadius, 30F.toPx())
-        inactiveBackgroundColor = typedArray.getColor(R.styleable.ExpandableBottomBar_itemInactiveBackgroundColor, Color.BLACK)
         transitionDuration = typedArray.getInt(R.styleable.ExpandableBottomBar_transitionDuration, 100)
+        itemInactiveColor = typedArray.getColor(R.styleable.ExpandableBottomBar_itemInactiveColor, Color.BLACK)
         menuItemHorizontalMargin = typedArray.getDimension(R.styleable.ExpandableBottomBar_item_horizontal_margin, 5F.toPx()).toInt()
         menuItemVerticalMargin = typedArray.getDimension(R.styleable.ExpandableBottomBar_item_vertical_margin, 5F.toPx()).toInt()
         menuHorizontalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_item_horizontal_padding, 15F.toPx()).toInt()
@@ -112,7 +112,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
     }
 
     private fun createItem(menuItem: ExpandableBottomBarMenuItem): ExpandableItemViewController {
-        val colors = intArrayOf(menuItem.activeColor, inactiveBackgroundColor)
+        val colors = intArrayOf(menuItem.activeColor, itemInactiveColor)
         val selectedStateColorList = ColorStateList(backgroundStates, colors)
 
         val viewController =

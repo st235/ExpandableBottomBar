@@ -14,7 +14,7 @@ Its really easy integrate to your project
 <dependency>
   <groupId>com.github.st235</groupId>
   <artifactId>expandablebottombar</artifactId>
-  <version>0.3</version>
+  <version>0.4</version>
   <type>pom</type>
 </dependency>
 ```
@@ -22,13 +22,13 @@ Its really easy integrate to your project
 - Gradle
 
 ```text
-implementation 'com.github.st235:expandablebottombar:0.3'
+implementation 'com.github.st235:expandablebottombar:0.4'
 ```
 
 - Ivy
 
 ```text
-<dependency org='com.github.st235' name='expandablebottombar' rev='0.3'>
+<dependency org='com.github.st235' name='expandablebottombar' rev='0.4'>
   <artifact name='expandablebottombar' ext='pom' ></artifact>
 </dependency>
 ```
@@ -78,7 +78,7 @@ Then you should add menu items to your navigation component
 - **backgroundColor** bottom bar background color
 - **transitionDuration** time between one item collapsed and another item expanded
 - **backgroundCornerRadius** bottom bar background corners radius
-- **itemInactiveBackgroundColor** item menu color, when its inactive
+- **itemInactiveColor** item menu color, when its inactive
 - **itemBackgroundCornerRadius** item background corner radius
 - **itemBackgroundOpacity** item background opacity (important: final color alpha calculates by next formulae __alpha = opacity * 255__)
 - **item_vertical_margin** top & bottom item margins

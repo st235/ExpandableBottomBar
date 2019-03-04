@@ -3,7 +3,7 @@
     <style name="ExpandableBottomBar">
         <item name="backgroundColor">#FFF</item>
         <item name="backgroundCornerRadius">0dp</item>
-        <item name="itemInactiveBackgroundColor">#000</item>
+        <item name="itemInactiveColor">#000</item>
         <item name="itemBackgroundCornerRadius">30dp</item>
         <item name="itemBackgroundOpacity">0.2</item>
         <item name="transitionDuration">100</item>

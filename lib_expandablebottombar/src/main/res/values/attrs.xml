@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ExpandableBottomBar">
-        <attr name="itemInactiveBackgroundColor" format="color" />
+        <attr name="itemInactiveColor" format="color" />
         <attr name="itemBackgroundCornerRadius" format="dimension" />
         <attr name="itemBackgroundOpacity" format="float" />
         <attr name="transitionDuration" format="integer" />
