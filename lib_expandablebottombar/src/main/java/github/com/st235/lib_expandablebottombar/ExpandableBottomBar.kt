@@ -52,6 +52,8 @@ class ExpandableBottomBar @JvmOverloads constructor(
 
     @IdRes private var selectedItemId: Int = ITEM_NOT_SELECTED
 
+    private lateinit var items: List<ExpandableBottomBarMenuItem> items
+
     var onItemClickListener: OnItemClickListener? = null
 
     init {
@@ -89,6 +91,8 @@ class ExpandableBottomBar @JvmOverloads constructor(
     }
 
     fun addItems(items: List<ExpandableBottomBarMenuItem>) {
+        this.items = items
+
         val firstItemId = items.first().itemId
         val lastItemId = items.last().itemId
         selectedItemId = firstItemId
@@ -102,6 +106,24 @@ class ExpandableBottomBar @JvmOverloads constructor(
 
             addItemInternal(itemView, prevIconId, nextIconId)
         }
+    }
+
+    fun selectById(id: Int) {
+        val itemToSelect = items.find { it.itemId == id }!!
+        selectByItem(itemToSelect)
+    }
+
+    fun selectByIndex(index: Int) {
+        val itemToSelect = items[index]
+        selectByItem(itemToSelect)
+    }
+
+    fun selectByItem(itemToSelect: ExpandableBottomBarMenuItem) {
+        val previouslyItemView = findViewById<LinearLayout>(itemToSelect.itemId)
+        val previouslyTextView = previouslyItemView.findViewWithTag<View>(TEXT_TAG) as TextView
+        val previouslyActiveIconView = previouslyItemView.findViewWithTag<View>(IMAGE_TAG) as AppCompatImageView
+        applyTransition()
+        selectItem(itemToSelect, previouslyItemView, previouslyActiveIconView, previouslyTextView)
     }
 
     private fun onItemClickInternal(
