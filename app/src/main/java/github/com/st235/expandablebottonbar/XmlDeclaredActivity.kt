@@ -1,13 +1,12 @@
 package github.com.st235.expandablebottonbar
 
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.graphics.ColorUtils
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewAnimationUtils
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem
 
 class XmlDeclaredActivity : AppCompatActivity() {
 

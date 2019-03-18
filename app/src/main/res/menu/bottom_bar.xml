@@ -8,13 +8,13 @@
 
     <item
         app:id="@+id/settings"
-        app:color="@color/colorSettigns"
-        app:icon="@drawable/ic_bookmarks"
-        app:text="@string/text" />
+        app:color="@color/colorSettings"
+        app:icon="@drawable/ic_settings"
+        app:text="@string/text4" />
 
     <item
-        app:id="@+id/give"
+        app:id="@+id/bookmarks"
         app:color="#fa2"
         app:icon="@drawable/ic_bookmarks"
-        app:text="@string/text" />
+        app:text="@string/text3" />
 </menu>
