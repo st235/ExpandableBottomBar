@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        app:id="@+id/hello"
-        app:color="#fef"
+        app:id="@+id/home"
+        app:color="#FF8888"
         app:icon="@drawable/ic_home"
         app:text="@string/text" />
 
     <item
-        app:id="@+id/world"
-        app:color="#fe2"
+        app:id="@+id/settings"
+        app:color="@color/colorSettigns"
         app:icon="@drawable/ic_bookmarks"
         app:text="@string/text" />
 
