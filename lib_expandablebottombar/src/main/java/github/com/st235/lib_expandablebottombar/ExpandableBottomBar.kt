@@ -11,9 +11,11 @@ import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.AttributeSet
 import android.view.View
+import github.com.st235.lib_expandablebottombar.parsers.BarParser
 import github.com.st235.lib_expandablebottombar.utils.*
 
 internal const val ITEM_NOT_SELECTED = -1
+internal const val NO_ID = 0
 
 typealias OnItemClickListener = (v: View, menuItem: ExpandableBottomBarMenuItem) -> Unit
 
@@ -70,6 +72,13 @@ class ExpandableBottomBar @JvmOverloads constructor(
 
         applyForApiMAndHigher {
             elevation = typedArray.getDimension(R.styleable.ExpandableBottomBar_elevation, 16F.toPx())
+        }
+
+        val menuId = typedArray.getResourceId(R.styleable.ExpandableBottomBar_items, View.NO_ID)
+        if (menuId != View.NO_ID) {
+            val barParser = BarParser(context)
+            val items = barParser.inflate(menuId)
+            addItems(items)
         }
 
         typedArray.recycle()
