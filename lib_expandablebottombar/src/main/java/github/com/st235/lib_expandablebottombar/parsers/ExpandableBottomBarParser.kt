@@ -9,9 +9,10 @@ import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem
 import org.xmlpull.v1.XmlPullParser
 import github.com.st235.lib_expandablebottombar.R
 
-class BarParser(private val context: Context) {
+internal class ExpandableBottomBarParser(private val context: Context) {
     companion object {
         private const val NO_ID = 0
+        private const val NO_COLOR = Color.TRANSPARENT
 
         private const val MENU_TAG = "menu"
         private const val MENU_ITEM_TAG = "item"
@@ -78,12 +79,11 @@ class BarParser(private val context: Context) {
         val id = typedArray.getResourceId(R.styleable.ExpandableBottomBarItem_id, NO_ID)
         val iconId = typedArray.getResourceId(R.styleable.ExpandableBottomBarItem_icon, NO_ID)
         val textId = typedArray.getResourceId(R.styleable.ExpandableBottomBarItem_text, NO_ID)
-        val color = typedArray.getColor(R.styleable.ExpandableBottomBarItem_color, Color.WHITE)
+        val color = typedArray.getColor(R.styleable.ExpandableBottomBarItem_color, NO_COLOR)
 
         typedArray.recycle()
 
         parser.require(XmlPullParser.START_TAG, namespace, MENU_ITEM_TAG)
-
         return ExpandableBottomBarMenuItem(id, iconId, textId, color)
     }
 }

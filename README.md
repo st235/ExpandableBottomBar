@@ -72,6 +72,58 @@ Then you should add menu items to your navigation component
         }
 ```
 
+## Menu from xml
+
+If your menu is constantly, you may specify it from xml
+
+Firstly, you should declare menu items in xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        app:id="@+id/home"
+        app:color="@color/home"
+        app:icon="@drawable/ic_home"
+        app:text="@string/home" />
+
+    <item
+        app:id="@+id/feed"
+        app:color="@color/feed"
+        app:icon="@drawable/ic_feed"
+        app:text="@string/feed" />
+
+    <item
+        app:id="@+id/settings"
+        app:color="#FFEE22"
+        app:icon="@drawable/ic_settings"
+        app:text="@string/settings" />
+</menu>
+```
+
+each item tag support following attributes:
+
+- **id** - an id of menu item
+- **color** - color of element, it may be color reference or color
+- **icon** - icon reference (vector drawables supported)
+- **text** - item name reference
+
+Then you should reference this xml file at the view attributes
+
+```xml
+    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+        android:id="@+id/expandable_bottom_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:backgroundCornerRadius="25dp"
+        app:itemInactiveBackgroundColor="#fff"
+        app:items="@menu/bottom_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+```
+
 ## Xml supported properties
 
 - **elevation** component elevation (important: api 21+)
@@ -85,6 +137,7 @@ Then you should add menu items to your navigation component
 - **item_horizontal_margin** left & right item margins
 - **item_vertical_padding** top & bottom item padding
 - **item_horizontal_padding** left & right item padding
+- **items** xml supported menu format
 
 ## Screens
 

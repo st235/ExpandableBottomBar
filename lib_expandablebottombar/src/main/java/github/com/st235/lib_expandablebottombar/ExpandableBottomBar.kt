@@ -11,7 +11,7 @@ import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.AttributeSet
 import android.view.View
-import github.com.st235.lib_expandablebottombar.parsers.BarParser
+import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
 import github.com.st235.lib_expandablebottombar.utils.*
 
 internal const val ITEM_NOT_SELECTED = -1
@@ -76,7 +76,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
 
         val menuId = typedArray.getResourceId(R.styleable.ExpandableBottomBar_items, View.NO_ID)
         if (menuId != View.NO_ID) {
-            val barParser = BarParser(context)
+            val barParser = ExpandableBottomBarParser(context)
             val items = barParser.inflate(menuId)
             addItems(items)
         }

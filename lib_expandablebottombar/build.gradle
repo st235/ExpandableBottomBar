@@ -16,7 +16,7 @@ publish {
     userOrg = 'st235'
     groupId = 'com.github.st235'
     artifactId = 'expandablebottombar'
-    publishVersion = '0.4'
+    publishVersion = '0.5'
     desc = 'A new way to improve navigation in your app.'
     website = 'https://github.com/st235/ExpandableBottomBar'
 }
@@ -27,8 +27,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 11
-        versionName "0.4"
+        versionCode 13
+        versionName "0.5"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
