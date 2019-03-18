@@ -2,6 +2,9 @@
 
 # ExpandableBottomBar
 
+[ ![Download](https://api.bintray.com/packages/st235/maven/expandablebottombar/images/download.svg) ](https://bintray.com/st235/maven/expandablebottombar/_latestVersion)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/st235/ExpandableBottomBar.svg)
+
 A new way to improve navigation in your app
 
 Its really easy integrate to your project
@@ -14,7 +17,7 @@ Its really easy integrate to your project
 <dependency>
   <groupId>com.github.st235</groupId>
   <artifactId>expandablebottombar</artifactId>
-  <version>0.4</version>
+  <version>X.X</version>
   <type>pom</type>
 </dependency>
 ```
@@ -22,16 +25,18 @@ Its really easy integrate to your project
 - Gradle
 
 ```text
-implementation 'com.github.st235:expandablebottombar:0.4'
+implementation 'com.github.st235:expandablebottombar:X.X'
 ```
 
 - Ivy
 
 ```text
-<dependency org='com.github.st235' name='expandablebottombar' rev='0.4'>
+<dependency org='com.github.st235' name='expandablebottombar' rev='X.X'>
   <artifact name='expandablebottombar' ext='pom' ></artifact>
 </dependency>
 ```
+
+P.S.: Check out latest version code in badge at the top of this page.
 
 ## Usage
 
