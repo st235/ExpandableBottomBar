@@ -85,24 +85,24 @@ Firstly, you should declare menu items in xml
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        app:id="@+id/home"
-        app:color="@color/home"
-        app:icon="@drawable/ic_home"
-        app:text="@string/home" />
+        android:id="@+id/home"
+        android:title="@string/text"
+        app:color="#FF8888"
+        app:icon="@drawable/ic_home" />
 
     <item
-        app:id="@+id/feed"
-        app:color="@color/feed"
-        app:icon="@drawable/ic_feed"
-        app:text="@string/feed" />
+        android:id="@+id/settings"
+        android:title="@string/text4"
+        app:color="@color/colorSettings"
+        app:icon="@drawable/ic_settings" />
 
     <item
-        app:id="@+id/settings"
-        app:color="#FFEE22"
-        app:icon="@drawable/ic_settings"
-        app:text="@string/settings" />
+        android:id="@+id/bookmarks"
+        android:title="@string/text3"
+        app:color="#fa2"
+        app:icon="@drawable/ic_bookmarks" />
 </menu>
 ```
 
@@ -111,7 +111,9 @@ each item tag support following attributes:
 - **id** - an id of menu item
 - **color** - color of element, it may be color reference or color
 - **icon** - icon reference (vector drawables supported)
-- **text** - item name reference
+- **title** - item name reference
+
+Just like usual Android menu 😉
 
 Then you should reference this xml file at the view attributes
 

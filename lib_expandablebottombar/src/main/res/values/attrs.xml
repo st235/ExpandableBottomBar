@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ExpandableBottomBarItem">
-        <attr name="id" />
+        <attr name="android:id" />
+        <attr name="android:title" />
         <attr name="icon" format="reference" />
-        <attr name="text" format="reference" />
         <attr name="color" format="reference|color" />
     </declare-styleable>
 
