@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="ExpandableBottomBarItem">
+        <attr name="android:id" />
+        <attr name="android:title" />
+        <attr name="icon" format="reference" />
+        <attr name="color" format="reference|color" />
+    </declare-styleable>
+
     <declare-styleable name="ExpandableBottomBar">
         <attr name="itemInactiveColor" format="color" />
         <attr name="itemBackgroundCornerRadius" format="dimension" />
@@ -13,6 +20,8 @@
         <attr name="item_horizontal_margin" format="dimension" />
         <attr name="item_vertical_padding" format="dimension" />
         <attr name="item_horizontal_padding" format="dimension" />
+
+        <attr name="items" format="reference" />
     </declare-styleable>
 
     <attr name="expandableButtonBarDefaultStyle" format="reference" />

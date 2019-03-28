@@ -2,6 +2,9 @@
 
 # ExpandableBottomBar
 
+[ ![Download](https://api.bintray.com/packages/st235/maven/expandablebottombar/images/download.svg) ](https://bintray.com/st235/maven/expandablebottombar/_latestVersion)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/st235/ExpandableBottomBar.svg)
+
 A new way to improve navigation in your app
 
 Its really easy integrate to your project
@@ -14,7 +17,7 @@ Its really easy integrate to your project
 <dependency>
   <groupId>com.github.st235</groupId>
   <artifactId>expandablebottombar</artifactId>
-  <version>0.4</version>
+  <version>X.X</version>
   <type>pom</type>
 </dependency>
 ```
@@ -22,16 +25,18 @@ Its really easy integrate to your project
 - Gradle
 
 ```text
-implementation 'com.github.st235:expandablebottombar:0.4'
+implementation 'com.github.st235:expandablebottombar:X.X'
 ```
 
 - Ivy
 
 ```text
-<dependency org='com.github.st235' name='expandablebottombar' rev='0.4'>
+<dependency org='com.github.st235' name='expandablebottombar' rev='X.X'>
   <artifact name='expandablebottombar' ext='pom' ></artifact>
 </dependency>
 ```
+
+P.S.: Check out latest version code in badge at the top of this page.
 
 ## Usage
 
@@ -72,6 +77,60 @@ Then you should add menu items to your navigation component
         }
 ```
 
+## Menu from xml
+
+If your menu is constantly, you may specify it from xml
+
+Firstly, you should declare menu items in xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:title="@string/text"
+        app:color="#FF8888"
+        app:icon="@drawable/ic_home" />
+
+    <item
+        android:id="@+id/settings"
+        android:title="@string/text4"
+        app:color="@color/colorSettings"
+        app:icon="@drawable/ic_settings" />
+
+    <item
+        android:id="@+id/bookmarks"
+        android:title="@string/text3"
+        app:color="#fa2"
+        app:icon="@drawable/ic_bookmarks" />
+</menu>
+```
+
+each item tag support following attributes:
+
+- **id** - an id of menu item
+- **color** - color of element, it may be color reference or color
+- **icon** - icon reference (vector drawables supported)
+- **title** - item name reference
+
+Just like usual Android menu 😉
+
+Then you should reference this xml file at the view attributes
+
+```xml
+    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+        android:id="@+id/expandable_bottom_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:backgroundCornerRadius="25dp"
+        app:itemInactiveBackgroundColor="#fff"
+        app:items="@menu/bottom_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+```
+
 ## Xml supported properties
 
 - **elevation** component elevation (important: api 21+)
@@ -85,6 +144,7 @@ Then you should add menu items to your navigation component
 - **item_horizontal_margin** left & right item margins
 - **item_vertical_padding** top & bottom item padding
 - **item_horizontal_padding** left & right item padding
+- **items** xml supported menu format
 
 ## Screens
 

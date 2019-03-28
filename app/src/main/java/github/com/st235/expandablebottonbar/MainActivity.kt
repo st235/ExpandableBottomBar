@@ -1,14 +1,10 @@
 package github.com.st235.expandablebottonbar
 
-import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.support.v4.graphics.ColorUtils
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem
-import android.view.ViewAnimationUtils
-import android.view.View
-
+import android.support.v7.app.AppCompatActivity
+import android.view.ViewGroup
+import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,28 +12,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val color: View = findViewById(R.id.color)
-        val bottomBar: ExpandableBottomBar = findViewById(R.id.expandable_bottom_bar)
+        val rootView = findViewById<ViewGroup>(R.id.root)
+        addButton(rootView, "Navigate to XML Declared Menu", XmlDeclaredActivity::class.java)
+        addButton(rootView, "Navigate to Programmatically Declared Menu",
+            ProgrammaticallyCreatedDemoActivity::class.java)
+    }
 
-        color.setBackgroundColor(ColorUtils.setAlphaComponent(Color.GRAY, 60))
-
-        bottomBar.addItems(
-                ExpandableBottomBarMenuItem.Builder()
-                        .addItem(R.id.icon_home, R.drawable.ic_home, R.string.text, Color.GRAY)
-                        .addItem(R.id.icon_likes, R.drawable.ic_likes, R.string.text2, Color.parseColor("#ff77a9"))
-                        .addItem(R.id.icon_bookmarks, R.drawable.ic_bookmarks, R.string.text3, Color.parseColor("#58a5f0"))
-                        .addItem(R.id.icon_settings, R.drawable.ic_settings, R.string.text4, Color.parseColor("#be9c91"))
-                        .build()
-        )
-
-        bottomBar.onItemClickListener = { v, i ->
-            val anim = ViewAnimationUtils.createCircularReveal(color,
-                bottomBar.x.toInt() + v.x.toInt() + v.height / 2,
-                bottomBar.y.toInt() + v.y.toInt() + v.width / 2, 0F,
-                findViewById<View>(android.R.id.content).height.toFloat())
-            color.setBackgroundColor(ColorUtils.setAlphaComponent(i.activeColor, 60))
-            anim.duration = 420
-            anim.start()
+    private fun addButton(root: ViewGroup,
+                          text: String, to: Class<*>) {
+        val button = Button(this)
+        button.text = text
+        val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT,
+            ViewGroup.MarginLayoutParams.WRAP_CONTENT)
+        button.setOnClickListener {
+            startActivity(Intent(this, to))
         }
+
+        root.addView(button, layoutParams)
     }
 }
