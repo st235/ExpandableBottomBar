@@ -20,7 +20,7 @@ internal const val NO_ID = 0
 typealias OnItemClickListener = (v: View, menuItem: ExpandableBottomBarMenuItem) -> Unit
 
 /**
- * Widget, which implements bottom bar navigation pattern
+ * Widget, which implements bottom bar navigation pattern xyn
  */
 class ExpandableBottomBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.expandableButtonBarDefaultStyle

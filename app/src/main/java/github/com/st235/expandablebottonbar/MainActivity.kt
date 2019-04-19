@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         addButton(rootView, "Navigate to XML Declared Menu", XmlDeclaredActivity::class.java)
         addButton(rootView, "Navigate to Programmatically Declared Menu",
             ProgrammaticallyCreatedDemoActivity::class.java)
+        addButton(rootView, "Java Interop with Expandable Menu", JavaActivity::class.java)
     }
 
     private fun addButton(root: ViewGroup,
