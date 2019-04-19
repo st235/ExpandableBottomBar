@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".JavaActivity" />
+        <activity android:name=".XmlDeclaredActivity"/>
+        <activity android:name=".ProgrammaticallyCreatedDemoActivity"/>
     </application>
 
 </manifest>
