@@ -1,4 +1,4 @@
-package github.com.st235.expandablebottonbar
+package github.com.st235.expandablebottombar
 
 import android.graphics.Color
 import android.os.Bundle

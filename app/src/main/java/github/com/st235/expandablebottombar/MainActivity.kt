@@ -1,4 +1,4 @@
-package github.com.st235.expandablebottonbar
+package github.com.st235.expandablebottombar
 
 import android.content.Intent
 import android.os.Bundle
