@@ -4,7 +4,7 @@
 
 [ ![Download](https://api.bintray.com/packages/st235/maven/expandablebottombar/images/download.svg) ](https://bintray.com/st235/maven/expandablebottombar/_latestVersion)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/st235/ExpandableBottomBar.svg)
-[![Build Status](https://travis-ci.org/st235/ExpandableBottomBar.svg?branch=master)](https://travis-ci.org/st235/ExpandableBottomBar)
+[![Build Status](https://travis-ci.com/st235/ExpandableBottomBar.svg?branch=master)](https://travis-ci.com/st235/ExpandableBottomBar)
 
 A new way to improve navigation in your app
 
