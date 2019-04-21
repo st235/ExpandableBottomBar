@@ -1,5 +1,6 @@
 package github.com.st235.expandablebottombar.parsers
 
+import android.content.Context
 import android.graphics.Color
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
@@ -19,11 +20,12 @@ import org.junit.Test
 @MediumTest
 class ExpandableBottomBarParserTest {
 
+    private lateinit var appContext: Context
     private lateinit var expandableBottomBarParser: ExpandableBottomBarParser
 
     @Before
     fun setUp() {
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        appContext = InstrumentationRegistry.getInstrumentation().targetContext
         expandableBottomBarParser =
             ExpandableBottomBarParser(appContext)
     }
@@ -42,8 +44,9 @@ class ExpandableBottomBarParserTest {
     @Test
     fun testThatMenuWillBeParserOkWhenThereItemsExists() {
         val items = expandableBottomBarParser.inflate(R.menu.valid_menu)
-        val actualItem = ExpandableBottomBarMenuItem(R.id.icon_id, R.drawable.item_icon, R.string.icon_text,
-            Color.WHITE)
+        val iconText = appContext.getString(R.string.icon_text)
+        val actualItem =
+            ExpandableBottomBarMenuItem(R.id.icon_id, R.drawable.item_icon, iconText, Color.WHITE)
         assertThat(items, contains(actualItem))
     }
 }

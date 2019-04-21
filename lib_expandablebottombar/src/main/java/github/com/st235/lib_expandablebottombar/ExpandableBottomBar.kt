@@ -120,6 +120,11 @@ class ExpandableBottomBar @JvmOverloads constructor(
         onItemSelected(itemToSelect.menuItem)
     }
 
+    /**
+     * Returns currently selected item
+     */
+    fun getSelected(): ExpandableBottomBarMenuItem = viewControllers.getValue(selectedItemId).menuItem
+
     private fun createItem(menuItem: ExpandableBottomBarMenuItem): ExpandableItemViewController {
         val colors = intArrayOf(menuItem.activeColor, itemInactiveColor)
         val selectedStateColorList = ColorStateList(backgroundStates, colors)

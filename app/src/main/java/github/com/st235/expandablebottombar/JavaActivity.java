@@ -18,7 +18,7 @@ public class JavaActivity extends AppCompatActivity {
         bottomBar = findViewById(R.id.expandable_bottom_bar);
 
         bottomBar.addItems(
-                new ExpandableBottomBarMenuItem.Builder()
+                new ExpandableBottomBarMenuItem.Builder(this)
                         .addItem(R.id.icon_home, R.drawable.ic_home, R.string.text, Color.GRAY)
                         .addItem(R.id.icon_likes, R.drawable.ic_likes, R.string.text2, Color.parseColor("#ff77a9"))
                         .addItem(R.id.icon_bookmarks, R.drawable.ic_bookmarks, R.string.text3, Color.parseColor("#58a5f0"))
