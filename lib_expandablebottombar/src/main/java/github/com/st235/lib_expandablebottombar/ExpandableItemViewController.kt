@@ -142,7 +142,7 @@ internal class ExpandableItemViewController(
             }
 
             val textView = AppCompatTextView(context).apply {
-                val rawText = SpannableString(resources.getString(menuItem.textId))
+                val rawText = SpannableString(menuItem.text)
                 rawText.setSpan(StyleSpan(Typeface.BOLD), 0, rawText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
                 setTextColor(backgroundColorSelector)
                 text = rawText

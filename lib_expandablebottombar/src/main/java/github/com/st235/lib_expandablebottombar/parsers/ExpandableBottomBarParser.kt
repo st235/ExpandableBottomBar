@@ -2,7 +2,6 @@ package github.com.st235.lib_expandablebottombar.parsers
 
 import android.content.Context
 import android.graphics.Color
-import android.support.annotation.MenuRes
 import android.util.AttributeSet
 import android.util.Xml
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem
@@ -12,6 +11,7 @@ import github.com.st235.lib_expandablebottombar.R
 internal class ExpandableBottomBarParser(private val context: Context) {
     companion object {
         private const val NO_ID = 0
+        private const val NO_TEXT = ""
         private const val NO_COLOR = Color.TRANSPARENT
 
         private const val MENU_TAG = "menu"
@@ -78,12 +78,12 @@ internal class ExpandableBottomBarParser(private val context: Context) {
 
         val id = typedArray.getResourceId(R.styleable.ExpandableBottomBarItem_android_id, NO_ID)
         val iconId = typedArray.getResourceId(R.styleable.ExpandableBottomBarItem_icon, NO_ID)
-        val textId = typedArray.getResourceId(R.styleable.ExpandableBottomBarItem_android_title, NO_ID)
         val color = typedArray.getColor(R.styleable.ExpandableBottomBarItem_color, NO_COLOR)
+        val text = typedArray.getString(R.styleable.ExpandableBottomBarItem_android_title) ?: NO_TEXT
 
         typedArray.recycle()
 
         parser.require(XmlPullParser.START_TAG, namespace, MENU_ITEM_TAG)
-        return ExpandableBottomBarMenuItem(id, iconId, textId, color)
+        return ExpandableBottomBarMenuItem(id, iconId, text, color)
     }
 }

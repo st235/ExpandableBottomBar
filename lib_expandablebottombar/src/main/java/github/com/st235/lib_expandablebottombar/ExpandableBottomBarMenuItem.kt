@@ -1,5 +1,6 @@
 package github.com.st235.lib_expandablebottombar
 
+import android.content.Context
 import android.graphics.Color
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
@@ -12,13 +13,13 @@ import android.support.annotation.StringRes
 data class ExpandableBottomBarMenuItem(
     @IdRes val itemId: Int,
     @DrawableRes val iconId: Int,
-    @StringRes val textId: Int,
+    val text: CharSequence,
     @ColorInt val activeColor: Int
 ) {
     /**
      * Class-helper to create expandable bottom bar menu items
      */
-    class Builder {
+    class Builder(private val context: Context) {
         private val items = mutableListOf<ExpandableBottomBarMenuItem>()
 
         fun addItem(
@@ -27,7 +28,18 @@ data class ExpandableBottomBarMenuItem(
             @StringRes textId: Int,
             @ColorInt activeColor: Int = Color.BLACK
         ): Builder {
-            items.add(ExpandableBottomBarMenuItem(itemId, iconId, textId, activeColor))
+            val text = context.getText(textId)
+            items.add(ExpandableBottomBarMenuItem(itemId, iconId, text, activeColor))
+            return this
+        }
+
+        fun addItem(
+            @IdRes itemId: Int,
+            @DrawableRes iconId: Int,
+            text: CharSequence,
+            @ColorInt activeColor: Int = Color.BLACK
+        ): Builder {
+            items.add(ExpandableBottomBarMenuItem(itemId, iconId, text, activeColor))
             return this
         }
 

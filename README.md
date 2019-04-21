@@ -65,7 +65,7 @@ Then you should add menu items to your navigation component
         val bottomBar: ExpandableBottomBar = findViewById(R.id.expandable_bottom_bar)
 
         bottomBar.addItems(
-                ExpandableBottomBarMenuItem.Builder()
+                ExpandableBottomBarMenuItem.Builder(context = this)
                         .addItem(R.id.icon_home, R.drawable.ic_bug, R.string.text, Color.GRAY)
                         .addItem(R.id.icon_go, R.drawable.ic_gift, R.string.text2, 0xFFFF77A9)
                         .addItem(R.id.icon_left, R.drawable.ic_one, R.string.text3, 0xFF58A5F0)
@@ -112,7 +112,7 @@ each item tag support following attributes:
 - **id** - an id of menu item
 - **color** - color of element, it may be color reference or color
 - **icon** - icon reference (vector drawables supported)
-- **title** - item name reference
+- **title** - item name reference **or raw text**
 
 Just like usual Android menu 😉
 
@@ -146,6 +146,13 @@ Then you should reference this xml file at the view attributes
 - **item_vertical_padding** top & bottom item padding
 - **item_horizontal_padding** left & right item padding
 - **items** xml supported menu format
+
+## Migration from 0.6 to upper versions
+
+for competent work with newer versions of the library, you may need to replace the Items Builders code.
+
+Was: `ExpandableBottomBarMenuItem.Builder()`
+Now: `ExpandableBottomBarMenuItem.Builder(context = this)`
 
 ## Screens
 
