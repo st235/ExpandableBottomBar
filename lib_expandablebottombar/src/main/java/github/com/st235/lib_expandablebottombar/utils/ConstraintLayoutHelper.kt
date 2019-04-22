@@ -1,7 +1,7 @@
 package github.com.st235.lib_expandablebottombar.utils
 
-import android.support.annotation.IdRes
-import android.support.constraint.ConstraintSet
+import androidx.annotation.IdRes
+import androidx.constraintlayout.widget.ConstraintSet
 
 internal inline fun ConstraintSet.createChain(@IdRes firstItemId: Int,
                                               @IdRes secondItemId: Int,

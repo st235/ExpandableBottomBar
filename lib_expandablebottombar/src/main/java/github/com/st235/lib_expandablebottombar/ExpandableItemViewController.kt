@@ -3,11 +3,6 @@ package github.com.st235.lib_expandablebottombar
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Typeface
-import android.support.annotation.Px
-import android.support.constraint.ConstraintLayout
-import android.support.constraint.ConstraintSet
-import android.support.v7.widget.AppCompatImageView
-import android.support.v7.widget.AppCompatTextView
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -16,6 +11,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.Px
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import github.com.st235.lib_expandablebottombar.utils.createChain
 import github.com.st235.lib_expandablebottombar.utils.toPx

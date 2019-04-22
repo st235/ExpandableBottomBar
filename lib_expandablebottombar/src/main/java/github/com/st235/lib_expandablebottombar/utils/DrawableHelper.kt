@@ -4,14 +4,12 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.StateListDrawable
 import android.graphics.drawable.shapes.RoundRectShape
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.annotation.FloatRange
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.ColorUtils
-import android.support.v4.graphics.drawable.DrawableCompat
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.drawable.DrawableCompat
 
 object DrawableHelper {
     internal fun createShapeDrawable(@ColorInt activeColor: Int,

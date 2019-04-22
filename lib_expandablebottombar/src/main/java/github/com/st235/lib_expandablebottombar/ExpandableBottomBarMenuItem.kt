@@ -2,10 +2,10 @@ package github.com.st235.lib_expandablebottombar
 
 import android.content.Context
 import android.graphics.Color
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.annotation.IdRes
-import android.support.annotation.StringRes
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
+import androidx.annotation.StringRes
 
 /**
  * Menu item for expandable bottom bar
