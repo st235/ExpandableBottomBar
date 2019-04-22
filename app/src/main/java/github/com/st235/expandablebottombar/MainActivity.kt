@@ -2,9 +2,9 @@ package github.com.st235.expandablebottombar
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
         addButton(rootView, "Navigate to Programmatically Declared Menu",
             ProgrammaticallyCreatedDemoActivity::class.java)
         addButton(rootView, "Java Interop with Expandable Menu", JavaActivity::class.java)
+        addButton(rootView, "Coordinator Layout Behavior", CoordinatorLayoutActivity::class.java)
+        addButton(rootView, "Coordinator Layout Scrollable Behavior", ScrollableCoordinatorLayoutActivity::class.java)
     }
 
     private fun addButton(root: ViewGroup,

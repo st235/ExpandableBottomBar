@@ -147,6 +147,32 @@ Then you should reference this xml file at the view attributes
 - **item_horizontal_padding** left & right item padding
 - **items** xml supported menu format
 
+## Coordinator Layout support
+
+Do you waiting for Coordinator Layout support - and it is already here! Fabs and Snackbars aligned by bottom bar! Hooray 🎉
+
+Available without registration and SMS, starting from **0.8** version. Seriously, everything is already working out of the box - nothing needs to be done.
+
+But... if you need to support hiding the menu by list/grid scroll - then you are really lucky!
+
+This functionality is very simple to implement. You need to redeclare custom `Coordinator Layout Behavoir` to `ExpandableBottomBarScrollableBehavior`.
+
+```xml
+    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+            android:id="@+id/expandable_bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:layout_behavior="github.com.st235.lib_expandablebottombar.ExpandableBottomBarScrollableBehavior"
+            app:items="@menu/bottom_bar" />
+```
+
+Really easy ;D 
+
+After integration this behavior should looks like:
+
+<img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/coordinator_layout.png" width="270" height="480">
+
 ## Migration from 0.6 to upper versions
 
 for competent work with newer versions of the library, you may need to replace the Items Builders code.

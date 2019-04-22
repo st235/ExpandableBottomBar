@@ -4,4 +4,5 @@
     <string name="text2">Likes</string>
     <string name="text3">Bookmarks</string>
     <string name="text4">Settings</string>
+    <string name="title_activity_coordinator_layout">CoordinatorLayoutActivity</string>
 </resources>

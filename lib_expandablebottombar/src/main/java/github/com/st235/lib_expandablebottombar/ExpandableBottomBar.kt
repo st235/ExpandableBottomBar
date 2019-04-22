@@ -3,14 +3,16 @@ package github.com.st235.lib_expandablebottombar
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.support.annotation.ColorInt
-import android.support.annotation.IdRes
-import android.support.constraint.ConstraintLayout
-import android.support.constraint.ConstraintSet
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.View
+import androidx.annotation.ColorInt
+import androidx.annotation.IdRes
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
 import github.com.st235.lib_expandablebottombar.utils.*
 
@@ -24,7 +26,7 @@ typealias OnItemClickListener = (v: View, menuItem: ExpandableBottomBarMenuItem)
  */
 class ExpandableBottomBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.expandableButtonBarDefaultStyle
-) : ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr), CoordinatorLayout.AttachedBehavior {
 
     private var backgroundOpacity: Float = 0F
     private var backgroundCornerRadius: Float = 0F
@@ -46,6 +48,8 @@ class ExpandableBottomBar @JvmOverloads constructor(
     init {
         initAttrs(context, attrs, defStyleAttr)
     }
+
+    override fun getBehavior(): CoordinatorLayout.Behavior<*> = ExpandableBottomBarBehavior<ExpandableBottomBar>()
 
     private fun initAttrs(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
         if (attrs == null) {
@@ -82,6 +86,15 @@ class ExpandableBottomBar @JvmOverloads constructor(
         }
 
         typedArray.recycle()
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+
+        val lp = layoutParams
+        if (lp is CoordinatorLayout.LayoutParams) {
+            lp.insetEdge = Gravity.BOTTOM
+        }
     }
 
     /**
