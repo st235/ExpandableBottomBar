@@ -171,7 +171,7 @@ Really easy ;D
 
 After integration this behavior should looks like:
 
-<img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/coordinator_layout.png" width="270" height="480">
+<img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/coordinator_layout.gif" width="270" height="480">
 
 ## Migration from 0.6 to upper versions
 
