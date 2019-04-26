@@ -3,6 +3,7 @@ package github.com.st235.lib_expandablebottombar
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Parcelable
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.AttributeSet
@@ -14,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
+import github.com.st235.lib_expandablebottombar.state.SavedState
 import github.com.st235.lib_expandablebottombar.utils.*
 
 internal const val ITEM_NOT_SELECTED = -1
@@ -41,7 +43,9 @@ class ExpandableBottomBar @JvmOverloads constructor(
     private var transitionDuration: Int = 0
 
     @IdRes private var selectedItemId: Int = ITEM_NOT_SELECTED
+
     private val viewControllers: MutableMap<Int, ExpandableItemViewController> = mutableMapOf()
+    private val stateController = ExpandableBottomBarStateController(this)
 
     var onItemClickListener: OnItemClickListener? = null
 
@@ -138,6 +142,20 @@ class ExpandableBottomBar @JvmOverloads constructor(
      */
     fun getSelected(): ExpandableBottomBarMenuItem = viewControllers.getValue(selectedItemId).menuItem
 
+    override fun onSaveInstanceState(): Parcelable? {
+        val superState = super.onSaveInstanceState()
+        return stateController.store(superState)
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state !is SavedState) {
+            super.onRestoreInstanceState(state)
+            return
+        }
+        super.onRestoreInstanceState(state.superState)
+        stateController.restore(state)
+    }
+
     private fun createItem(menuItem: ExpandableBottomBarMenuItem): ExpandableItemViewController {
         val colors = intArrayOf(menuItem.activeColor, itemInactiveColor)
         val selectedStateColorList = ColorStateList(backgroundStates, colors)
@@ -181,5 +199,18 @@ class ExpandableBottomBar @JvmOverloads constructor(
         val autoTransition = AutoTransition()
         autoTransition.duration = transitionDuration.toLong()
         TransitionManager.beginDelayedTransition(this, autoTransition)
+    }
+
+    internal class ExpandableBottomBarStateController(
+        private val expandableBottomBar: ExpandableBottomBar
+    ) {
+
+        fun store(superState: Parcelable?) = SavedState(expandableBottomBar.selectedItemId, superState)
+
+        fun restore(state: SavedState) {
+            val selectedItemId = state.selectedItem
+            val viewController = expandableBottomBar.viewControllers.getValue(selectedItemId)
+            expandableBottomBar.onItemSelected(viewController.menuItem)
+        }
     }
 }
