@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.novoda.bintray-release'
 
 buildscript {
@@ -19,6 +19,10 @@ publish {
     publishVersion = '0.8'
     desc = 'A new way to improve navigation in your app.'
     website = 'https://github.com/st235/ExpandableBottomBar'
+}
+
+androidExtensions {
+    experimental = true
 }
 
 android {

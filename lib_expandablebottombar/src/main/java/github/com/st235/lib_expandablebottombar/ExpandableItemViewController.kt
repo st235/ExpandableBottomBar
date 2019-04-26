@@ -22,7 +22,7 @@ import github.com.st235.lib_expandablebottombar.utils.toPx
 
 internal class ExpandableItemViewController(
     internal val menuItem: ExpandableBottomBarMenuItem,
-    private val itemView: View,
+    internal val itemView: View,
     private val textView: TextView,
     private val iconView: ImageView,
     private val backgroundCornerRadius: Float,
