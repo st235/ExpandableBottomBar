@@ -73,12 +73,21 @@ Then you should add menu items to your navigation component
                         .build()
         )
 
-        bottomBar.onItemClickListener = { view, menuItem ->
-            // handle menu item clicks here
+        bottomBar.onItemSelectedListener = { view, menuItem ->
+            /**
+             * handle menu item clicks here,
+             * but clicks on already selected item will not affect this callback
+             */
+        }
+        
+        bottomBar.onItemReselectedListener = { view, menuItem ->
+            /**
+             * handle here all the click in already selected items
+             */
         }
 ```
 
-## Menu from xml
+## Xml menu declaration
 
 If your menu is constantly, you may specify it from xml
 
@@ -107,14 +116,16 @@ Firstly, you should declare menu items in xml
 </menu>
 ```
 
-each item tag support following attributes:
+each item tag has following attributes:
 
-- **id** - an id of menu item
-- **color** - color of element, it may be color reference or color
-- **icon** - icon reference (vector drawables supported)
-- **title** - item name reference **or raw text**
+| property | type | description |
+| ----- | ----- | ----- |
+| **id** | reference | an id of menu item |
+| **color** | reference/color | color of element, it may be color reference or color |
+| **icon** | reference | icon reference (vector drawables supported) |
+| **title** | reference/text | item title |
 
-Just like usual Android menu 😉
+Just like any Android menu 😉
 
 Then you should reference this xml file at the view attributes
 
@@ -132,20 +143,23 @@ Then you should reference this xml file at the view attributes
         app:layout_constraintStart_toStartOf="parent" />
 ```
 
-## Xml supported properties
+## Xml attributes
 
-- **elevation** component elevation (important: api 21+)
-- **backgroundColor** bottom bar background color
-- **transitionDuration** time between one item collapsed and another item expanded
-- **backgroundCornerRadius** bottom bar background corners radius
-- **itemInactiveColor** item menu color, when its inactive
-- **itemBackgroundCornerRadius** item background corner radius
-- **itemBackgroundOpacity** item background opacity (important: final color alpha calculates by next formulae __alpha = opacity * 255__)
-- **item_vertical_margin** top & bottom item margins
-- **item_horizontal_margin** left & right item margins
-- **item_vertical_padding** top & bottom item padding
-- **item_horizontal_padding** left & right item padding
-- **items** xml supported menu format
+| property | type | description |
+| ----- | ----- | ----- |
+| **elevation** | dimen | component elevation (important: api 21+) |
+| **backgroundColor** | color | bottom bar background color |
+| **transitionDuration** | integer | component elevation (important: api 21+) |
+| **backgroundCornerRadius** | dimen | bottom bar background corners radius |
+| **itemInactiveColor** | color | item menu color, when its inactive |
+| **itemBackgroundCornerRadius** | dimen | item background corner radius |
+| **itemBackgroundOpacity** | float | component elevation (important: api 21+) |
+| **item_vertical_margin** | dimen | top & bottom item margins |
+| **item_horizontal_margin** | dimen | left & right item margins |
+| **item_vertical_padding** | dimen | top & bottom item padding |
+| **item_horizontal_padding** | dimen | left & right item padding |
+| **items** | reference | xml supported menu format |
+
 
 ## Coordinator Layout support
 
@@ -163,7 +177,7 @@ This functionality is very simple to implement. You need to redeclare custom `Co
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:layout_behavior="github.com.st235.lib_expandablebottombar.ExpandableBottomBarScrollableBehavior"
+            app:layout_behavior="github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior"
             app:items="@menu/bottom_bar" />
 ```
 
@@ -173,12 +187,9 @@ After integration this behavior should looks like:
 
 <img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/coordinator_layout.gif" width="270" height="480">
 
-## Migration from 0.6 to upper versions
+## Migration guide
 
-for competent work with newer versions of the library, you may need to replace the Items Builders code.
-
-Was: `ExpandableBottomBarMenuItem.Builder()`
-Now: `ExpandableBottomBarMenuItem.Builder(context = this)`
+You may found all necessary info about migration from old versions [here](https://github.com/st235/ExpandableBottomBar/wiki/Migration)
 
 ## Screens
 

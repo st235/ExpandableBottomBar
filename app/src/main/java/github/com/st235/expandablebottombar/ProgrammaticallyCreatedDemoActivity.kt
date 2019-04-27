@@ -2,6 +2,7 @@ package github.com.st235.expandablebottombar
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -24,13 +25,13 @@ class ProgrammaticallyCreatedDemoActivity : AppCompatActivity() {
         bottomBar.addItems(
                 ExpandableBottomBarMenuItem.Builder(this)
                         .addItem(R.id.icon_home, R.drawable.ic_home, R.string.text, Color.GRAY)
-                        .addItem(R.id.icon_likes, R.drawable.ic_likes, R.string.text2, Color.parseColor("#ff77a9"))
+                        .addItem(R.id.icon_likes, R.drawable.ic_likes).textRes(R.string.text2).colorRes(R.color.colorLike).create()
                         .addItem(R.id.icon_bookmarks, R.drawable.ic_bookmarks, R.string.text3, Color.parseColor("#58a5f0"))
                         .addItem(R.id.icon_settings, R.drawable.ic_settings, R.string.text4, Color.parseColor("#be9c91"))
                         .build()
         )
 
-        bottomBar.onItemClickListener = { v, i ->
+        bottomBar.onItemSelectedListener = { v, i ->
             val anim = ViewAnimationUtils.createCircularReveal(color,
                 bottomBar.x.toInt() + v.x.toInt() + v.width / 2,
                 bottomBar.y.toInt() + v.y.toInt() + v.height / 2, 0F,
@@ -38,6 +39,10 @@ class ProgrammaticallyCreatedDemoActivity : AppCompatActivity() {
             color.setBackgroundColor(ColorUtils.setAlphaComponent(i.activeColor, 60))
             anim.duration = 420
             anim.start()
+        }
+
+        bottomBar.onItemReselectedListener = { v, i ->
+            Log.d("ExpandableBottomBar", "OnReselected: ${i.itemId}")
         }
     }
 }

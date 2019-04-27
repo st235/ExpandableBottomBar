@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:layout_behavior="github.com.st235.lib_expandablebottombar.ExpandableBottomBarScrollableBehavior"
+            app:layout_behavior="github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior"
             app:items="@menu/bottom_bar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

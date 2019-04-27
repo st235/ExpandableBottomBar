@@ -10,16 +10,18 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.annotation.FloatRange
 import androidx.annotation.IdRes
+import androidx.annotation.IntRange
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarBehavior
 import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
 import github.com.st235.lib_expandablebottombar.state.SavedState
 import github.com.st235.lib_expandablebottombar.utils.*
 
 internal const val ITEM_NOT_SELECTED = -1
-internal const val NO_ID = 0
 
 typealias OnItemClickListener = (v: View, menuItem: ExpandableBottomBarMenuItem) -> Unit
 
@@ -30,15 +32,19 @@ class ExpandableBottomBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.expandableButtonBarDefaultStyle
 ) : ConstraintLayout(context, attrs, defStyleAttr), CoordinatorLayout.AttachedBehavior {
 
-    private var backgroundOpacity: Float = 0F
-    private var backgroundCornerRadius: Float = 0F
-    private var menuItemHorizontalMargin: Int = 0
-    private var menuItemVerticalMargin: Int = 0
-    private var menuHorizontalPadding: Int = 0
-    private var menuVerticalPadding: Int = 0
+    @FloatRange(from = 0.0, to = 1.0) private var backgroundOpacity: Float = 0F
+    @FloatRange(from = 0.0) private var backgroundCornerRadius: Float = 0F
+    @IntRange(from = 0) private var menuItemHorizontalMargin: Int = 0
+    @IntRange(from = 0) private var menuItemVerticalMargin: Int = 0
+    @IntRange(from = 0) private var menuHorizontalPadding: Int = 0
+    @IntRange(from = 0) private var menuVerticalPadding: Int = 0
+
     @ColorInt private var itemInactiveColor: Int = Color.BLACK
     private val backgroundStates
-            = arrayOf(intArrayOf(android.R.attr.state_selected), intArrayOf(-android.R.attr.state_selected))
+            = arrayOf(
+        intArrayOf(android.R.attr.state_selected),
+        intArrayOf(-android.R.attr.state_selected)
+    )
 
     private var transitionDuration: Int = 0
 
@@ -47,13 +53,15 @@ class ExpandableBottomBar @JvmOverloads constructor(
     private val viewControllers: MutableMap<Int, ExpandableItemViewController> = mutableMapOf()
     private val stateController = ExpandableBottomBarStateController(this)
 
-    var onItemClickListener: OnItemClickListener? = null
+    var onItemSelectedListener: OnItemClickListener? = null
+    var onItemReselectedListener: OnItemClickListener? = null
 
     init {
         initAttrs(context, attrs, defStyleAttr)
     }
 
-    override fun getBehavior(): CoordinatorLayout.Behavior<*> = ExpandableBottomBarBehavior<ExpandableBottomBar>()
+    override fun getBehavior(): CoordinatorLayout.Behavior<*> =
+        ExpandableBottomBarBehavior<ExpandableBottomBar>()
 
     private fun initAttrs(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
         if (attrs == null) {
@@ -78,7 +86,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
         background =
             DrawableHelper.createShapeDrawable(backgroundColor, backgroundCornerRadius, 1.0F)
 
-        applyForApiMAndHigher {
+        applyForApiLAndHigher {
             elevation = typedArray.getDimension(R.styleable.ExpandableBottomBar_elevation, 16F.toPx())
         }
 
@@ -99,6 +107,20 @@ class ExpandableBottomBar @JvmOverloads constructor(
         if (lp is CoordinatorLayout.LayoutParams) {
             lp.insetEdge = Gravity.BOTTOM
         }
+    }
+
+    override fun onSaveInstanceState(): Parcelable? {
+        val superState = super.onSaveInstanceState()
+        return stateController.store(superState)
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state !is SavedState) {
+            super.onRestoreInstanceState(state)
+            return
+        }
+        super.onRestoreInstanceState(state.superState)
+        stateController.restore(state)
     }
 
     /**
@@ -142,20 +164,6 @@ class ExpandableBottomBar @JvmOverloads constructor(
      */
     fun getSelected(): ExpandableBottomBarMenuItem = viewControllers.getValue(selectedItemId).menuItem
 
-    override fun onSaveInstanceState(): Parcelable? {
-        val superState = super.onSaveInstanceState()
-        return stateController.store(superState)
-    }
-
-    override fun onRestoreInstanceState(state: Parcelable?) {
-        if (state !is SavedState) {
-            super.onRestoreInstanceState(state)
-            return
-        }
-        super.onRestoreInstanceState(state.superState)
-        stateController.restore(state)
-    }
-
     private fun createItem(menuItem: ExpandableBottomBarMenuItem): ExpandableItemViewController {
         val colors = intArrayOf(menuItem.activeColor, itemInactiveColor)
         val selectedStateColorList = ColorStateList(backgroundStates, colors)
@@ -166,8 +174,12 @@ class ExpandableBottomBar @JvmOverloads constructor(
                 .itemBackground(backgroundCornerRadius, backgroundOpacity)
                 .itemsColors(selectedStateColorList)
                 .onItemClickListener { v: View ->
-                    onItemSelected(menuItem)
-                    onItemClickListener?.invoke(v, menuItem)
+                    if (!v.isSelected) {
+                        onItemSelected(menuItem)
+                        onItemSelectedListener?.invoke(v, menuItem)
+                    } else {
+                        onItemReselectedListener?.invoke(v, menuItem)
+                    }
                 }
                 .build(context)
 

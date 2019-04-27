@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar
+package github.com.st235.lib_expandablebottombar.behavior
 
 import android.content.Context
 import android.util.AttributeSet

@@ -1,15 +1,14 @@
-package github.com.st235.lib_expandablebottombar
+package github.com.st235.lib_expandablebottombar.behavior
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.Gravity
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
-import com.google.android.material.snackbar.Snackbar
 import github.com.st235.lib_expandablebottombar.utils.clamp
 
-class ExpandableBottomBarScrollableBehavior<V: View>: ExpandableBottomBarBehavior<V> {
+class ExpandableBottomBarScrollableBehavior<V: View>:
+    ExpandableBottomBarBehavior<V> {
 
     constructor(): super()
 
