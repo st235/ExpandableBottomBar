@@ -3,6 +3,7 @@ package github.com.st235.lib_expandablebottombar
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -11,7 +12,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.FloatRange
 import androidx.annotation.Px
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -20,9 +23,9 @@ import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import github.com.st235.lib_expandablebottombar.utils.createChain
 import github.com.st235.lib_expandablebottombar.utils.toPx
 
-internal class ExpandableItemViewController(
+internal open class ExpandableItemViewController(
     internal val menuItem: ExpandableBottomBarMenuItem,
-    internal val itemView: View,
+    private val itemView: View,
     private val textView: TextView,
     private val iconView: ImageView,
     private val backgroundCornerRadius: Float,
@@ -34,18 +37,24 @@ internal class ExpandableItemViewController(
         textView.visibility = View.GONE
         textView.isSelected = false
         iconView.isSelected = false
+        itemView.isSelected = false
     }
 
     fun select() {
-        itemView.background =
-            DrawableHelper.createShapeDrawable(
-                menuItem.activeColor,
-                backgroundCornerRadius,
-                backgroundOpacity
-            )
+        itemView.background = createHighlightedMenuShape()
         textView.visibility = View.VISIBLE
         textView.isSelected = true
         iconView.isSelected = true
+        itemView.isSelected = true
+    }
+
+    @VisibleForTesting
+    internal open fun createHighlightedMenuShape(): Drawable {
+        return DrawableHelper.createShapeDrawable(
+            menuItem.activeColor,
+            backgroundCornerRadius,
+            backgroundOpacity
+        )
     }
 
     fun attachTo(parent: ConstraintLayout,
@@ -93,7 +102,7 @@ internal class ExpandableItemViewController(
         private var itemHorizontalPadding: Int = 0
         @Px
         private var backgroundCornerRadius: Float = 0.0f
-        @Px
+        @FloatRange(from = 0.0, to = 1.0)
         private var backgroundOpacity: Float = 1.0f
 
         private lateinit var backgroundColorSelector: ColorStateList
@@ -108,7 +117,8 @@ internal class ExpandableItemViewController(
             return this
         }
 
-        fun itemBackground(backgroundCornerRadius: Float, backgroundOpacity: Float): Builder {
+        fun itemBackground(backgroundCornerRadius: Float,
+                           @FloatRange(from = 0.0, to = 1.0) backgroundOpacity: Float): Builder {
             this.backgroundCornerRadius = backgroundCornerRadius
             this.backgroundOpacity = backgroundOpacity
             return this

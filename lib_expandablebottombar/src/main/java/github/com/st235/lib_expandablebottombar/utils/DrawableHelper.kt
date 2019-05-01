@@ -7,14 +7,15 @@ import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RoundRectShape
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
+import androidx.annotation.FloatRange
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.DrawableCompat
 
 object DrawableHelper {
     internal fun createShapeDrawable(@ColorInt activeColor: Int,
-                                     cornerRadius: Float,
-                                     opacity: Float): Drawable {
+                                     @FloatRange(from = 0.0) cornerRadius: Float,
+                                     @FloatRange(from = 0.0, to = 1.0) opacity: Float): Drawable {
         val footerBackground = ShapeDrawable()
 
         val radii = FloatArray(8)
