@@ -3,6 +3,7 @@ package github.com.st235.lib_expandablebottombar
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -13,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.FloatRange
 import androidx.annotation.Px
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +23,7 @@ import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import github.com.st235.lib_expandablebottombar.utils.createChain
 import github.com.st235.lib_expandablebottombar.utils.toPx
 
-internal class ExpandableItemViewController(
+internal open class ExpandableItemViewController(
     internal val menuItem: ExpandableBottomBarMenuItem,
     private val itemView: View,
     private val textView: TextView,
@@ -39,16 +41,20 @@ internal class ExpandableItemViewController(
     }
 
     fun select() {
-        itemView.background =
-            DrawableHelper.createShapeDrawable(
-                menuItem.activeColor,
-                backgroundCornerRadius,
-                backgroundOpacity
-            )
+        itemView.background = createHighlightedMenuShape()
         textView.visibility = View.VISIBLE
         textView.isSelected = true
         iconView.isSelected = true
         itemView.isSelected = true
+    }
+
+    @VisibleForTesting
+    internal open fun createHighlightedMenuShape(): Drawable {
+        return DrawableHelper.createShapeDrawable(
+            menuItem.activeColor,
+            backgroundCornerRadius,
+            backgroundOpacity
+        )
     }
 
     fun attachTo(parent: ConstraintLayout,
