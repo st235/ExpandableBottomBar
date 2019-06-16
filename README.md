@@ -149,11 +149,11 @@ Then you should reference this xml file at the view attributes
 | ----- | ----- | ----- |
 | **elevation** | dimen | component elevation (important: api 21+) |
 | **backgroundColor** | color | bottom bar background color |
-| **transitionDuration** | integer | component elevation (important: api 21+) |
+| **transitionDuration** | integer | time between one item collapsed and another item expanded |
 | **backgroundCornerRadius** | dimen | bottom bar background corners radius |
 | **itemInactiveColor** | color | item menu color, when its inactive |
 | **itemBackgroundCornerRadius** | dimen | item background corner radius |
-| **itemBackgroundOpacity** | float | component elevation (important: api 21+) |
+| **itemBackgroundOpacity** | float | item background opacity (important: final color alpha calculates by next formulae alpha = opacity * 255) |
 | **item_vertical_margin** | dimen | top & bottom item margins |
 | **item_horizontal_margin** | dimen | left & right item margins |
 | **item_vertical_padding** | dimen | top & bottom item padding |
