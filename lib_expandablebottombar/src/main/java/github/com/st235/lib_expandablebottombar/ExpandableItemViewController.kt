@@ -19,6 +19,9 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat.setAccessibilityDelegate
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import github.com.st235.lib_expandablebottombar.utils.createChain
 import github.com.st235.lib_expandablebottombar.utils.toPx
@@ -31,6 +34,17 @@ internal open class ExpandableItemViewController(
     private val backgroundCornerRadius: Float,
     private val backgroundOpacity: Float
 ) {
+
+    fun setAccessibleWith(prev: ExpandableItemViewController?,
+                          next: ExpandableItemViewController?) {
+        setAccessibilityDelegate(itemView, object : AccessibilityDelegateCompat() {
+            override fun onInitializeAccessibilityNodeInfo(host: View?, info: AccessibilityNodeInfoCompat?) {
+                info?.setTraversalAfter(prev?.itemView)
+                info?.setTraversalBefore(next?.itemView)
+                super.onInitializeAccessibilityNodeInfo(host, info)
+            }
+        })
+    }
 
     fun deselect() {
         itemView.background = null
@@ -139,6 +153,8 @@ internal open class ExpandableItemViewController(
                 id = menuItem.itemId
                 orientation = LinearLayout.HORIZONTAL
                 setPadding(itemHorizontalPadding, itemVerticalPadding, itemHorizontalPadding, itemVerticalPadding)
+                contentDescription = context.resources.getString(R.string.accessibility_item_description, menuItem.text)
+                isFocusable = true
             }
 
             val iconView = AppCompatImageView(context).apply {
