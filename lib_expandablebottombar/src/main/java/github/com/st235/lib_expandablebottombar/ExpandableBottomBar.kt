@@ -19,7 +19,10 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarBehavior
 import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
 import github.com.st235.lib_expandablebottombar.state.SavedState
-import github.com.st235.lib_expandablebottombar.utils.*
+import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
+import github.com.st235.lib_expandablebottombar.utils.applyForApiLAndHigher
+import github.com.st235.lib_expandablebottombar.utils.toPx
+
 
 internal const val ITEM_NOT_SELECTED = -1
 
@@ -67,6 +70,8 @@ class ExpandableBottomBar @JvmOverloads constructor(
         if (attrs == null) {
             return
         }
+
+        contentDescription = resources.getString(R.string.accessibility_description)
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableBottomBar,
             defStyleAttr, R.style.ExpandableBottomBar)
@@ -133,8 +138,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
         val lastItemId = items.last().itemId
         selectedItemId = firstItemId
 
-        for (i in 0 until items.size) {
-            val item = items[i]
+        for ((i, item) in items.withIndex()) {
             val viewController = createItem(item)
             viewControllers[item.itemId] = viewController
 
@@ -147,6 +151,8 @@ class ExpandableBottomBar @JvmOverloads constructor(
                 menuItemHorizontalMargin, menuItemVerticalMargin
             )
         }
+
+        madeMenuItemsAccessible(items)
     }
 
     /**
@@ -163,6 +169,15 @@ class ExpandableBottomBar @JvmOverloads constructor(
      * Returns currently selected item
      */
     fun getSelected(): ExpandableBottomBarMenuItem = viewControllers.getValue(selectedItemId).menuItem
+
+    private fun madeMenuItemsAccessible(items: List<ExpandableBottomBarMenuItem>) {
+        for ((i, item) in items.withIndex()) {
+            val prev = viewControllers[items.getOrNull(i - 1)?.itemId]
+            val next = viewControllers[items.getOrNull(i + 1)?.itemId]
+
+            viewControllers[item.itemId]?.setAccessibleWith(prev = prev, next = next)
+        }
+    }
 
     private fun createItem(menuItem: ExpandableBottomBarMenuItem): ExpandableItemViewController {
         val colors = intArrayOf(menuItem.activeColor, itemInactiveColor)

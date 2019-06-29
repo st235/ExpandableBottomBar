@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">lib-expandablebottombar</string>
+    <string name="accessibility_description">Screen menu</string>
+    <string name="accessibility_item_description">%1$s menu item</string>
 </resources>
