@@ -1,5 +1,6 @@
 package github.com.st235.lib_expandablebottombar
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Typeface
@@ -115,6 +116,7 @@ internal open class ExpandableItemViewController(
         @Px
         private var itemHorizontalPadding: Int = 0
         @Px
+        @SuppressLint("SupportAnnotationUsage")
         private var backgroundCornerRadius: Float = 0.0f
         @FloatRange(from = 0.0, to = 1.0)
         private var backgroundOpacity: Float = 1.0f

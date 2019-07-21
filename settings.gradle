@@ -1,1 +1,1 @@
-include ':app', ':lib_expandablebottombar'
+include ':app', ':lib-expandablebottombar'
