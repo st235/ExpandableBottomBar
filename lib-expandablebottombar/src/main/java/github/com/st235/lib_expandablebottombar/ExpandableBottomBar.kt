@@ -29,10 +29,10 @@ internal const val ITEM_NOT_SELECTED = -1
 typealias OnItemClickListener = (v: View, menuItem: ExpandableBottomBarMenuItem) -> Unit
 
 /**
- * Widget, which implements bottom bar navigation pattern xyn
+ * Widget, which implements bottom bar navigation pattern
  */
 class ExpandableBottomBar @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.expandableButtonBarDefaultStyle
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.exb_expandableButtonBarDefaultStyle
 ) : ConstraintLayout(context, attrs, defStyleAttr), CoordinatorLayout.AttachedBehavior {
 
     @FloatRange(from = 0.0, to = 1.0) private var backgroundOpacity: Float = 0F
@@ -76,26 +76,26 @@ class ExpandableBottomBar @JvmOverloads constructor(
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableBottomBar,
             defStyleAttr, R.style.ExpandableBottomBar)
 
-        backgroundOpacity = typedArray.getFloat(R.styleable.ExpandableBottomBar_itemBackgroundOpacity, 0.2F)
-        backgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_itemBackgroundCornerRadius, 30F.toPx())
-        transitionDuration = typedArray.getInt(R.styleable.ExpandableBottomBar_transitionDuration, 100)
-        itemInactiveColor = typedArray.getColor(R.styleable.ExpandableBottomBar_itemInactiveColor, Color.BLACK)
-        menuItemHorizontalMargin = typedArray.getDimension(R.styleable.ExpandableBottomBar_item_horizontal_margin, 5F.toPx()).toInt()
-        menuItemVerticalMargin = typedArray.getDimension(R.styleable.ExpandableBottomBar_item_vertical_margin, 5F.toPx()).toInt()
-        menuHorizontalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_item_horizontal_padding, 15F.toPx()).toInt()
-        menuVerticalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_item_vertical_padding, 10F.toPx()).toInt()
+        backgroundOpacity = typedArray.getFloat(R.styleable.ExpandableBottomBar_exb_itemBackgroundOpacity, 0.2F)
+        backgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_itemBackgroundCornerRadius, 30F.toPx())
+        transitionDuration = typedArray.getInt(R.styleable.ExpandableBottomBar_exb_transitionDuration, 100)
+        itemInactiveColor = typedArray.getColor(R.styleable.ExpandableBottomBar_exb_itemInactiveColor, Color.BLACK)
+        menuItemHorizontalMargin = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_item_horizontal_margin, 5F.toPx()).toInt()
+        menuItemVerticalMargin = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_item_vertical_margin, 5F.toPx()).toInt()
+        menuHorizontalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_item_horizontal_padding, 15F.toPx()).toInt()
+        menuVerticalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_item_vertical_padding, 10F.toPx()).toInt()
 
-        val backgroundColor = typedArray.getColor(R.styleable.ExpandableBottomBar_backgroundColor, Color.WHITE)
-        val backgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_backgroundCornerRadius, 0F)
+        val backgroundColor = typedArray.getColor(R.styleable.ExpandableBottomBar_exb_backgroundColor, Color.WHITE)
+        val backgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_backgroundCornerRadius, 0F)
 
         background =
             DrawableHelper.createShapeDrawable(backgroundColor, backgroundCornerRadius, 1.0F)
 
         applyForApiLAndHigher {
-            elevation = typedArray.getDimension(R.styleable.ExpandableBottomBar_elevation, 16F.toPx())
+            elevation = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_elevation, 16F.toPx())
         }
 
-        val menuId = typedArray.getResourceId(R.styleable.ExpandableBottomBar_items, View.NO_ID)
+        val menuId = typedArray.getResourceId(R.styleable.ExpandableBottomBar_exb_items, View.NO_ID)
         if (menuId != View.NO_ID) {
             val barParser = ExpandableBottomBarParser(context)
             val items = barParser.inflate(menuId)
