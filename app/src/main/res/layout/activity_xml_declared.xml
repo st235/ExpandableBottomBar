@@ -15,7 +15,7 @@
         android:id="@+id/expandable_bottom_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:items="@menu/bottom_bar"
+        app:exb_items="@menu/bottom_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

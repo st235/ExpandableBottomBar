@@ -3,26 +3,26 @@
     <declare-styleable name="ExpandableBottomBarItem">
         <attr name="android:id" />
         <attr name="android:title" />
-        <attr name="icon" format="reference" />
-        <attr name="color" format="reference|color" />
+        <attr name="exb_icon" format="reference" />
+        <attr name="exb_color" format="reference|color" />
     </declare-styleable>
 
     <declare-styleable name="ExpandableBottomBar">
-        <attr name="itemInactiveColor" format="color" />
-        <attr name="itemBackgroundCornerRadius" format="dimension" />
-        <attr name="itemBackgroundOpacity" format="float" />
-        <attr name="transitionDuration" format="integer" />
-        <attr name="elevation" format="dimension" />
-        <attr name="backgroundColor" format="color" />
-        <attr name="backgroundCornerRadius" format="dimension" />
+        <attr name="exb_itemInactiveColor" format="color" />
+        <attr name="exb_itemBackgroundCornerRadius" format="dimension" />
+        <attr name="exb_itemBackgroundOpacity" format="float" />
+        <attr name="exb_transitionDuration" format="integer" />
+        <attr name="exb_elevation" format="dimension" />
+        <attr name="exb_backgroundColor" format="color" />
+        <attr name="exb_backgroundCornerRadius" format="dimension" />
 
-        <attr name="item_vertical_margin" format="dimension" />
-        <attr name="item_horizontal_margin" format="dimension" />
-        <attr name="item_vertical_padding" format="dimension" />
-        <attr name="item_horizontal_padding" format="dimension" />
+        <attr name="exb_item_vertical_margin" format="dimension" />
+        <attr name="exb_item_horizontal_margin" format="dimension" />
+        <attr name="exb_item_vertical_padding" format="dimension" />
+        <attr name="exb_item_horizontal_padding" format="dimension" />
 
-        <attr name="items" format="reference" />
+        <attr name="exb_items" format="reference" />
     </declare-styleable>
 
-    <attr name="expandableButtonBarDefaultStyle" format="reference" />
+    <attr name="exb_expandableButtonBarDefaultStyle" format="reference" />
 </resources>

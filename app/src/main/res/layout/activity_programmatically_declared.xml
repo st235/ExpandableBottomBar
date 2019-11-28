@@ -16,9 +16,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        app:backgroundCornerRadius="25dp"
-        app:backgroundColor="#2e2e2e"
-        app:itemInactiveColor="#fff"
+        app:exb_backgroundCornerRadius="25dp"
+        app:exb_backgroundColor="#2e2e2e"
+        app:exb_itemInactiveColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -51,9 +51,9 @@ Firstly, you should declare your view in xml file
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        app:backgroundCornerRadius="25dp"
-        app:backgroundColor="#2e2e2e"
-        app:itemInactiveBackgroundColor="#fff"
+        app:exb_backgroundCornerRadius="25dp"
+        app:exb_backgroundColor="#2e2e2e"
+        app:exb_itemInactiveBackgroundColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -99,20 +99,20 @@ Firstly, you should declare menu items in xml
     <item
         android:id="@+id/home"
         android:title="@string/text"
-        app:color="#FF8888"
-        app:icon="@drawable/ic_home" />
+        app:exb_color="#FF8888"
+        app:exb_icon="@drawable/ic_home" />
 
     <item
         android:id="@+id/settings"
         android:title="@string/text4"
-        app:color="@color/colorSettings"
-        app:icon="@drawable/ic_settings" />
+        app:exb_color="@color/colorSettings"
+        app:exb_icon="@drawable/ic_settings" />
 
     <item
         android:id="@+id/bookmarks"
         android:title="@string/text3"
-        app:color="#fa2"
-        app:icon="@drawable/ic_bookmarks" />
+        app:exb_color="#fa2"
+        app:exb_icon="@drawable/ic_bookmarks" />
 </menu>
 ```
 
@@ -135,9 +135,9 @@ Then you should reference this xml file at the view attributes
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        app:backgroundCornerRadius="25dp"
-        app:itemInactiveBackgroundColor="#fff"
-        app:items="@menu/bottom_bar"
+        app:exb_backgroundCornerRadius="25dp"
+        app:exb_itemInactiveBackgroundColor="#fff"
+        app:exb_items="@menu/bottom_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -147,18 +147,18 @@ Then you should reference this xml file at the view attributes
 
 | property | type | description |
 | ----- | ----- | ----- |
-| **elevation** | dimen | component elevation (important: api 21+) |
-| **backgroundColor** | color | bottom bar background color |
-| **transitionDuration** | integer | time between one item collapsed and another item expanded |
-| **backgroundCornerRadius** | dimen | bottom bar background corners radius |
-| **itemInactiveColor** | color | item menu color, when its inactive |
-| **itemBackgroundCornerRadius** | dimen | item background corner radius |
-| **itemBackgroundOpacity** | float | item background opacity (important: final color alpha calculates by next formulae alpha = opacity * 255) |
-| **item_vertical_margin** | dimen | top & bottom item margins |
-| **item_horizontal_margin** | dimen | left & right item margins |
-| **item_vertical_padding** | dimen | top & bottom item padding |
-| **item_horizontal_padding** | dimen | left & right item padding |
-| **items** | reference | xml supported menu format |
+| **exb_elevation** | dimen | component elevation (important: api 21+) |
+| **exb_backgroundColor** | color | bottom bar background color |
+| **exb_transitionDuration** | integer | time between one item collapsed and another item expanded |
+| **exb_backgroundCornerRadius** | dimen | bottom bar background corners radius |
+| **exb_itemInactiveColor** | color | item menu color, when its inactive |
+| **exb_itemBackgroundCornerRadius** | dimen | item background corner radius |
+| **exb_itemBackgroundOpacity** | float | item background opacity (important: final color alpha calculates by next formulae alpha = opacity * 255) |
+| **exb_item_vertical_margin** | dimen | top & bottom item margins |
+| **exb_item_horizontal_margin** | dimen | left & right item margins |
+| **exb_item_vertical_padding** | dimen | top & bottom item padding |
+| **exb_item_horizontal_padding** | dimen | left & right item padding |
+| **exb_items** | reference | xml supported menu format |
 
 
 ## Coordinator Layout support
