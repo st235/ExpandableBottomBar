@@ -53,7 +53,7 @@ Firstly, you should declare your view in xml file
         android:layout_margin="20dp"
         app:exb_backgroundCornerRadius="25dp"
         app:exb_backgroundColor="#2e2e2e"
-        app:exb_itemInactiveBackgroundColor="#fff"
+        app:exb_itemInactiveColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -136,7 +136,7 @@ Then you should reference this xml file at the view attributes
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         app:exb_backgroundCornerRadius="25dp"
-        app:exb_itemInactiveBackgroundColor="#fff"
+        app:exb_itemInactiveColor="#fff"
         app:exb_items="@menu/bottom_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
