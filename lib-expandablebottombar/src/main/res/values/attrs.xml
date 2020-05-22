@@ -3,7 +3,7 @@
     <declare-styleable name="ExpandableBottomBarItem">
         <attr name="android:id" />
         <attr name="android:title" />
-        <attr name="exb_icon" format="reference" />
+        <attr name="android:icon" />
         <attr name="exb_color" format="reference|color" />
     </declare-styleable>
 

@@ -77,7 +77,7 @@ internal class ExpandableBottomBarParser(private val context: Context) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableBottomBarItem)
 
         val id = typedArray.getResourceId(R.styleable.ExpandableBottomBarItem_android_id, NO_ID)
-        val iconId = typedArray.getResourceId(R.styleable.ExpandableBottomBarItem_exb_icon, NO_ID)
+        val iconId = typedArray.getResourceId(R.styleable.ExpandableBottomBarItem_android_icon, NO_ID)
         val color = typedArray.getColor(R.styleable.ExpandableBottomBarItem_exb_color, NO_COLOR)
         val text = typedArray.getString(R.styleable.ExpandableBottomBarItem_android_title) ?: NO_TEXT
 

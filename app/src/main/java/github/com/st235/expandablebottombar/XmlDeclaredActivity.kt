@@ -6,9 +6,11 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.graphics.ColorUtils
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import kotlinx.android.synthetic.main.activity_xml_declared.*
+
 
 class XmlDeclaredActivity : AppCompatActivity() {
 
