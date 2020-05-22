@@ -99,20 +99,20 @@ Firstly, you should declare menu items in xml
     <item
         android:id="@+id/home"
         android:title="@string/text"
-        app:exb_color="#FF8888"
-        app:exb_icon="@drawable/ic_home" />
+        android:icon="@drawable/ic_home"
+        app:exb_color="#FF8888" />
 
     <item
         android:id="@+id/settings"
         android:title="@string/text4"
-        app:exb_color="@color/colorSettings"
-        app:exb_icon="@drawable/ic_settings" />
+        android:icon="@drawable/ic_settings"
+        app:exb_color="@color/colorSettings" />
 
     <item
         android:id="@+id/bookmarks"
         android:title="@string/text3"
-        app:exb_color="#fa2"
-        app:exb_icon="@drawable/ic_bookmarks" />
+        android:icon="@drawable/ic_bookmarks"
+        app:exb_color="#fa2 />
 </menu>
 ```
 
@@ -121,7 +121,7 @@ each item tag has following attributes:
 | property | type | description |
 | ----- | ----- | ----- |
 | **id** | reference | an id of menu item |
-| **color** | reference/color | color of element, it may be color reference or color |
+| **exb_color** | reference/color | color of element, it may be color reference or color |
 | **icon** | reference | icon reference (vector drawables supported) |
 | **title** | reference/text | item title |
 
