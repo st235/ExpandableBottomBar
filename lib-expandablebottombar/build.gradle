@@ -16,7 +16,7 @@ publish {
     userOrg = 'st235'
     groupId = 'com.github.st235'
     artifactId = 'expandablebottombar'
-    publishVersion = '1.1.0'
+    publishVersion = '1.1.1'
     desc = 'A new way to improve navigation in your app.'
     website = 'https://github.com/st235/ExpandableBottomBar'
 }
