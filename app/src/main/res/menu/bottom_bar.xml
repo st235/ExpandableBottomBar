@@ -3,18 +3,21 @@
     <item
         android:id="@+id/home"
         android:title="@string/text"
+        android:icon="@drawable/ic_home"
         app:exb_color="#FF8888"
         app:exb_icon="@drawable/ic_home" />
 
     <item
         android:id="@+id/settings"
         android:title="@string/text4"
+        android:icon="@drawable/ic_settings"
         app:exb_color="@color/colorSettings"
         app:exb_icon="@drawable/ic_settings" />
 
     <item
         android:id="@+id/bookmarks"
         android:title="@string/text3"
+        android:icon="@drawable/ic_bookmarks"
         app:exb_color="#fa2"
         app:exb_icon="@drawable/ic_bookmarks" />
 </menu>
