@@ -30,8 +30,15 @@ object DrawableHelper {
     internal fun createDrawable(context: Context,
                                 @DrawableRes menuItem: Int,
                                 stateList: ColorStateList): Drawable {
-        val iconDrawable = ContextCompat.getDrawable(context, menuItem)!!
+        val iconDrawable = DrawableCompat.wrap(
+            ContextCompat.getDrawable(context, menuItem).deepCopy()
+        )
         DrawableCompat.setTintList(iconDrawable, stateList)
         return iconDrawable
+    }
+
+    private fun Drawable?.deepCopy(): Drawable {
+        return this?.mutate()?.constantState?.newDrawable()
+            ?: throw IllegalStateException("Cannot clone existing drawable")
     }
 }
