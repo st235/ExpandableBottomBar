@@ -181,7 +181,7 @@ internal open class ExpandableItemViewController(
 
             val textLayoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
+                LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
                 gravity = Gravity.CENTER
                 setMargins(8.toPx(), 0, 0, 0)
