@@ -154,6 +154,7 @@ internal open class ExpandableItemViewController(
             val itemView = LinearLayout(context).apply {
                 id = menuItem.itemId
                 orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER
                 setPadding(itemHorizontalPadding, itemVerticalPadding, itemHorizontalPadding, itemVerticalPadding)
                 contentDescription = context.resources.getString(R.string.accessibility_item_description, menuItem.text)
                 isFocusable = true
@@ -183,7 +184,6 @@ internal open class ExpandableItemViewController(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                gravity = Gravity.CENTER
                 setMargins(8.toPx(), 0, 0, 0)
             }
 
