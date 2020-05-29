@@ -5,8 +5,8 @@ apply plugin: 'com.novoda.bintray-release'
 
 ext {
     vers = [
-            versionCode: 26,
-            versionName: "1.1.5"
+            versionCode: 28,
+            versionName: "1.1.6"
     ]
 }
 
