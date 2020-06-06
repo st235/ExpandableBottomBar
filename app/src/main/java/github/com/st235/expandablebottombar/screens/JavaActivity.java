@@ -1,4 +1,4 @@
-package github.com.st235.expandablebottombar;
+package github.com.st235.expandablebottombar.screens;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import github.com.st235.expandablebottombar.R;
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar;
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem;
 
