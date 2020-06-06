@@ -9,18 +9,17 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ShowCaseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".JavaActivity"/>
-        <activity android:name=".XmlDeclaredActivity"/>
-        <activity android:name=".ProgrammaticallyCreatedDemoActivity"/>
-        <activity android:name=".CoordinatorLayoutActivity" />
-        <activity android:name=".ScrollableCoordinatorLayoutActivity" />
+        <activity android:name=".screens.JavaActivity"/>
+        <activity android:name=".screens.XmlDeclaredActivity"/>
+        <activity android:name=".screens.ProgrammaticallyCreatedDemoActivity"/>
+        <activity android:name=".screens.CoordinatorLayoutActivity" />
+        <activity android:name=".screens.ScrollableCoordinatorLayoutActivity" />
         <activity android:name=".screens.navigation.NavigationComponentActivity" />
     </application>
 

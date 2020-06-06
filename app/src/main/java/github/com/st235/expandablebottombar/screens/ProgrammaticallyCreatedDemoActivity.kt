@@ -1,4 +1,4 @@
-package github.com.st235.expandablebottombar
+package github.com.st235.expandablebottombar.screens
 
 import android.graphics.Color
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
+import github.com.st235.expandablebottombar.R
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem
 
@@ -24,10 +25,24 @@ class ProgrammaticallyCreatedDemoActivity : AppCompatActivity() {
 
         bottomBar.addItems(
                 ExpandableBottomBarMenuItem.Builder(this)
-                        .addItem(R.id.icon_home, R.drawable.ic_home, R.string.text, Color.GRAY)
-                        .addItem(R.id.icon_likes, R.drawable.ic_likes).textRes(R.string.text2).colorRes(R.color.colorLike).create()
-                        .addItem(R.id.icon_bookmarks, R.drawable.ic_bookmarks, R.string.text3, Color.parseColor("#58a5f0"))
-                        .addItem(R.id.icon_settings, R.drawable.ic_settings, R.string.text4, Color.parseColor("#be9c91"))
+                        .addItem(
+                            R.id.icon_home,
+                            R.drawable.ic_home,
+                            R.string.text, Color.GRAY)
+                        .addItem(
+                            R.id.icon_likes,
+                            R.drawable.ic_likes
+                        ).textRes(R.string.text2).colorRes(
+                        R.color.colorLike
+                    ).create()
+                        .addItem(
+                            R.id.icon_bookmarks,
+                            R.drawable.ic_bookmarks,
+                            R.string.text3, Color.parseColor("#58a5f0"))
+                        .addItem(
+                            R.id.icon_settings,
+                            R.drawable.ic_settings,
+                            R.string.text4, Color.parseColor("#be9c91"))
                         .build()
         )
 

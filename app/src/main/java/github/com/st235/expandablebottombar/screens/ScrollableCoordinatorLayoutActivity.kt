@@ -1,4 +1,4 @@
-package github.com.st235.expandablebottombar
+package github.com.st235.expandablebottombar.screens
 
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
@@ -13,6 +13,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import github.com.st235.expandablebottombar.R
 import kotlinx.android.synthetic.main.activity_coordinator_layout.*
 
 class ScrollableCoordinatorLayoutActivity : AppCompatActivity() {
