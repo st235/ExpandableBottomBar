@@ -21,6 +21,7 @@
         <activity android:name=".ProgrammaticallyCreatedDemoActivity"/>
         <activity android:name=".CoordinatorLayoutActivity" />
         <activity android:name=".ScrollableCoordinatorLayoutActivity" />
+        <activity android:name=".screens.navigation.NavigationComponentActivity" />
     </application>
 
 </manifest>

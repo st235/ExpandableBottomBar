@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import github.com.st235.expandablebottombar.screens.navigation.NavigationComponentActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         addButton(rootView, "Java Interop with Expandable Menu", JavaActivity::class.java)
         addButton(rootView, "Coordinator Layout Behavior", CoordinatorLayoutActivity::class.java)
         addButton(rootView, "Coordinator Layout Scrollable Behavior", ScrollableCoordinatorLayoutActivity::class.java)
+        addButton(rootView, "Navigation component", NavigationComponentActivity::class.java)
     }
 
     private fun addButton(root: ViewGroup,

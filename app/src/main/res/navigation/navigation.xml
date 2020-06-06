@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/fragment1">
+
+    <fragment
+        android:id="@+id/fragment1"
+        android:name="github.com.st235.expandablebottombar.screens.navigation.FirstFragment"
+        android:label="Fragment 1"
+        tools:layout="@layout/fragment_one" />
+
+    <fragment
+        android:id="@+id/fragment2"
+        android:name="github.com.st235.expandablebottombar.screens.navigation.SecondFragment"
+        android:label="Fragment 2"
+        tools:layout="@layout/fragment_two" />
+
+    <fragment
+        android:id="@+id/fragment3"
+        android:name="github.com.st235.expandablebottombar.screens.navigation.ThirdFragment"
+        android:label="Fragment 3"
+        tools:layout="@layout/fragment_three" />
+
+</navigation>
