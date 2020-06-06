@@ -53,6 +53,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
 
     @IdRes private var selectedItemId: Int = ITEM_NOT_SELECTED
 
+    private val menuItems = mutableListOf<ExpandableBottomBarMenuItem>()
     private val viewControllers: MutableMap<Int, ExpandableItemViewController> = mutableMapOf()
     private val stateController = ExpandableBottomBarStateController(this)
 
@@ -134,6 +135,8 @@ class ExpandableBottomBar @JvmOverloads constructor(
      * @param items - bottom bar menu items
      */
     fun addItems(items: List<ExpandableBottomBarMenuItem>) {
+        menuItems.clear()
+
         val firstItemId = items.first().itemId
         val lastItemId = items.last().itemId
         selectedItemId = firstItemId
@@ -152,8 +155,11 @@ class ExpandableBottomBar @JvmOverloads constructor(
             )
         }
 
+        menuItems.addAll(items)
         madeMenuItemsAccessible(items)
     }
+
+    internal fun getMenuItems(): List<ExpandableBottomBarMenuItem> = menuItems
 
     /**
      * Programmatically select item

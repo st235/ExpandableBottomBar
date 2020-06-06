@@ -160,6 +160,16 @@ Then you should reference this xml file at the view attributes
 | **exb_item_horizontal_padding** | dimen | left & right item padding |
 | **exb_items** | reference | xml supported menu format |
 
+## Navigation Components support
+
+Usually Drawer or BottomNavigationView attached to navigation controller with `NavigationUI.setupWithNavController(view, navController)`, but this system is not applicable
+to customview components. That's why ExpandableBottomBar offers it's own `ExpandableBottomBarNavigationUI`
+
+To attach ExpandableBottomBar to your navigation components you should use the same approach
+
+```kotlin
+    ExpandableBottomBarNavigationUI.setupWithNavController(bottomNavigation, navigationController)
+```
 
 ## Coordinator Layout support
 
