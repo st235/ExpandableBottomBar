@@ -3,4 +3,5 @@
 -keep class github.com.st235.lib_expandablebottombar.ExpandableBottomBar { *; }
 -keep class github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarBehavior { *; }
 -keep class github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem** { *; }
--keep class github.com.st235.lib_expandablebottombar.ExpandableBottomBarScrollableBehavior { *; }
+-keep class github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior { *; }
+-keep class github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI { *; }
