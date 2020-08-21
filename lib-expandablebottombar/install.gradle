@@ -1,0 +1,26 @@
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = info.groupId
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                groupId info.groupId
+                artifactId info.artifactId
+                name info.name
+                description info.desc
+                url info.website
+
+                developers {
+                    developer {
+                        id 'st235'
+                        name 'Alexander Dadukin'
+                        email 'hi@st235.xyz'
+                    }
+                }
+            }
+        }
+    }
+}
