@@ -153,7 +153,7 @@ Then you should reference this xml file at the view attributes
 | **exb_backgroundCornerRadius** | dimen | bottom bar background corners radius |
 | **exb_itemInactiveColor** | color | item menu color, when its inactive |
 | **exb_itemBackgroundCornerRadius** | dimen | item background corner radius |
-| **exb_itemStyle** | enum: normal, outline, stroke | controls the style of items. normal = items are filled with solid color, outline = no fill, only border, stroke = fill + border |
+| **exb_itemStyle** | enum: normal, outline, stroke | controls the style of items. **normal** = items are filled with solid color; **outline** = no fill, only border; **stroke** = fill + border |
 | **exb_itemBackgroundOpacity** | float | item background opacity (important: final color alpha calculates by next formulae alpha = opacity * 255) |
 | **exb_item_vertical_margin** | dimen | top & bottom item margins |
 | **exb_item_horizontal_margin** | dimen | left & right item margins |
