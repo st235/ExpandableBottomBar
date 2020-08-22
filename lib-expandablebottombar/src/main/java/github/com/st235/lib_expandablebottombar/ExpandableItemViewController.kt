@@ -24,11 +24,13 @@ import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat.setAccessibilityDelegate
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
+import github.com.st235.lib_expandablebottombar.utils.StyleController
 import github.com.st235.lib_expandablebottombar.utils.createChain
 import github.com.st235.lib_expandablebottombar.utils.toPx
 
 internal open class ExpandableItemViewController(
     internal val menuItem: ExpandableBottomBarMenuItem,
+    private val styleController: StyleController,
     private val itemView: View,
     private val textView: TextView,
     private val iconView: ImageView,
@@ -65,7 +67,7 @@ internal open class ExpandableItemViewController(
 
     @VisibleForTesting
     internal open fun createHighlightedMenuShape(): Drawable {
-        return DrawableHelper.createShapeDrawable(
+        return styleController.createShapeDrawable(
             menuItem.activeColor,
             backgroundCornerRadius,
             backgroundOpacity
@@ -121,6 +123,7 @@ internal open class ExpandableItemViewController(
         @FloatRange(from = 0.0, to = 1.0)
         private var backgroundOpacity: Float = 1.0f
 
+        private lateinit var styleController: StyleController
         private lateinit var backgroundColorSelector: ColorStateList
         private lateinit var onItemClickListener: (View) -> Unit
 
@@ -147,6 +150,11 @@ internal open class ExpandableItemViewController(
 
         fun onItemClickListener(onItemClickListener: (View) -> Unit): Builder {
             this.onItemClickListener = onItemClickListener
+            return this
+        }
+
+        fun styleController(styleController: StyleController): Builder {
+            this.styleController = styleController
             return this
         }
 
@@ -195,6 +203,7 @@ internal open class ExpandableItemViewController(
 
             return ExpandableItemViewController(
                 menuItem,
+                styleController,
                 itemView, textView, iconView,
                 backgroundCornerRadius, backgroundOpacity
             )

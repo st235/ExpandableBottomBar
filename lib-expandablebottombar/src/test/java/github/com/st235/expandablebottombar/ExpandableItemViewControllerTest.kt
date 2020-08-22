@@ -8,6 +8,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem
 import github.com.st235.lib_expandablebottombar.ExpandableItemViewController
+import github.com.st235.lib_expandablebottombar.utils.StyleController
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,6 +18,7 @@ import org.junit.runners.JUnit4
 class ExpandableItemViewControllerTest {
 
     private val menuItem = ExpandableBottomBarMenuItem(0, 0, "", 0)
+    private val styleController = mock<StyleController>()
     private val itemView = mock<View>()
     private val titleView = mock<TextView>()
     private val iconView = mock<ImageView>()
@@ -27,7 +29,7 @@ class ExpandableItemViewControllerTest {
     @Before
     fun setUp() {
         expandableItemViewController = object : ExpandableItemViewController(
-            menuItem, itemView, titleView, iconView, 0.0F, 1.0F
+            menuItem, styleController, itemView, titleView, iconView, 0.0F, 1.0F
         ) {
             override fun createHighlightedMenuShape(): Drawable = drawable
         }

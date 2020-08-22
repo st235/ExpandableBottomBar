@@ -153,6 +153,7 @@ Then you should reference this xml file at the view attributes
 | **exb_backgroundCornerRadius** | dimen | bottom bar background corners radius |
 | **exb_itemInactiveColor** | color | item menu color, when its inactive |
 | **exb_itemBackgroundCornerRadius** | dimen | item background corner radius |
+| **exb_itemStyle** | enum: normal, outline, stroke | controls the style of items. normal = items are filled with solid color, outline = no fill, only border, stroke = fill + border |
 | **exb_itemBackgroundOpacity** | float | item background opacity (important: final color alpha calculates by next formulae alpha = opacity * 255) |
 | **exb_item_vertical_margin** | dimen | top & bottom item margins |
 | **exb_item_horizontal_margin** | dimen | left & right item margins |
@@ -203,7 +204,8 @@ You may found all necessary info about migration from old versions [here](https:
 
 ## Screens
 
-<img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/ordinary.png" width="270" height="480"> <img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/small_rounded.png" width="270" height="480"> <img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/hard_rounded.png" width="270" height="480"> <img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/night_like.png" width="270" height="480">
+<img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/ordinary.png" width="270" height="480"> <img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/small_rounded.png" width="270" height="480"> <img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/hard_rounded.png" width="270" height="480"> <img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/night_like.png" width="270" height="480"> <img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/styles.png" width="270" height="480">
+
 
 ### License
 

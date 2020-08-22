@@ -24,10 +24,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import github.com.st235.lib_expandablebottombar.ExpandableBottomBar.ItemStyle.Companion.toItemStyle
 import github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarBehavior
 import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
 import github.com.st235.lib_expandablebottombar.state.SavedState
-import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
+import github.com.st235.lib_expandablebottombar.utils.*
+import github.com.st235.lib_expandablebottombar.utils.StyleController
 import github.com.st235.lib_expandablebottombar.utils.applyForApiLAndHigher
 import github.com.st235.lib_expandablebottombar.utils.clamp
 import github.com.st235.lib_expandablebottombar.utils.min
@@ -44,6 +46,17 @@ typealias OnItemClickListener = (v: View, menuItem: ExpandableBottomBarMenuItem)
 class ExpandableBottomBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.exb_expandableButtonBarDefaultStyle
 ) : ConstraintLayout(context, attrs, defStyleAttr), CoordinatorLayout.AttachedBehavior {
+
+    internal enum class ItemStyle(private val id: Int) {
+        NORMAL(0), OUTLINE(1), STROKE(2);
+
+        companion object {
+
+            fun Int.toItemStyle(): ItemStyle = values().find { it.id == this }
+                ?: throw IllegalArgumentException("Cannot find style for id $this")
+
+        }
+    }
 
     private val bounds = Rect()
 
@@ -76,6 +89,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
     private val menuItems = mutableListOf<ExpandableBottomBarMenuItem>()
     private val viewControllers: MutableMap<Int, ExpandableItemViewController> = mutableMapOf()
     private val stateController = ExpandableBottomBarStateController(this)
+    private lateinit var styleController: StyleController
 
     var onItemSelectedListener: OnItemClickListener? = null
     var onItemReselectedListener: OnItemClickListener? = null
@@ -106,11 +120,14 @@ class ExpandableBottomBar @JvmOverloads constructor(
         menuHorizontalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_item_horizontal_padding, 15F.toPx()).toInt()
         menuVerticalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_item_vertical_padding, 10F.toPx()).toInt()
 
+        val rawItemsStyle = typedArray.getInt(R.styleable.ExpandableBottomBar_exb_itemStyle, 0)
+        styleController = StyleController.create(style = rawItemsStyle.toItemStyle())
+
         val backgroundColor = typedArray.getColor(R.styleable.ExpandableBottomBar_exb_backgroundColor, Color.WHITE)
         backgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_backgroundCornerRadius, 0F)
 
         background =
-            DrawableHelper.createShapeDrawable(backgroundColor, backgroundCornerRadius, 1.0F)
+            DrawableHelper.createShapeDrawable(color = backgroundColor, cornerRadius = backgroundCornerRadius, opacity = 1.0F)
 
         applyForApiLAndHigher {
             elevation = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_elevation, 16F.toPx())
@@ -135,7 +152,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
     fun setBackgroundColor(@ColorInt color: Int, @FloatRange(from = 0.0) backgroundCornerRadius: Float) {
         this.backgroundCornerRadius = backgroundCornerRadius
         background =
-            DrawableHelper.createShapeDrawable(color, backgroundCornerRadius, 1.0F)
+            DrawableHelper.createShapeDrawable(color = color, cornerRadius = backgroundCornerRadius, opacity = 1.0F)
     }
 
     fun setBackgroundColorRes(@ColorRes colorRes: Int) {
@@ -236,6 +253,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
 
         val viewController =
             ExpandableItemViewController.Builder(menuItem)
+                .styleController(styleController)
                 .itemMargins(menuHorizontalPadding, menuVerticalPadding)
                 .itemBackground(itemBackgroundCornerRadius, itemBackgroundOpacity)
                 .itemsColors(selectedStateColorList)
