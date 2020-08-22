@@ -1,26 +1,36 @@
 package github.com.st235.lib_expandablebottombar
 
+import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Outline
+import android.graphics.Rect
+import android.os.Build
 import android.os.Parcelable
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
+import android.view.ViewOutlineProvider
 import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.annotation.FloatRange
+import androidx.annotation.DimenRes
 import androidx.annotation.IdRes
 import androidx.annotation.IntRange
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarBehavior
 import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
 import github.com.st235.lib_expandablebottombar.state.SavedState
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import github.com.st235.lib_expandablebottombar.utils.applyForApiLAndHigher
+import github.com.st235.lib_expandablebottombar.utils.clamp
+import github.com.st235.lib_expandablebottombar.utils.min
 import github.com.st235.lib_expandablebottombar.utils.toPx
 
 
@@ -35,14 +45,24 @@ class ExpandableBottomBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.exb_expandableButtonBarDefaultStyle
 ) : ConstraintLayout(context, attrs, defStyleAttr), CoordinatorLayout.AttachedBehavior {
 
-    @FloatRange(from = 0.0, to = 1.0) private var backgroundOpacity: Float = 0F
-    @FloatRange(from = 0.0) private var backgroundCornerRadius: Float = 0F
+    private val bounds = Rect()
+
+    @FloatRange(from = 0.0, to = 1.0) private var itemBackgroundOpacity: Float = 0F
+    @FloatRange(from = 0.0) private var itemBackgroundCornerRadius: Float = 0F
     @IntRange(from = 0) private var menuItemHorizontalMargin: Int = 0
     @IntRange(from = 0) private var menuItemVerticalMargin: Int = 0
     @IntRange(from = 0) private var menuHorizontalPadding: Int = 0
     @IntRange(from = 0) private var menuVerticalPadding: Int = 0
 
     @ColorInt private var itemInactiveColor: Int = Color.BLACK
+    @FloatRange(from = 0.0) private var backgroundCornerRadius: Float = 0F
+    set(value) {
+        field = value
+        applyForApiLAndHigher {
+            invalidateOutline()
+        }
+    }
+
     private val backgroundStates
             = arrayOf(
         intArrayOf(android.R.attr.state_selected),
@@ -77,8 +97,8 @@ class ExpandableBottomBar @JvmOverloads constructor(
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableBottomBar,
             defStyleAttr, R.style.ExpandableBottomBar)
 
-        backgroundOpacity = typedArray.getFloat(R.styleable.ExpandableBottomBar_exb_itemBackgroundOpacity, 0.2F)
-        backgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_itemBackgroundCornerRadius, 30F.toPx())
+        itemBackgroundOpacity = typedArray.getFloat(R.styleable.ExpandableBottomBar_exb_itemBackgroundOpacity, 0.2F)
+        itemBackgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_itemBackgroundCornerRadius, 30F.toPx())
         transitionDuration = typedArray.getInt(R.styleable.ExpandableBottomBar_exb_transitionDuration, 100)
         itemInactiveColor = typedArray.getColor(R.styleable.ExpandableBottomBar_exb_itemInactiveColor, Color.BLACK)
         menuItemHorizontalMargin = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_item_horizontal_margin, 5F.toPx()).toInt()
@@ -87,13 +107,15 @@ class ExpandableBottomBar @JvmOverloads constructor(
         menuVerticalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_item_vertical_padding, 10F.toPx()).toInt()
 
         val backgroundColor = typedArray.getColor(R.styleable.ExpandableBottomBar_exb_backgroundColor, Color.WHITE)
-        val backgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_backgroundCornerRadius, 0F)
+        backgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_backgroundCornerRadius, 0F)
 
         background =
             DrawableHelper.createShapeDrawable(backgroundColor, backgroundCornerRadius, 1.0F)
 
         applyForApiLAndHigher {
             elevation = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_elevation, 16F.toPx())
+            outlineProvider = ExpandableBottomBarOutlineProvider()
+            clipToOutline = true
         }
 
         val menuId = typedArray.getResourceId(R.styleable.ExpandableBottomBar_exb_items, View.NO_ID)
@@ -104,6 +126,24 @@ class ExpandableBottomBar @JvmOverloads constructor(
         }
 
         typedArray.recycle()
+    }
+
+    override fun setBackgroundColor(@ColorInt color: Int) {
+        setBackgroundColor(color, backgroundCornerRadius)
+    }
+
+    fun setBackgroundColor(@ColorInt color: Int, @FloatRange(from = 0.0) backgroundCornerRadius: Float) {
+        this.backgroundCornerRadius = backgroundCornerRadius
+        background =
+            DrawableHelper.createShapeDrawable(color, backgroundCornerRadius, 1.0F)
+    }
+
+    fun setBackgroundColorRes(@ColorRes colorRes: Int) {
+        setBackgroundColor(ContextCompat.getColor(context, colorRes), backgroundCornerRadius)
+    }
+
+    fun setBackgroundColorRes(@ColorRes colorRes: Int, @DimenRes backgroundCornerRadiusRes: Int) {
+        setBackgroundColor(ContextCompat.getColor(context, colorRes), resources.getDimension(backgroundCornerRadiusRes))
     }
 
     override fun onAttachedToWindow() {
@@ -127,6 +167,11 @@ class ExpandableBottomBar @JvmOverloads constructor(
         }
         super.onRestoreInstanceState(state.superState)
         stateController.restore(state)
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        bounds.set(0, 0, w, h)
     }
 
     /**
@@ -192,7 +237,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
         val viewController =
             ExpandableItemViewController.Builder(menuItem)
                 .itemMargins(menuHorizontalPadding, menuVerticalPadding)
-                .itemBackground(backgroundCornerRadius, backgroundOpacity)
+                .itemBackground(itemBackgroundCornerRadius, itemBackgroundOpacity)
                 .itemsColors(selectedStateColorList)
                 .onItemClickListener { v: View ->
                     if (!v.isSelected) {
@@ -244,6 +289,13 @@ class ExpandableBottomBar @JvmOverloads constructor(
             val selectedItemId = state.selectedItem
             val viewController = expandableBottomBar.viewControllers.getValue(selectedItemId)
             expandableBottomBar.onItemSelected(viewController.menuItem)
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private inner class ExpandableBottomBarOutlineProvider : ViewOutlineProvider() {
+        override fun getOutline(view: View?, outline: Outline?) {
+            outline?.setRoundRect(bounds, clamp(backgroundCornerRadius, 0F, min(height, width) / 2F))
         }
     }
 }
