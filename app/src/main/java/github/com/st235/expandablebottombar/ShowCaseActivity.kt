@@ -35,6 +35,10 @@ class ShowCaseActivity : AppCompatActivity() {
             createShowCase<NavigationComponentActivity>(
                 title = getString(R.string.navigation_components_title),
                 description = getString(R.string.navigation_components_description)
+            ),
+            createShowCase<StylesActivity>(
+                title = getString(R.string.styles_title),
+                description = getString(R.string.styles_description)
             )
         )
     }

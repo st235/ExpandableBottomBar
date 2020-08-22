@@ -11,6 +11,11 @@
         <attr name="exb_itemInactiveColor" format="color" />
         <attr name="exb_itemBackgroundCornerRadius" format="dimension" />
         <attr name="exb_itemBackgroundOpacity" format="float" />
+        <attr name="exb_itemStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="outline" value="1" />
+            <enum name="stroked" value="2" />
+        </attr>
         <attr name="exb_transitionDuration" format="integer" />
         <attr name="exb_elevation" format="dimension" />
         <attr name="exb_backgroundColor" format="color" />

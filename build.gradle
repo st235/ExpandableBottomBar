@@ -1,7 +1,7 @@
 ext {
     vers = [
-            versionCode: 32,
-            versionName: "1.1.10"
+            versionCode: 33,
+            versionName: "1.2.0"
     ]
     info = [
             name: 'expandablebottombar',

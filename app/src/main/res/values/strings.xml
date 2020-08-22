@@ -23,4 +23,7 @@
 
     <string name="navigation_components_title">Navigation components</string>
     <string name="navigation_components_description">ExpandableBottomBar brings support of Navigation Components system. Starting from now you are able to attach bottom menu in a one line of code.\n See: https://github.com/st235/ExpandableBottomBar#navigation-components-support</string>
+
+    <string name="styles_title">Styles showcase</string>
+    <string name="styles_description">Demonstrates styles, introduced at 1.2.0.</string>
 </resources>

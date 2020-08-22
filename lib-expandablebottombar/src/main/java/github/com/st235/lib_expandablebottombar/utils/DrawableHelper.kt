@@ -3,8 +3,7 @@ package github.com.st235.lib_expandablebottombar.utils
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.RoundRectShape
+import android.graphics.drawable.GradientDrawable
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.FloatRange
@@ -13,16 +12,26 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.DrawableCompat
 
 object DrawableHelper {
-    internal fun createShapeDrawable(@ColorInt activeColor: Int,
+    internal fun createShapeDrawable(@ColorInt color: Int,
+                                     shouldFill: Boolean = true,
+                                     shouldStroke: Boolean = false,
                                      @FloatRange(from = 0.0) cornerRadius: Float,
                                      @FloatRange(from = 0.0, to = 1.0) opacity: Float): Drawable {
-        val footerBackground = ShapeDrawable()
+        val footerBackground = GradientDrawable()
 
         val radii = FloatArray(8)
         for (i in 0 until 8) radii[i] = cornerRadius
 
-        footerBackground.shape = RoundRectShape(radii, null, null)
-        footerBackground.paint.color = ColorUtils.setAlphaComponent(activeColor, (opacity * 255).toInt())
+        footerBackground.shape = GradientDrawable.RECTANGLE
+        footerBackground.cornerRadii = radii
+
+        if (shouldFill) {
+            footerBackground.setColor(ColorUtils.setAlphaComponent(color, (opacity * 255).toInt()))
+        }
+
+        if (shouldStroke) {
+            footerBackground.setStroke(2.toPx(), color)
+        }
 
         return footerBackground
     }
