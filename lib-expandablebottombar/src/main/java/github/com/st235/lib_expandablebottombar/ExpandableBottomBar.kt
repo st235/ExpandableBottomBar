@@ -106,6 +106,10 @@ class ExpandableBottomBar @JvmOverloads constructor(
             return
         }
 
+        if (id == View.NO_ID) {
+            id = View.generateViewId()
+        }
+
         contentDescription = resources.getString(R.string.accessibility_description)
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableBottomBar,
