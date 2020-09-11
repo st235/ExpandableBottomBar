@@ -1,5 +1,6 @@
 package github.com.st235.lib_expandablebottombar
 
+import android.animation.Animator
 import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.ColorStateList
@@ -24,6 +25,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.marginBottom
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar.ItemStyle.Companion.toItemStyle
 import github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarBehavior
 import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
@@ -93,6 +96,8 @@ class ExpandableBottomBar @JvmOverloads constructor(
 
     var onItemSelectedListener: OnItemClickListener? = null
     var onItemReselectedListener: OnItemClickListener? = null
+
+    private var animator: Animator? = null
 
     init {
         initAttrs(context, attrs, defStyleAttr)
@@ -241,6 +246,38 @@ class ExpandableBottomBar @JvmOverloads constructor(
      * Returns currently selected item
      */
     fun getSelected(): ExpandableBottomBarMenuItem = viewControllers.getValue(selectedItemId).menuItem
+
+    /**
+     * Shows the bottom bar
+     */
+    fun show() {
+        cancelRunningAnimation()
+
+        animator = AnimationHelper.translateViewTo(this, 0F)
+        animator?.start()
+    }
+
+    /**
+     * Hides the bottom bar
+     */
+    fun hide() {
+        cancelRunningAnimation()
+
+        animator = AnimationHelper.translateViewTo(this, getMaxScrollDistance())
+        animator?.start()
+    }
+
+    private fun getMaxScrollDistance(): Float {
+        val childHeight = if (ViewCompat.isLaidOut(this)) height else measuredHeight
+        return childHeight.toFloat() + marginBottom
+    }
+
+    private fun cancelRunningAnimation() {
+        if (animator?.isRunning == true) {
+            animator?.cancel()
+            animator = null
+        }
+    }
 
     private fun madeMenuItemsAccessible(items: List<ExpandableBottomBarMenuItem>) {
         for ((i, item) in items.withIndex()) {
