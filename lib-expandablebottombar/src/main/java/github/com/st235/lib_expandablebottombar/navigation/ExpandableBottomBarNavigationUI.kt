@@ -19,7 +19,7 @@ object ExpandableBottomBarNavigationUI {
         expandableBottomBar: ExpandableBottomBar,
         navigationController: NavController
     ) {
-        expandableBottomBar.onItemSelectedListener = { v, menuItem ->
+        expandableBottomBar.onItemSelectedListener = { _, menuItem ->
             onNavDestinationSelected(menuItem, navigationController)
         }
 
