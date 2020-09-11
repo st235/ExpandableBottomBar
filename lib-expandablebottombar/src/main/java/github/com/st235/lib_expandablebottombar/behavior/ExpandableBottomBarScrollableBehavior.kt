@@ -35,11 +35,7 @@ class ExpandableBottomBarScrollableBehavior<V: View>:
     override fun onNestedScroll(coordinatorLayout: CoordinatorLayout, child: V, target: View, dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int, type: Int, consumed: IntArray) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type, consumed)
 
-        if (lastKnownRunnable != null) {
-            handler.removeCallbacks(lastKnownRunnable)
-            lastKnownRunnable = null
-        }
-
+        removeActiveRunnable()
         cancelAnimation()
 
         lastKnownDirection = dyConsumed
@@ -49,14 +45,13 @@ class ExpandableBottomBarScrollableBehavior<V: View>:
     override fun onStopNestedScroll(coordinatorLayout: CoordinatorLayout, child: V, target: View, type: Int) {
         super.onStopNestedScroll(coordinatorLayout, child, target, type)
 
-        if (lastKnownRunnable != null) {
-            handler.removeCallbacks(lastKnownRunnable)
-        }
+        removeActiveRunnable()
 
-        lastKnownRunnable = Runnable {
+        val delayedAnimationRunnable = Runnable {
             animateWithDirection(child)
         }
-        handler.postDelayed(lastKnownRunnable, 500L)
+        handler.postDelayed(delayedAnimationRunnable, 500L)
+        lastKnownRunnable = delayedAnimationRunnable
     }
 
     private fun getScrollRange(child: V, dy: Int): Float {
@@ -96,6 +91,14 @@ class ExpandableBottomBarScrollableBehavior<V: View>:
         if (animator != null && animator?.isRunning == true) {
             animator?.cancel()
             animator = null
+        }
+    }
+
+    private fun removeActiveRunnable() {
+        val runnableToDelete = lastKnownRunnable
+        if (runnableToDelete != null) {
+            handler.removeCallbacks(runnableToDelete)
+            lastKnownRunnable = null
         }
     }
 }

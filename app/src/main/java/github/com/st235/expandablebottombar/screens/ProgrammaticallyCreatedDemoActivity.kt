@@ -56,7 +56,7 @@ class ProgrammaticallyCreatedDemoActivity : AppCompatActivity() {
             anim.start()
         }
 
-        bottomBar.onItemReselectedListener = { v, i ->
+        bottomBar.onItemReselectedListener = { _, i ->
             Log.d("ExpandableBottomBar", "OnReselected: ${i.itemId}")
         }
     }

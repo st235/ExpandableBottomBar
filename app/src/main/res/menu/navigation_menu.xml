@@ -4,20 +4,17 @@
         android:id="@+id/fragment1"
         android:title="@string/text"
         android:icon="@drawable/ic_home"
-        app:showAsAction="always"
         app:exb_color="#FF8888" />
 
     <item
         android:id="@+id/fragment2"
         android:title="@string/text4"
         android:icon="@drawable/ic_settings"
-        app:showAsAction="always"
         app:exb_color="@color/colorSettings" />
 
     <item
         android:id="@+id/fragment3"
         android:title="@string/text3"
         android:icon="@drawable/ic_bookmarks"
-        app:showAsAction="always"
         app:exb_color="#fa2" />
 </menu>

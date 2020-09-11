@@ -10,8 +10,8 @@ object AnimationHelper {
     fun <T: View> translateViewTo(child: T, translation: Float): Animator {
         val animator = ValueAnimator.ofFloat(child.translationY, translation)
         animator.interpolator = DecelerateInterpolator()
-        animator.addUpdateListener { animator ->
-            val animatedValue = animator?.animatedValue as Float
+        animator.addUpdateListener {
+            val animatedValue = it.animatedValue as Float
             child.translationY = animatedValue
         }
 
