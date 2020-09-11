@@ -1,15 +1,15 @@
 package github.com.st235.lib_expandablebottombar.behavior
 
-import android.animation.ValueAnimator
+import android.animation.Animator
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
-import android.view.animation.DecelerateInterpolator
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.marginBottom
+import github.com.st235.lib_expandablebottombar.utils.AnimationHelper
 import github.com.st235.lib_expandablebottombar.utils.clamp
 import kotlin.math.abs
 
@@ -19,7 +19,7 @@ class ExpandableBottomBarScrollableBehavior<V: View>:
     private val handler = Handler(Looper.getMainLooper())
     private var lastKnownRunnable: Runnable? = null
 
-    private var animator: ValueAnimator? = null
+    private var animator: Animator? = null
     private var lastKnownDirection: Int? = null
 
     constructor(): super()
@@ -88,14 +88,7 @@ class ExpandableBottomBarScrollableBehavior<V: View>:
         }
 
         cancelAnimation()
-
-        animator = ValueAnimator.ofFloat(child.translationY, translation)
-        animator?.interpolator = DecelerateInterpolator()
-        animator?.addUpdateListener { animator ->
-            val animatedValue = this.animator?.animatedValue as Float
-            child.translationY = animatedValue
-        }
-
+        animator = AnimationHelper.translateViewTo(child, translation)
         animator?.start()
     }
 
