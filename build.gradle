@@ -1,6 +1,6 @@
 ext {
     vers = [
-            versionCode: 37,
+            versionCode: 38,
             versionName: "1.2.4"
     ]
     info = [
