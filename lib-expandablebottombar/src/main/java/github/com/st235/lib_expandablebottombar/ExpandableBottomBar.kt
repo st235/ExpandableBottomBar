@@ -31,7 +31,8 @@ import github.com.st235.lib_expandablebottombar.ExpandableBottomBar.ItemStyle.Co
 import github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarBehavior
 import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
 import github.com.st235.lib_expandablebottombar.state.SavedState
-import github.com.st235.lib_expandablebottombar.utils.*
+import github.com.st235.lib_expandablebottombar.utils.AnimationHelper
+import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import github.com.st235.lib_expandablebottombar.utils.StyleController
 import github.com.st235.lib_expandablebottombar.utils.applyForApiLAndHigher
 import github.com.st235.lib_expandablebottombar.utils.clamp
