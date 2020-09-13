@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/video.gif" width="600" height="205">
+<img src="/images/video.gif" width="600" height="205">
 
 # ExpandableBottomBar
 
@@ -196,7 +196,7 @@ Really easy ;D
 
 After integration this behavior should looks like:
 
-<img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/coordinator_layout.gif" width="270" height="480">
+<img src="/images/coordinator_layout.gif" width="270" height="480">
 
 ## Migration guide
 
@@ -204,7 +204,7 @@ You may found all necessary info about migration from old versions [here](https:
 
 ## Screens
 
-<img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/ordinary.png" width="270" height="480"> <img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/small_rounded.png" width="270" height="480"> <img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/hard_rounded.png" width="270" height="480"> <img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/night_like.png" width="270" height="480"> <img src="https://raw.githubusercontent.com/st235/ExpandableBottomBar/master/images/styles.png" width="270" height="480">
+<img src="/images/ordinary.png" width="270" height="480"> <img src="/images/small_rounded.png" width="270" height="480"> <img src="/images/hard_rounded.png" width="270" height="480"> <img src="/images/night_like.png" width="270" height="480"> <img src="/images/styles.png" width="270" height="480">
 
 
 ### License
