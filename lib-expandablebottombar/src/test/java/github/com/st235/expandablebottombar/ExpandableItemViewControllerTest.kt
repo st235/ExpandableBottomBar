@@ -13,7 +13,7 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class ExpandableItemViewControllerTest {
 
-    private val menuItem = ExpandableBottomBarMenuItem(0, 0, "", 0)
+    private val menuItem = ExpandableBottomBarMenuItem(0, 0, "", 0, null, null)
     private val itemView = mock<ExpandableBottomBarMenuItemView>()
 
     private lateinit var expandableItemViewController: ExpandableItemViewController

@@ -15,7 +15,6 @@ import org.hamcrest.collection.IsIterableContainingInOrder.contains
 import org.junit.Assert.assertThat
 import org.junit.Test
 
-
 @RunWith(AndroidJUnit4::class)
 @MediumTest
 class ExpandableBottomBarParserTest {
@@ -46,7 +45,7 @@ class ExpandableBottomBarParserTest {
         val items = expandableBottomBarParser.inflate(R.menu.valid_menu)
         val iconText = appContext.getString(R.string.icon_text)
         val actualItem =
-            ExpandableBottomBarMenuItem(R.id.icon_id, R.drawable.item_icon, iconText, Color.WHITE)
+            ExpandableBottomBarMenuItem(R.id.icon_id, R.drawable.item_icon, iconText, Color.WHITE, null, null)
         assertThat(items, contains(actualItem))
     }
 }
