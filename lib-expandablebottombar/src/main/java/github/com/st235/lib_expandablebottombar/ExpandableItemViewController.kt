@@ -172,8 +172,8 @@ internal class ExpandableItemViewController(
 
                 setIcon(menuItem.iconId, backgroundColorStateList)
                 setText(menuItem.text, backgroundColorStateList)
-                setNotifiationBadgeBackground(menuItem.badgeBackgroundColor ?: notificationBadgeColor)
-                setNotifiationBadgeTextColor(menuItem.badgeTextColor ?: notificationBadgeTextColor)
+                setNotificationBadgeBackground(menuItem.badgeBackgroundColor ?: notificationBadgeColor)
+                setNotificationBadgeTextColor(menuItem.badgeTextColor ?: notificationBadgeTextColor)
 
                 background = createHighlightedMenuShape()
                 setOnClickListener(onItemClickListener)

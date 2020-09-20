@@ -91,11 +91,11 @@ internal class ExpandableBottomBarMenuItemView @JvmOverloads constructor(
         iconView.badgeText = null
     }
 
-    override fun setNotifiationBadgeBackground(color: Int) {
+    override fun setNotificationBadgeBackground(color: Int) {
         iconView.badgeColor = color
     }
 
-    override fun setNotifiationBadgeTextColor(color: Int) {
+    override fun setNotificationBadgeTextColor(color: Int) {
         iconView.badgeTextColor = color
     }
 }

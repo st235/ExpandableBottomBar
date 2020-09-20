@@ -18,14 +18,14 @@ class ExpandableBottomBarNotification internal constructor(
      * @param color - background color of a badge
      */
     fun setBadgeColor(@ColorInt color: Int) {
-        view?.setNotifiationBadgeBackground(color)
+        view?.setNotificationBadgeBackground(color)
     }
 
     /**
      * @param color - text color of a badge
      */
     fun setBadgeTextColor(@ColorInt color: Int) {
-        view?.setNotifiationBadgeTextColor(color)
+        view?.setNotificationBadgeTextColor(color)
     }
 
     /**

@@ -11,8 +11,8 @@ internal interface ExpandableBottomBarNotificationBadge {
 
     fun clearNotification()
 
-    fun setNotifiationBadgeBackground(@ColorInt color: Int)
+    fun setNotificationBadgeBackground(@ColorInt color: Int)
 
-    fun setNotifiationBadgeTextColor(@ColorInt color: Int)
+    fun setNotificationBadgeTextColor(@ColorInt color: Int)
 
 }
