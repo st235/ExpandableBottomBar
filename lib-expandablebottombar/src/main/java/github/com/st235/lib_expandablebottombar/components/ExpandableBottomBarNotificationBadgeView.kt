@@ -34,17 +34,25 @@ internal class ExpandableBottomBarNotificationBadgeView @JvmOverloads constructo
         invalidate()
     }
 
+    @ColorInt
+    var badgeTextColor: Int = Color.WHITE
+    set(value) {
+        field = value
+        badgeDrawer = BadgeDrawer.newDrawer(badgeText, badgeTextColor, showBadge)
+        invalidate()
+    }
+
     var badgeText: String? = null
     set(value) {
         field = value
-        badgeDrawer = BadgeDrawer.newDrawer(badgeText, Color.WHITE, showBadge)
+        badgeDrawer = BadgeDrawer.newDrawer(badgeText, badgeTextColor, showBadge)
         invalidate()
     }
 
     var showBadge: Boolean = false
     set(value) {
         field = value
-        badgeDrawer = BadgeDrawer.newDrawer(badgeText, Color.WHITE, showBadge)
+        badgeDrawer = BadgeDrawer.newDrawer(badgeText, badgeTextColor, showBadge)
         invalidate()
     }
 
@@ -126,17 +134,22 @@ internal class ExpandableBottomBarNotificationBadgeView @JvmOverloads constructo
     ): BadgeDrawer {
 
         @Px
-        protected fun getPadding(): Float {
+        protected open fun getVerticalPadding(): Float {
             return 2F.toPx()
         }
 
         @Px
-        protected fun getWidth(paint: Paint): Float {
+        protected open fun getHorizontalPadding(): Float {
+            return 2F.toPx()
+        }
+
+        @Px
+        protected open fun getWidth(paint: Paint): Float {
             return paint.measureText(text, 0, text.length)
         }
 
         @Px
-        protected fun getHeight(paint: Paint): Float {
+        protected open fun getHeight(paint: Paint): Float {
             val fm = paint.fontMetrics
             return fm.descent - fm.ascent
         }
@@ -155,7 +168,7 @@ internal class ExpandableBottomBarNotificationBadgeView @JvmOverloads constructo
             val topRightX = viewBounds.right
             val topRightY = viewBounds.top
 
-            val radius = max(width, height) / 2F + getPadding()
+            val radius = max(width, height) / 2F + max(getVerticalPadding(), getHorizontalPadding())
 
             val centerX = topRightX - radius / 2F
             val centerY = topRightY + radius / 2F
@@ -190,16 +203,16 @@ internal class ExpandableBottomBarNotificationBadgeView @JvmOverloads constructo
             val topRightX = viewBounds.right
             val topRightY = viewBounds.top
 
-            val radius = max(width, height) / 2F + getPadding()
+            val radius = max(width, height) / 2F + max(getVerticalPadding(), getHorizontalPadding())
 
             val centerX = topRightX - radius / 2F
             val centerY = topRightY + radius / 2F
 
             buffer.set(
-                centerX - width / 2F - getPadding(), //left
-                centerY - height / 2F - getPadding(), //top
-                centerX + width / 2F + getPadding(), //right
-                centerY + height / 2F + getPadding() //bottom
+                centerX - width / 2F - getHorizontalPadding(), //left
+                centerY - height / 2F - getVerticalPadding(), //top
+                centerX + width / 2F + getHorizontalPadding(), //right
+                centerY + height / 2F + getVerticalPadding() //bottom
             )
 
             canvas.drawRoundRect(buffer, getCornerRoundRadius(), getCornerRoundRadius(), paint)
@@ -214,6 +227,10 @@ internal class ExpandableBottomBarNotificationBadgeView @JvmOverloads constructo
             )
 
             paint.color = oldColor
+        }
+
+        override fun getHorizontalPadding(): Float {
+            return 3F.toPx()
         }
 
         @Px

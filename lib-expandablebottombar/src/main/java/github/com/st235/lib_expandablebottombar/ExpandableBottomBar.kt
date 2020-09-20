@@ -80,6 +80,11 @@ class ExpandableBottomBar @JvmOverloads constructor(
         }
     }
 
+    @ColorInt
+    private var globalBadgeColor: Int = Color.RED
+    @ColorInt
+    private var globalBadgeTextColor: Int = Color.WHITE
+
     private var transitionDuration: Int = 0
 
     @IdRes private var selectedItemId: Int = ITEM_NOT_SELECTED
@@ -123,6 +128,9 @@ class ExpandableBottomBar @JvmOverloads constructor(
         menuItemVerticalMargin = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_item_vertical_margin, 5F.toPx()).toInt()
         menuHorizontalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_item_horizontal_padding, 15F.toPx()).toInt()
         menuVerticalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_item_vertical_padding, 10F.toPx()).toInt()
+
+        globalBadgeColor = typedArray.getColor(R.styleable.ExpandableBottomBar_exb_notificationBadgeBackgroundColor, Color.RED)
+        globalBadgeTextColor = typedArray.getColor(R.styleable.ExpandableBottomBar_exb_notificationBadgeTextColor, Color.WHITE)
 
         val rawItemsStyle = typedArray.getInt(R.styleable.ExpandableBottomBar_exb_itemStyle, 0)
         styleController = StyleController.create(style = rawItemsStyle.toItemStyle())
@@ -294,6 +302,8 @@ class ExpandableBottomBar @JvmOverloads constructor(
                 .itemMargins(menuHorizontalPadding, menuVerticalPadding)
                 .itemBackground(itemBackgroundCornerRadius, itemBackgroundOpacity)
                 .itemInactiveColor(itemInactiveColor)
+                .notificationBadgeColor(globalBadgeColor)
+                .notificationBadgeTextColor(globalBadgeTextColor)
                 .onItemClickListener { v: View ->
                     if (!v.isSelected) {
                         onItemSelected(menuItem)

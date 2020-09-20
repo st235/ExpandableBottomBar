@@ -8,7 +8,6 @@ import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
 import androidx.annotation.Px
-import androidx.annotation.VisibleForTesting
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.AccessibilityDelegateCompat
@@ -36,7 +35,7 @@ internal class ExpandableItemViewController(
     }
 
     fun notification(): ExpandableBottomBarNotification {
-        return ExpandableBottomBarNotification(itemView.badge())
+        return ExpandableBottomBarNotification(itemView)
     }
 
     fun unselect() {
@@ -98,6 +97,10 @@ internal class ExpandableItemViewController(
         private var backgroundOpacity: Float = 1.0f
         @ColorInt
         private var itemInactiveColor: Int = Color.BLACK
+        @ColorInt
+        private var notificationBadgeColor: Int = Color.RED
+        @ColorInt
+        private var notificationBadgeTextColor: Int = Color.WHITE
 
         private lateinit var styleController: StyleController
         private lateinit var onItemClickListener: (View) -> Unit
@@ -133,6 +136,16 @@ internal class ExpandableItemViewController(
             return this
         }
 
+        fun notificationBadgeColor(@ColorInt notificationBadgeColor: Int): Builder {
+            this.notificationBadgeColor = notificationBadgeColor
+            return this
+        }
+
+        fun notificationBadgeTextColor(@ColorInt notificationBadgeTextColor: Int): Builder {
+            this.notificationBadgeTextColor = notificationBadgeTextColor
+            return this
+        }
+
         private fun createHighlightedMenuShape(): Drawable {
             return styleController.createStateBackground(
                 menuItem.activeColor,
@@ -159,6 +172,9 @@ internal class ExpandableItemViewController(
 
                 setIcon(menuItem.iconId, backgroundColorStateList)
                 setText(menuItem.text, backgroundColorStateList)
+                setNotifiationBadgeBackground(menuItem.badgeBackgroundColor ?: notificationBadgeColor)
+                setNotifiationBadgeTextColor(menuItem.badgeTextColor ?: notificationBadgeTextColor)
+
                 background = createHighlightedMenuShape()
                 setOnClickListener(onItemClickListener)
             }

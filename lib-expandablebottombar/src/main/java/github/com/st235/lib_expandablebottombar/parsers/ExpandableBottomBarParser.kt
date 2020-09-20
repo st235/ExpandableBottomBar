@@ -81,9 +81,20 @@ internal class ExpandableBottomBarParser(private val context: Context) {
         val color = typedArray.getColor(R.styleable.ExpandableBottomBarItem_exb_color, NO_COLOR)
         val text = typedArray.getString(R.styleable.ExpandableBottomBarItem_android_title) ?: NO_TEXT
 
+        var badgeBackgroundColor: Int? = typedArray.getColor(R.styleable.ExpandableBottomBar_exb_notificationBadgeBackgroundColor, NO_COLOR)
+        var badgeTextColor: Int? = typedArray.getColor(R.styleable.ExpandableBottomBar_exb_notificationBadgeTextColor, NO_COLOR)
+
+        if (badgeBackgroundColor == NO_COLOR) {
+            badgeBackgroundColor = null
+        }
+
+        if (badgeTextColor == NO_COLOR) {
+            badgeTextColor = null
+        }
+
         typedArray.recycle()
 
         parser.require(XmlPullParser.START_TAG, namespace, MENU_ITEM_TAG)
-        return ExpandableBottomBarMenuItem(id, iconId, text, color)
+        return ExpandableBottomBarMenuItem(id, iconId, text, color, badgeBackgroundColor, badgeTextColor)
     }
 }

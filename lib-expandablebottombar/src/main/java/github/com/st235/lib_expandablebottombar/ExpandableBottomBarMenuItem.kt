@@ -17,16 +17,28 @@ data class ExpandableBottomBarMenuItem(
     @IdRes val itemId: Int,
     @DrawableRes val iconId: Int,
     val text: CharSequence,
-    @ColorInt val activeColor: Int
+    @ColorInt val activeColor: Int,
+    @ColorInt val badgeBackgroundColor: Int?,
+    @ColorInt val badgeTextColor: Int?
 ) {
-    class ItemBuildRequest internal constructor(private val builder: Builder, private val context: Context) {
+    class ItemBuildRequest internal constructor(
+        private val builder: Builder,
+        private val context: Context
+    ) {
 
         @IdRes
         private var itemId: Int = 0
+
         @DrawableRes
         private var iconId: Int = 0
         var text: CharSequence? = null
         var activeColor: Int? = null
+
+        @ColorInt
+        var badgeBackgroundColor: Int? = null
+
+        @ColorInt
+        var badgeTextColor: Int? = null
 
         fun id(@IdRes id: Int): ItemBuildRequest {
             this.itemId = id
@@ -58,6 +70,26 @@ data class ExpandableBottomBarMenuItem(
             return this
         }
 
+        fun badgeBackgroundColor(@ColorInt badgeBackgroundColor: Int): ItemBuildRequest {
+            this.badgeBackgroundColor = badgeBackgroundColor
+            return this
+        }
+
+        fun badgeBackgroundColorRes(@ColorRes badgeBackgroundColorRes: Int): ItemBuildRequest {
+            this.badgeBackgroundColor = ContextCompat.getColor(context, badgeBackgroundColorRes)
+            return this
+        }
+
+        fun badgeTextColor(@ColorInt badgeTextColor: Int): ItemBuildRequest {
+            this.badgeTextColor = badgeTextColor
+            return this
+        }
+
+        fun badgeTextColorRes(@ColorRes badgeTextColorRes: Int): ItemBuildRequest {
+            this.badgeTextColor = ContextCompat.getColor(context, badgeTextColorRes)
+            return this
+        }
+
         private fun assertValidity() {
             if (itemId == 0 ||
                 iconId == 0 ||
@@ -70,7 +102,16 @@ data class ExpandableBottomBarMenuItem(
 
         fun create(): Builder {
             assertValidity()
-            builder.items.add(ExpandableBottomBarMenuItem(itemId, iconId, text!!, activeColor!!))
+            builder.items.add(
+                ExpandableBottomBarMenuItem(
+                    itemId,
+                    iconId,
+                    text!!,
+                    activeColor!!,
+                    badgeBackgroundColor,
+                    badgeTextColor
+                )
+            )
             return builder
         }
     }
@@ -91,7 +132,8 @@ data class ExpandableBottomBarMenuItem(
             @DrawableRes iconId: Int,
             @StringRes textId: Int,
             @ColorInt activeColor: Int = Color.BLACK
-        ) = ItemBuildRequest(this, context).id(itemId).icon(iconId).textRes(textId).color(activeColor).create()
+        ) = ItemBuildRequest(this, context).id(itemId).icon(iconId).textRes(textId)
+            .color(activeColor).create()
 
         fun build(): List<ExpandableBottomBarMenuItem> = items
     }
