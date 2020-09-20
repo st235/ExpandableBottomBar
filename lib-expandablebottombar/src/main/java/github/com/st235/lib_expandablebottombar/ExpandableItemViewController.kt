@@ -2,9 +2,10 @@ package github.com.st235.lib_expandablebottombar
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.View
+import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
 import androidx.annotation.Px
 import androidx.annotation.VisibleForTesting
@@ -13,13 +14,14 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat.setAccessibilityDelegate
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
-import github.com.st235.lib_expandablebottombar.components.ExpandableBottomBarItemView
+import github.com.st235.lib_expandablebottombar.components.ExpandableBottomBarMenuItemView
+import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import github.com.st235.lib_expandablebottombar.utils.StyleController
 import github.com.st235.lib_expandablebottombar.utils.createChain
 
-internal open class ExpandableItemViewController(
+internal class ExpandableItemViewController(
     internal val menuItem: ExpandableBottomBarMenuItem,
-    private val itemView: ExpandableBottomBarItemView
+    private val itemView: ExpandableBottomBarMenuItemView
 ) {
 
     fun setAccessibleWith(prev: ExpandableItemViewController?,
@@ -89,9 +91,10 @@ internal open class ExpandableItemViewController(
         private var backgroundCornerRadius: Float = 0.0f
         @FloatRange(from = 0.0, to = 1.0)
         private var backgroundOpacity: Float = 1.0f
+        @ColorInt
+        private var itemInactiveColor: Int = Color.BLACK
 
         private lateinit var styleController: StyleController
-        private lateinit var backgroundColorSelector: ColorStateList
         private lateinit var onItemClickListener: (View) -> Unit
 
         fun itemMargins(
@@ -110,8 +113,8 @@ internal open class ExpandableItemViewController(
             return this
         }
 
-        fun itemsColors(backgroundColorSelector: ColorStateList): Builder {
-            this.backgroundColorSelector = backgroundColorSelector
+        fun itemInactiveColor(@ColorInt itemInactiveColor: Int): Builder {
+            this.itemInactiveColor = itemInactiveColor
             return this
         }
 
@@ -125,8 +128,7 @@ internal open class ExpandableItemViewController(
             return this
         }
 
-        @VisibleForTesting
-        internal open fun createHighlightedMenuShape(): Drawable {
+        private fun createHighlightedMenuShape(): Drawable {
             return styleController.createStateBackground(
                 menuItem.activeColor,
                 backgroundCornerRadius,
@@ -134,16 +136,24 @@ internal open class ExpandableItemViewController(
             )
         }
 
+        private fun createMenuItemView(context: Context): ExpandableBottomBarMenuItemView {
+            return ExpandableBottomBarMenuItemView(context = context)
+        }
+
         fun build(context: Context): ExpandableItemViewController {
-            val itemView = ExpandableBottomBarItemView(context)
+            val itemView = createMenuItemView(context)
+            val backgroundColorStateList = DrawableHelper.createSelectedUnselectedStateList(
+                menuItem.activeColor,
+                itemInactiveColor
+            )
 
             with(itemView) {
                 id = menuItem.itemId
                 contentDescription = context.resources.getString(R.string.accessibility_item_description, menuItem.text)
                 setPadding(itemHorizontalPadding, itemVerticalPadding, itemHorizontalPadding, itemVerticalPadding)
 
-                setIcon(menuItem.iconId, backgroundColorSelector)
-                setText(menuItem.text, backgroundColorSelector)
+                setIcon(menuItem.iconId, backgroundColorStateList)
+                setText(menuItem.text, backgroundColorStateList)
                 background = createHighlightedMenuShape()
                 setOnClickListener(onItemClickListener)
             }

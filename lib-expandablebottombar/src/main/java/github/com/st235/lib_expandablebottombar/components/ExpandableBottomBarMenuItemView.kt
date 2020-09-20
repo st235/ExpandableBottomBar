@@ -11,7 +11,7 @@ import github.com.st235.lib_expandablebottombar.R
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import kotlinx.android.synthetic.main.content_bottombar_menu_item.view.*
 
-class ExpandableBottomBarItemView @JvmOverloads constructor(
+class ExpandableBottomBarMenuItemView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 

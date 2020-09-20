@@ -80,12 +80,6 @@ class ExpandableBottomBar @JvmOverloads constructor(
         }
     }
 
-    private val backgroundStates
-            = arrayOf(
-        intArrayOf(android.R.attr.state_selected),
-        intArrayOf(-android.R.attr.state_selected)
-    )
-
     private var transitionDuration: Int = 0
 
     @IdRes private var selectedItemId: Int = ITEM_NOT_SELECTED
@@ -290,15 +284,12 @@ class ExpandableBottomBar @JvmOverloads constructor(
     }
 
     private fun createItem(menuItem: ExpandableBottomBarMenuItem): ExpandableItemViewController {
-        val colors = intArrayOf(menuItem.activeColor, itemInactiveColor)
-        val selectedStateColorList = ColorStateList(backgroundStates, colors)
-
         val viewController =
             ExpandableItemViewController.Builder(menuItem)
                 .styleController(styleController)
                 .itemMargins(menuHorizontalPadding, menuVerticalPadding)
                 .itemBackground(itemBackgroundCornerRadius, itemBackgroundOpacity)
-                .itemsColors(selectedStateColorList)
+                .itemInactiveColor(itemInactiveColor)
                 .onItemClickListener { v: View ->
                     if (!v.isSelected) {
                         onItemSelected(menuItem)
