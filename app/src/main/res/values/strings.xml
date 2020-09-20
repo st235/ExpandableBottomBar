@@ -27,5 +27,5 @@
     <string name="styles_description">Demonstrates styles, introduced at 1.2.0.</string>
 
     <string name="notification_badges_title">Notification badges showcase</string>
-    <string name="notification_badges_description">Demonstrates usage and look of notification badges</string>
+    <string name="notification_badges_description">Demonstrates usage and look of notification badges\n See: https://github.com/st235/ExpandableBottomBar#notification-badges</string>
 </resources>
