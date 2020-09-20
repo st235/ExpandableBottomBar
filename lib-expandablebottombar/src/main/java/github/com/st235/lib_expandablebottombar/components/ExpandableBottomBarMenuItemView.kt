@@ -2,6 +2,7 @@ package github.com.st235.lib_expandablebottombar.components
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -10,6 +11,8 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBarNotificationBadge
 import github.com.st235.lib_expandablebottombar.R
+import github.com.st235.lib_expandablebottombar.state.MenuItemSavedState
+import github.com.st235.lib_expandablebottombar.state.SavedState
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import kotlinx.android.synthetic.main.content_bottombar_menu_item.view.*
 
@@ -25,6 +28,19 @@ internal class ExpandableBottomBarMenuItemView @JvmOverloads constructor(
         isFocusable = true
         clipToPadding = false
         clipChildren = false
+    }
+
+    override fun onSaveInstanceState(): Parcelable? {
+        return MenuItemSavedState(iconView.getState(), super.onSaveInstanceState())
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state !is MenuItemSavedState) {
+            super.onRestoreInstanceState(state)
+            return
+        }
+        super.onRestoreInstanceState(state.superState)
+        iconView.restore(state.badgeState)
     }
 
     fun setIcon(@DrawableRes drawableRes: Int, backgroundColorSelector: ColorStateList) {

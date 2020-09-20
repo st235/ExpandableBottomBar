@@ -25,4 +25,7 @@
 
     <string name="styles_title">Styles showcase</string>
     <string name="styles_description">Demonstrates styles, introduced at 1.2.0.</string>
+
+    <string name="notification_badges_title">Notification badges showcase</string>
+    <string name="notification_badges_description">Demonstrates usage and look of notification badges</string>
 </resources>

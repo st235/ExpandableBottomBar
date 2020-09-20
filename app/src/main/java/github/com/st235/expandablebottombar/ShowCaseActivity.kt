@@ -39,6 +39,10 @@ class ShowCaseActivity : AppCompatActivity() {
             createShowCase<StylesActivity>(
                 title = getString(R.string.styles_title),
                 description = getString(R.string.styles_description)
+            ),
+            createShowCase<NotificationBadgeActivity>(
+                title = getString(R.string.notification_badges_title),
+                description = getString(R.string.notification_badges_description)
             )
         )
     }

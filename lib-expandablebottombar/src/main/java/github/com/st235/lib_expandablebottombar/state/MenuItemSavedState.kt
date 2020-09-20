@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-internal data class SavedState(
-    val selectedItem: Int,
+internal data class MenuItemSavedState(
+    val badgeState: NotificationBadgeSavedState,
     val superState: Parcelable?
 ): Parcelable

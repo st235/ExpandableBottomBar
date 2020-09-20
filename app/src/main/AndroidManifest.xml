@@ -22,6 +22,7 @@
         <activity android:name=".screens.ScrollableCoordinatorLayoutActivity" />
         <activity android:name=".screens.navigation.NavigationComponentActivity" />
         <activity android:name=".screens.StylesActivity" />
+        <activity android:name=".screens.NotificationBadgeActivity" />
     </application>
 
 </manifest>

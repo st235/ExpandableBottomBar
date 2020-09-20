@@ -5,17 +5,21 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import android.os.Parcelable
 import android.text.TextPaint
 import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.annotation.Px
 import androidx.appcompat.widget.AppCompatImageView
+import github.com.st235.lib_expandablebottombar.state.NotificationBadgeSavedState
 import github.com.st235.lib_expandablebottombar.utils.max
 import github.com.st235.lib_expandablebottombar.utils.toPx
 
 internal class ExpandableBottomBarNotificationBadgeView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
+
+    private val stateController = NotificationBadgeStateController()
 
     private val viewBounds = RectF()
 
@@ -67,6 +71,33 @@ internal class ExpandableBottomBarNotificationBadgeView @JvmOverloads constructo
         if (canvas != null) {
             badgeDrawer?.draw(paint, viewBounds, canvas)
         }
+    }
+
+    fun getState() = stateController.store(onSaveInstanceState())
+
+    fun restore(state: NotificationBadgeSavedState) {
+        super.onRestoreInstanceState(state.superState)
+        stateController.restore(state)
+    }
+
+    inner class NotificationBadgeStateController {
+
+        fun store(superState: Parcelable?) =
+            NotificationBadgeSavedState(
+                badgeColor,
+                badgeTextColor,
+                badgeText,
+                showBadge,
+                superState
+            )
+
+        fun restore(savedState: NotificationBadgeSavedState) {
+            showBadge = savedState.shouldShowBadge
+            badgeColor = savedState.badgeColor
+            badgeTextColor = savedState.badgeTextColor
+            badgeText = savedState.badgeText
+        }
+
     }
 
     interface BadgeDrawer {
