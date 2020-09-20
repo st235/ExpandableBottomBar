@@ -2,40 +2,25 @@ package github.com.st235.lib_expandablebottombar
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Typeface
+import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.StyleSpan
-import android.view.Gravity
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
 import androidx.annotation.Px
-import androidx.annotation.VisibleForTesting
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat.setAccessibilityDelegate
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
+import github.com.st235.lib_expandablebottombar.components.ExpandableBottomBarMenuItemView
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import github.com.st235.lib_expandablebottombar.utils.StyleController
 import github.com.st235.lib_expandablebottombar.utils.createChain
-import github.com.st235.lib_expandablebottombar.utils.toPx
 
-internal open class ExpandableItemViewController(
+internal class ExpandableItemViewController(
     internal val menuItem: ExpandableBottomBarMenuItem,
-    private val styleController: StyleController,
-    private val itemView: View,
-    private val textView: TextView,
-    private val iconView: ImageView,
-    private val backgroundCornerRadius: Float,
-    private val backgroundOpacity: Float
+    private val itemView: ExpandableBottomBarMenuItemView
 ) {
 
     fun setAccessibleWith(prev: ExpandableItemViewController?,
@@ -49,29 +34,16 @@ internal open class ExpandableItemViewController(
         })
     }
 
-    fun deselect() {
-        itemView.background = null
-        textView.visibility = View.GONE
-        textView.isSelected = false
-        iconView.isSelected = false
-        itemView.isSelected = false
+    fun notification(): ExpandableBottomBarNotification {
+        return ExpandableBottomBarNotification(itemView)
+    }
+
+    fun unselect() {
+        itemView.deselect()
     }
 
     fun select() {
-        itemView.background = createHighlightedMenuShape()
-        textView.visibility = View.VISIBLE
-        textView.isSelected = true
-        iconView.isSelected = true
-        itemView.isSelected = true
-    }
-
-    @VisibleForTesting
-    internal open fun createHighlightedMenuShape(): Drawable {
-        return styleController.createShapeDrawable(
-            menuItem.activeColor,
-            backgroundCornerRadius,
-            backgroundOpacity
-        )
+        itemView.select()
     }
 
     fun attachTo(parent: ConstraintLayout,
@@ -111,6 +83,7 @@ internal open class ExpandableItemViewController(
         cl.applyTo(parent)
     }
 
+    //TODO(st235): separate this builder to view factory
     class Builder(private val menuItem: ExpandableBottomBarMenuItem) {
 
         @Px
@@ -122,9 +95,14 @@ internal open class ExpandableItemViewController(
         private var backgroundCornerRadius: Float = 0.0f
         @FloatRange(from = 0.0, to = 1.0)
         private var backgroundOpacity: Float = 1.0f
+        @ColorInt
+        private var itemInactiveColor: Int = Color.BLACK
+        @ColorInt
+        private var notificationBadgeColor: Int = Color.RED
+        @ColorInt
+        private var notificationBadgeTextColor: Int = Color.WHITE
 
         private lateinit var styleController: StyleController
-        private lateinit var backgroundColorSelector: ColorStateList
         private lateinit var onItemClickListener: (View) -> Unit
 
         fun itemMargins(
@@ -143,8 +121,8 @@ internal open class ExpandableItemViewController(
             return this
         }
 
-        fun itemsColors(backgroundColorSelector: ColorStateList): Builder {
-            this.backgroundColorSelector = backgroundColorSelector
+        fun itemInactiveColor(@ColorInt itemInactiveColor: Int): Builder {
+            this.itemInactiveColor = itemInactiveColor
             return this
         }
 
@@ -158,54 +136,52 @@ internal open class ExpandableItemViewController(
             return this
         }
 
+        fun notificationBadgeColor(@ColorInt notificationBadgeColor: Int): Builder {
+            this.notificationBadgeColor = notificationBadgeColor
+            return this
+        }
+
+        fun notificationBadgeTextColor(@ColorInt notificationBadgeTextColor: Int): Builder {
+            this.notificationBadgeTextColor = notificationBadgeTextColor
+            return this
+        }
+
+        private fun createHighlightedMenuShape(): Drawable {
+            return styleController.createStateBackground(
+                menuItem.activeColor,
+                backgroundCornerRadius,
+                backgroundOpacity
+            )
+        }
+
+        private fun createMenuItemView(context: Context): ExpandableBottomBarMenuItemView {
+            return ExpandableBottomBarMenuItemView(context = context)
+        }
+
         fun build(context: Context): ExpandableItemViewController {
-            val itemView = LinearLayout(context).apply {
-                id = menuItem.itemId
-                orientation = LinearLayout.HORIZONTAL
-                gravity = Gravity.CENTER
-                setPadding(itemHorizontalPadding, itemVerticalPadding, itemHorizontalPadding, itemVerticalPadding)
-                contentDescription = context.resources.getString(R.string.accessibility_item_description, menuItem.text)
-                isFocusable = true
-            }
-
-            val iconView = AppCompatImageView(context).apply {
-                setImageDrawable(
-                    DrawableHelper.createDrawable(
-                        context,
-                        menuItem.iconId,
-                        backgroundColorSelector
-                    )
-                )
-            }
-
-            val textView = AppCompatTextView(context).apply {
-                val rawText = SpannableString(menuItem.text)
-                rawText.setSpan(StyleSpan(Typeface.BOLD), 0, rawText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                setTextColor(backgroundColorSelector)
-                text = rawText
-                gravity = Gravity.CENTER
-                visibility = View.GONE
-                textSize = 15F
-            }
-
-            val textLayoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(8.toPx(), 0, 0, 0)
-            }
+            val itemView = createMenuItemView(context)
+            val backgroundColorStateList = DrawableHelper.createSelectedUnselectedStateList(
+                menuItem.activeColor,
+                itemInactiveColor
+            )
 
             with(itemView) {
-                addView(iconView)
-                addView(textView, textLayoutParams)
+                id = menuItem.itemId
+                contentDescription = context.resources.getString(R.string.accessibility_item_description, menuItem.text)
+                setPadding(itemHorizontalPadding, itemVerticalPadding, itemHorizontalPadding, itemVerticalPadding)
+
+                setIcon(menuItem.iconId, backgroundColorStateList)
+                setText(menuItem.text, backgroundColorStateList)
+                setNotificationBadgeBackground(menuItem.badgeBackgroundColor ?: notificationBadgeColor)
+                setNotificationBadgeTextColor(menuItem.badgeTextColor ?: notificationBadgeTextColor)
+
+                background = createHighlightedMenuShape()
                 setOnClickListener(onItemClickListener)
             }
 
             return ExpandableItemViewController(
                 menuItem,
-                styleController,
-                itemView, textView, iconView,
-                backgroundCornerRadius, backgroundOpacity
+                itemView
             )
         }
     }

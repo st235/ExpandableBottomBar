@@ -4,6 +4,6 @@
     <item
             android:id="@+id/icon_id"
             android:title="@string/icon_text"
-            app:icon="@drawable/item_icon"
-            app:color="@android:color/white" />
+            android:icon="@drawable/item_icon"
+            app:exb_color="@android:color/white" />
 </menu>

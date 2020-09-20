@@ -124,6 +124,8 @@ each item tag has following attributes:
 | **exb_color** | reference/color | color of element, it may be color reference or color |
 | **icon** | reference | icon reference (vector drawables supported) |
 | **title** | reference/text | item title |
+| **exb_badgeColor** | color | notification badge background color. **It will override the color from layout attribute** |
+| **exb_badgeTextColor** | color | notification badge text color. **It will override the color from layout attribute** |
 
 Just like any Android menu 😉
 
@@ -160,6 +162,22 @@ Then you should reference this xml file at the view attributes
 | **exb_item_vertical_padding** | dimen | top & bottom item padding |
 | **exb_item_horizontal_padding** | dimen | left & right item padding |
 | **exb_items** | reference | xml supported menu format |
+| **exb_notificationBadgeBackgroundColor** | color | notification badge background color. **Will be applied to all menu items** |
+| **exb_notificationBadgeTextColor** | color | notification badge text color. **Will be applied to all menu items** |
+
+## Notification badges
+
+```kotlin
+    /**
+     * Returns notification object
+     */
+    val notification = bottomBar.getNotificationFor(i.itemId) // itemId is R.id.action_id
+
+   notification.show() // shows simple dot-notification
+   notification.show("string literal") // shows notification with counter. Counter could not exceed the 4 symbols length
+
+  notification.clear() // removes notification badge from menu item
+```
 
 ## Navigation Components support
 

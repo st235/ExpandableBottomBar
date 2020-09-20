@@ -11,8 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.DrawableCompat
 
-object DrawableHelper {
-    internal fun createShapeDrawable(@ColorInt color: Int,
+internal object DrawableHelper {
+    fun createShapeDrawable(@ColorInt color: Int,
                                      shouldFill: Boolean = true,
                                      shouldStroke: Boolean = false,
                                      @FloatRange(from = 0.0) cornerRadius: Float,
@@ -36,7 +36,20 @@ object DrawableHelper {
         return footerBackground
     }
 
-    internal fun createDrawable(context: Context,
+    fun createSelectedUnselectedStateList(
+        @ColorInt selectedColor: Int,
+        @ColorInt unselectedColor: Int
+    ): ColorStateList {
+        return ColorStateList(
+            arrayOf(
+                intArrayOf(android.R.attr.state_selected),
+                intArrayOf(-android.R.attr.state_selected)
+            ),
+            intArrayOf(selectedColor, unselectedColor)
+        )
+    }
+
+    fun createDrawable(context: Context,
                                 @DrawableRes menuItem: Int,
                                 stateList: ColorStateList): Drawable {
         val iconDrawable = DrawableCompat.wrap(

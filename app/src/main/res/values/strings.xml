@@ -4,6 +4,7 @@
     <string name="text2">Likes</string>
     <string name="text3">Bookmarks</string>
     <string name="text4">Settings</string>
+    <string name="action_clear">Clear</string>
 
     <string name="programmatically_title">Manually created</string>
     <string name="programmatically_description">This showcase demonstrates the basic usage of library.\nSee: https://github.com/st235/ExpandableBottomBar#usage</string>
@@ -25,4 +26,7 @@
 
     <string name="styles_title">Styles showcase</string>
     <string name="styles_description">Demonstrates styles, introduced at 1.2.0.</string>
+
+    <string name="notification_badges_title">Notification badges showcase</string>
+    <string name="notification_badges_description">Demonstrates usage and look of notification badges\n See: https://github.com/st235/ExpandableBottomBar#notification-badges</string>
 </resources>

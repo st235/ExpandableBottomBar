@@ -11,7 +11,6 @@ import github.com.st235.expandablebottombar.R
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import kotlinx.android.synthetic.main.activity_xml_declared.*
 
-
 class XmlDeclaredActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

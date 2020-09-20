@@ -5,6 +5,8 @@
         <attr name="android:title" />
         <attr name="android:icon" />
         <attr name="exb_color" format="reference|color" />
+        <attr name="exb_badgeColor" format="color" />
+        <attr name="exb_badgeTextColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="ExpandableBottomBar">
@@ -27,6 +29,9 @@
         <attr name="exb_item_horizontal_padding" format="dimension" />
 
         <attr name="exb_items" format="reference" />
+
+        <attr name="exb_notificationBadgeBackgroundColor" format="color" />
+        <attr name="exb_notificationBadgeTextColor" format="color" />
     </declare-styleable>
 
     <attr name="exb_expandableButtonBarDefaultStyle" format="reference" />

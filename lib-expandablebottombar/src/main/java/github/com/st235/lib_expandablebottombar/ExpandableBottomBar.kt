@@ -80,11 +80,10 @@ class ExpandableBottomBar @JvmOverloads constructor(
         }
     }
 
-    private val backgroundStates
-            = arrayOf(
-        intArrayOf(android.R.attr.state_selected),
-        intArrayOf(-android.R.attr.state_selected)
-    )
+    @ColorInt
+    private var globalBadgeColor: Int = Color.RED
+    @ColorInt
+    private var globalBadgeTextColor: Int = Color.WHITE
 
     private var transitionDuration: Int = 0
 
@@ -130,6 +129,9 @@ class ExpandableBottomBar @JvmOverloads constructor(
         menuHorizontalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_item_horizontal_padding, 15F.toPx()).toInt()
         menuVerticalPadding = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_item_vertical_padding, 10F.toPx()).toInt()
 
+        globalBadgeColor = typedArray.getColor(R.styleable.ExpandableBottomBar_exb_notificationBadgeBackgroundColor, Color.RED)
+        globalBadgeTextColor = typedArray.getColor(R.styleable.ExpandableBottomBar_exb_notificationBadgeTextColor, Color.WHITE)
+
         val rawItemsStyle = typedArray.getInt(R.styleable.ExpandableBottomBar_exb_itemStyle, 0)
         styleController = StyleController.create(style = rawItemsStyle.toItemStyle())
 
@@ -173,6 +175,24 @@ class ExpandableBottomBar @JvmOverloads constructor(
         setBackgroundColor(ContextCompat.getColor(context, colorRes), resources.getDimension(backgroundCornerRadiusRes))
     }
 
+    fun setNotificationBadgeBackgroundColor(@ColorInt color: Int) {
+        globalBadgeColor = color
+        invalidate()
+    }
+
+    fun setNotificationBadgeBackgroundColorRes(@ColorRes colorRes: Int) {
+        setNotificationBadgeBackgroundColor(ContextCompat.getColor(context, colorRes))
+    }
+
+    fun setNotificationBadgeTextColor(@ColorInt color: Int) {
+        globalBadgeTextColor = color
+        invalidate()
+    }
+
+    fun setNotificationBadgeTextColorRes(@ColorRes colorRes: Int) {
+        setNotificationBadgeTextColor(ContextCompat.getColor(context, colorRes))
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
@@ -199,6 +219,15 @@ class ExpandableBottomBar @JvmOverloads constructor(
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         bounds.set(0, 0, w, h)
+    }
+
+    /**
+     * Returns notification for passed menu item
+     *
+     * @throws NullPointerException when id doesn't exists
+     */
+    fun getNotificationFor(@IdRes id: Int): ExpandableBottomBarNotification {
+        return viewControllers.getValue(id).notification()
     }
 
     /**
@@ -290,15 +319,14 @@ class ExpandableBottomBar @JvmOverloads constructor(
     }
 
     private fun createItem(menuItem: ExpandableBottomBarMenuItem): ExpandableItemViewController {
-        val colors = intArrayOf(menuItem.activeColor, itemInactiveColor)
-        val selectedStateColorList = ColorStateList(backgroundStates, colors)
-
         val viewController =
             ExpandableItemViewController.Builder(menuItem)
                 .styleController(styleController)
                 .itemMargins(menuHorizontalPadding, menuVerticalPadding)
                 .itemBackground(itemBackgroundCornerRadius, itemBackgroundOpacity)
-                .itemsColors(selectedStateColorList)
+                .itemInactiveColor(itemInactiveColor)
+                .notificationBadgeColor(globalBadgeColor)
+                .notificationBadgeTextColor(globalBadgeTextColor)
                 .onItemClickListener { v: View ->
                     if (!v.isSelected) {
                         onItemSelected(menuItem)
@@ -327,7 +355,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
         set.clone(this)
 
         viewControllers.getValue(activeMenuItem.itemId).select()
-        viewControllers.getValue(selectedItemId).deselect()
+        viewControllers.getValue(selectedItemId).unselect()
         selectedItemId = activeMenuItem.itemId
 
         set.applyTo(this)
