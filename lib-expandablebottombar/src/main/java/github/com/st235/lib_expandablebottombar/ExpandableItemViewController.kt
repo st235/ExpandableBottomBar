@@ -3,39 +3,23 @@ package github.com.st235.lib_expandablebottombar
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Typeface
 import android.graphics.drawable.Drawable
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.StyleSpan
-import android.view.Gravity
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.annotation.FloatRange
 import androidx.annotation.Px
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat.setAccessibilityDelegate
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
-import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
+import github.com.st235.lib_expandablebottombar.components.ExpandableBottomBarItemView
 import github.com.st235.lib_expandablebottombar.utils.StyleController
 import github.com.st235.lib_expandablebottombar.utils.createChain
-import github.com.st235.lib_expandablebottombar.utils.toPx
 
 internal open class ExpandableItemViewController(
     internal val menuItem: ExpandableBottomBarMenuItem,
-    private val styleController: StyleController,
-    private val itemView: View,
-    private val textView: TextView,
-    private val iconView: ImageView,
-    private val backgroundCornerRadius: Float,
-    private val backgroundOpacity: Float
+    private val itemView: ExpandableBottomBarItemView
 ) {
 
     fun setAccessibleWith(prev: ExpandableItemViewController?,
@@ -49,29 +33,12 @@ internal open class ExpandableItemViewController(
         })
     }
 
-    fun deselect() {
-        itemView.background = null
-        textView.visibility = View.GONE
-        textView.isSelected = false
-        iconView.isSelected = false
-        itemView.isSelected = false
+    fun unselect() {
+        itemView.deselect()
     }
 
     fun select() {
-        itemView.background = createHighlightedMenuShape()
-        textView.visibility = View.VISIBLE
-        textView.isSelected = true
-        iconView.isSelected = true
-        itemView.isSelected = true
-    }
-
-    @VisibleForTesting
-    internal open fun createHighlightedMenuShape(): Drawable {
-        return styleController.createShapeDrawable(
-            menuItem.activeColor,
-            backgroundCornerRadius,
-            backgroundOpacity
-        )
+        itemView.select()
     }
 
     fun attachTo(parent: ConstraintLayout,
@@ -158,54 +125,32 @@ internal open class ExpandableItemViewController(
             return this
         }
 
+        @VisibleForTesting
+        internal open fun createHighlightedMenuShape(): Drawable {
+            return styleController.createStateBackground(
+                menuItem.activeColor,
+                backgroundCornerRadius,
+                backgroundOpacity
+            )
+        }
+
         fun build(context: Context): ExpandableItemViewController {
-            val itemView = LinearLayout(context).apply {
-                id = menuItem.itemId
-                orientation = LinearLayout.HORIZONTAL
-                gravity = Gravity.CENTER
-                setPadding(itemHorizontalPadding, itemVerticalPadding, itemHorizontalPadding, itemVerticalPadding)
-                contentDescription = context.resources.getString(R.string.accessibility_item_description, menuItem.text)
-                isFocusable = true
-            }
-
-            val iconView = AppCompatImageView(context).apply {
-                setImageDrawable(
-                    DrawableHelper.createDrawable(
-                        context,
-                        menuItem.iconId,
-                        backgroundColorSelector
-                    )
-                )
-            }
-
-            val textView = AppCompatTextView(context).apply {
-                val rawText = SpannableString(menuItem.text)
-                rawText.setSpan(StyleSpan(Typeface.BOLD), 0, rawText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                setTextColor(backgroundColorSelector)
-                text = rawText
-                gravity = Gravity.CENTER
-                visibility = View.GONE
-                textSize = 15F
-            }
-
-            val textLayoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(8.toPx(), 0, 0, 0)
-            }
+            val itemView = ExpandableBottomBarItemView(context)
 
             with(itemView) {
-                addView(iconView)
-                addView(textView, textLayoutParams)
+                id = menuItem.itemId
+                contentDescription = context.resources.getString(R.string.accessibility_item_description, menuItem.text)
+                setPadding(itemHorizontalPadding, itemVerticalPadding, itemHorizontalPadding, itemVerticalPadding)
+
+                setIcon(menuItem.iconId, backgroundColorSelector)
+                setText(menuItem.text, backgroundColorSelector)
+                background = createHighlightedMenuShape()
                 setOnClickListener(onItemClickListener)
             }
 
             return ExpandableItemViewController(
                 menuItem,
-                styleController,
-                itemView, textView, iconView,
-                backgroundCornerRadius, backgroundOpacity
+                itemView
             )
         }
     }

@@ -47,7 +47,7 @@ class ExpandableItemViewControllerTest {
 
     @Test
     fun `test that deselect item will hide title and remove highlight`() {
-        expandableItemViewController.deselect()
+        expandableItemViewController.unselect()
         verify(itemView).background = null
         verify(titleView).visibility = View.GONE
         verify(titleView).isSelected = false

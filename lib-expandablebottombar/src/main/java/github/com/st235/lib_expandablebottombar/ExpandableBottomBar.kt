@@ -327,7 +327,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
         set.clone(this)
 
         viewControllers.getValue(activeMenuItem.itemId).select()
-        viewControllers.getValue(selectedItemId).deselect()
+        viewControllers.getValue(selectedItemId).unselect()
         selectedItemId = activeMenuItem.itemId
 
         set.applyTo(this)
