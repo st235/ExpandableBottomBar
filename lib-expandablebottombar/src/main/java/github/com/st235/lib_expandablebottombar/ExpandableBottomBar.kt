@@ -175,6 +175,24 @@ class ExpandableBottomBar @JvmOverloads constructor(
         setBackgroundColor(ContextCompat.getColor(context, colorRes), resources.getDimension(backgroundCornerRadiusRes))
     }
 
+    fun setNotificationBadgeBackgroundColor(@ColorInt color: Int) {
+        globalBadgeColor = color
+        invalidate()
+    }
+
+    fun setNotificationBadgeBackgroundColorRes(@ColorRes colorRes: Int) {
+        setNotificationBadgeBackgroundColor(ContextCompat.getColor(context, colorRes))
+    }
+
+    fun setNotificationBadgeTextColor(@ColorInt color: Int) {
+        globalBadgeTextColor = color
+        invalidate()
+    }
+
+    fun setNotificationBadgeTextColorRes(@ColorRes colorRes: Int) {
+        setNotificationBadgeTextColor(ContextCompat.getColor(context, colorRes))
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
@@ -203,6 +221,11 @@ class ExpandableBottomBar @JvmOverloads constructor(
         bounds.set(0, 0, w, h)
     }
 
+    /**
+     * Returns notification for passed menu item
+     *
+     * @throws NullPointerException when id doesn't exists
+     */
     fun getNotificationFor(@IdRes id: Int): ExpandableBottomBarNotification {
         return viewControllers.getValue(id).notification()
     }
