@@ -4,7 +4,7 @@
     tools:parentTag="android.widget.LinearLayout"
     tools:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <github.com.st235.lib_expandablebottombar.components.ExpandableBottomBarNotificationBadgeView
         android:id="@+id/iconView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

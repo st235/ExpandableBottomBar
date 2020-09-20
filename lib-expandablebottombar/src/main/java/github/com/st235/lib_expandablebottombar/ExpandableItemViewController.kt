@@ -35,6 +35,10 @@ internal class ExpandableItemViewController(
         })
     }
 
+    fun notification(): ExpandableBottomBarNotification {
+        return ExpandableBottomBarNotification(itemView.badge())
+    }
+
     fun unselect() {
         itemView.deselect()
     }
@@ -80,6 +84,7 @@ internal class ExpandableItemViewController(
         cl.applyTo(parent)
     }
 
+    //TODO(st235): separate this builder to view factory
     class Builder(private val menuItem: ExpandableBottomBarMenuItem) {
 
         @Px

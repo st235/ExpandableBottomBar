@@ -195,6 +195,10 @@ class ExpandableBottomBar @JvmOverloads constructor(
         bounds.set(0, 0, w, h)
     }
 
+    fun getNotificationFor(@IdRes id: Int): ExpandableBottomBarNotification {
+        return viewControllers.getValue(id).notification()
+    }
+
     /**
      * Adds passed items to widget
      *

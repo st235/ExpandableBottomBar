@@ -11,7 +11,7 @@ import github.com.st235.lib_expandablebottombar.R
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import kotlinx.android.synthetic.main.content_bottombar_menu_item.view.*
 
-class ExpandableBottomBarMenuItemView @JvmOverloads constructor(
+internal class ExpandableBottomBarMenuItemView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
@@ -21,6 +21,8 @@ class ExpandableBottomBarMenuItemView @JvmOverloads constructor(
         orientation =  HORIZONTAL
         gravity = Gravity.CENTER
         isFocusable = true
+        clipToPadding = false
+        clipChildren = false
     }
 
     fun setIcon(@DrawableRes drawableRes: Int, backgroundColorSelector: ColorStateList) {
@@ -36,6 +38,10 @@ class ExpandableBottomBarMenuItemView @JvmOverloads constructor(
     fun setText(text: CharSequence, textColorSelector: ColorStateList) {
         titleView.text = text
         titleView.setTextColor(textColorSelector)
+    }
+
+    fun badge(): ExpandableBottomBarNotificationBadgeView {
+        return iconView
     }
 
     fun select() {
