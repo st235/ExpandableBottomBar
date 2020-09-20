@@ -4,6 +4,7 @@
     <string name="text2">Likes</string>
     <string name="text3">Bookmarks</string>
     <string name="text4">Settings</string>
+    <string name="action_clear">Clear</string>
 
     <string name="programmatically_title">Manually created</string>
     <string name="programmatically_description">This showcase demonstrates the basic usage of library.\nSee: https://github.com/st235/ExpandableBottomBar#usage</string>
