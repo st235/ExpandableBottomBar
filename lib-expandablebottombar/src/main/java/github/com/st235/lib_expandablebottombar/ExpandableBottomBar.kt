@@ -3,7 +3,6 @@ package github.com.st235.lib_expandablebottombar
 import android.animation.Animator
 import android.annotation.TargetApi
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Outline
 import android.graphics.Rect
@@ -30,7 +29,7 @@ import androidx.core.view.marginBottom
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar.ItemStyle.Companion.toItemStyle
 import github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarBehavior
 import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
-import github.com.st235.lib_expandablebottombar.state.SavedState
+import github.com.st235.lib_expandablebottombar.state.BottomBarSavedState
 import github.com.st235.lib_expandablebottombar.utils.AnimationHelper
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import github.com.st235.lib_expandablebottombar.utils.StyleController
@@ -208,7 +207,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
-        if (state !is SavedState) {
+        if (state !is BottomBarSavedState) {
             super.onRestoreInstanceState(state)
             return
         }
@@ -371,10 +370,10 @@ class ExpandableBottomBar @JvmOverloads constructor(
         private val expandableBottomBar: ExpandableBottomBar
     ) {
 
-        fun store(superState: Parcelable?) = SavedState(expandableBottomBar.selectedItemId, superState)
+        fun store(superState: Parcelable?) = BottomBarSavedState(expandableBottomBar.selectedItemId, superState)
 
-        fun restore(state: SavedState) {
-            val selectedItemId = state.selectedItem
+        fun restore(stateBottomBar: BottomBarSavedState) {
+            val selectedItemId = stateBottomBar.selectedItem
             val viewController = expandableBottomBar.viewControllers.getValue(selectedItemId)
             expandableBottomBar.onItemSelected(viewController.menuItem)
         }
