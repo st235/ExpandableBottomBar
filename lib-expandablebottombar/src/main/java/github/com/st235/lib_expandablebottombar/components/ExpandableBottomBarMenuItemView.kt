@@ -7,12 +7,10 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
-import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBarNotificationBadge
 import github.com.st235.lib_expandablebottombar.R
 import github.com.st235.lib_expandablebottombar.state.MenuItemSavedState
-import github.com.st235.lib_expandablebottombar.state.SavedState
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import kotlinx.android.synthetic.main.content_bottombar_menu_item.view.*
 
