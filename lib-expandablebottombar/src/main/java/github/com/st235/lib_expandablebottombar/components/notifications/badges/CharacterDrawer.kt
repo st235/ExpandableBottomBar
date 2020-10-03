@@ -19,14 +19,20 @@ internal abstract class CharacterDrawer(
     }
 
     @Px
-    protected open fun getWidth(paint: Paint): Float {
+    protected open fun getTextWidth(paint: Paint): Float {
         return paint.measureText(text, 0, text.length)
     }
 
     @Px
-    protected open fun getHeight(paint: Paint): Float {
+    protected open fun getTextHeight(paint: Paint): Float {
         val fm = paint.fontMetrics
         return fm.descent - fm.ascent
+    }
+
+    @Px
+    protected fun getTextOffset(paint: Paint): Float {
+        val textHeight = getTextHeight(paint)
+        return textHeight / 2F - paint.descent()
     }
 
 }

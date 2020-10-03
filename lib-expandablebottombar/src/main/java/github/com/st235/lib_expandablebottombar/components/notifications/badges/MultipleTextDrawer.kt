@@ -16,8 +16,8 @@ internal class MultipleTextDrawer(
     private val buffer = RectF()
 
     override fun draw(paint: Paint, viewBounds: RectF, canvas: Canvas) {
-        val width = getWidth(paint)
-        val height = getHeight(paint)
+        val width = getTextWidth(paint)
+        val height = getTextHeight(paint)
 
         val topRightX = viewBounds.right
         val topRightY = viewBounds.top
@@ -41,7 +41,7 @@ internal class MultipleTextDrawer(
         paint.color = textColor
         canvas.drawText(text,
             centerX,
-            centerY + height / 4F,
+            centerY + getTextOffset(paint),
             paint
         )
 
