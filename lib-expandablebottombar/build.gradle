@@ -1,8 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply from: './install.gradle'
-apply from: './publish.gradle'
+apply from: './maven.gradle'
 
 androidExtensions {
     experimental = true
@@ -14,8 +13,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode vers.versionCode
-        versionName vers.versionName
+        versionCode project.property('VERSION_CODE') as int
+        versionName project.property('VERSION_NAME')
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
