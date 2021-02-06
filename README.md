@@ -2,7 +2,7 @@
 
 # ExpandableBottomBar
 
-[ ![Download](https://api.bintray.com/packages/st235/maven/expandablebottombar/images/download.svg) ](https://bintray.com/st235/maven/expandablebottombar/_latestVersion)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.st235/expandablebottombar/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.st235/expandablebottombar)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/st235/ExpandableBottomBar.svg)
 [![CircleCI](https://circleci.com/gh/st235/ExpandableBottomBar.svg?style=svg)](https://circleci.com/gh/st235/ExpandableBottomBar)
 
@@ -11,6 +11,8 @@ A new way to improve navigation in your app
 Its really easy integrate to your project
 
 ## take it, faster, faster
+
+__Important: library was migrated from JCenter to MavenCentral__ 
 
 - Maven
 
