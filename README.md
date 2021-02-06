@@ -14,6 +14,18 @@ Its really easy integrate to your project
 
 __Important: library was migrated from JCenter to MavenCentral__ 
 
+It means that it may be necessary to add __mavenCentral__ repository to your repositories list
+
+```groovy
+allprojects {
+    repositories {
+        // your repositories
+
+        mavenCentral()
+    }
+}
+```
+
 - Maven
 
 ```text
