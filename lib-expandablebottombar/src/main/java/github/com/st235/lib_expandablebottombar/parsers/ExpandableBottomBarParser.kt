@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Xml
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem
+import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import org.xmlpull.v1.XmlPullParser
 import github.com.st235.lib_expandablebottombar.R
 
@@ -21,7 +21,7 @@ internal class ExpandableBottomBarParser(private val context: Context) {
     // We don't use namespaces
     private val namespace: String? = null
 
-    fun inflate(menuId: Int): List<ExpandableBottomBarMenuItem> {
+    fun inflate(menuId: Int): List<MenuItemDescriptor> {
         val parser = context.resources.getLayout(menuId)
         parser.use {
             val attrs = Xml.asAttributeSet(parser)
@@ -30,8 +30,8 @@ internal class ExpandableBottomBarParser(private val context: Context) {
     }
 
     private fun readBottomBar(parser: XmlPullParser,
-                              attrs: AttributeSet): List<ExpandableBottomBarMenuItem> {
-        val items = mutableListOf<ExpandableBottomBarMenuItem>()
+                              attrs: AttributeSet): List<MenuItemDescriptor> {
+        val items = mutableListOf<MenuItemDescriptor>()
         var eventType = parser.eventType
         var tagName: String
 
@@ -73,7 +73,7 @@ internal class ExpandableBottomBarParser(private val context: Context) {
     }
 
     private fun readBottomBarItem(parser: XmlPullParser,
-                                  attrs: AttributeSet): ExpandableBottomBarMenuItem {
+                                  attrs: AttributeSet): MenuItemDescriptor {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableBottomBarItem)
 
         val id = typedArray.getResourceId(R.styleable.ExpandableBottomBarItem_android_id, NO_ID)
@@ -95,6 +95,6 @@ internal class ExpandableBottomBarParser(private val context: Context) {
         typedArray.recycle()
 
         parser.require(XmlPullParser.START_TAG, namespace, MENU_ITEM_TAG)
-        return ExpandableBottomBarMenuItem(id, iconId, text, color, badgeBackgroundColor, badgeTextColor)
+        return MenuItemDescriptor(id, iconId, text, color, badgeBackgroundColor, badgeTextColor)
     }
 }

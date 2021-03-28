@@ -5,7 +5,7 @@ import android.graphics.Color
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import androidx.test.platform.app.InstrumentationRegistry
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem
+import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
 import org.junit.Before
 import org.junit.runner.RunWith
@@ -45,7 +45,7 @@ class ExpandableBottomBarParserTest {
         val items = expandableBottomBarParser.inflate(R.menu.valid_menu)
         val iconText = appContext.getString(R.string.icon_text)
         val actualItem =
-            ExpandableBottomBarMenuItem(R.id.icon_id, R.drawable.item_icon, iconText, Color.WHITE, null, null)
+            MenuItemDescriptor(R.id.icon_id, R.drawable.item_icon, iconText, Color.WHITE, null, null)
         assertThat(items, contains(actualItem))
     }
 }

@@ -13,18 +13,29 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat.setAccessibilityDelegate
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
-import github.com.st235.lib_expandablebottombar.components.ExpandableBottomBarMenuItemView
+import github.com.st235.lib_expandablebottombar.components.MenuItemView
+import github.com.st235.lib_expandablebottombar.utils.*
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import github.com.st235.lib_expandablebottombar.utils.StyleController
 import github.com.st235.lib_expandablebottombar.utils.createChain
+import github.com.st235.lib_expandablebottombar.utils.show
 
-internal class ExpandableItemViewController(
-    internal val menuItem: ExpandableBottomBarMenuItem,
-    private val itemView: ExpandableBottomBarMenuItemView
-) {
+internal class MenuItemImpl(
+        menuItemDescriptor: MenuItemDescriptor,
+        private val rootView: ExpandableBottomBar,
+        private val itemView: MenuItemView
+): MenuItem {
 
-    fun setAccessibleWith(prev: ExpandableItemViewController?,
-                          next: ExpandableItemViewController?) {
+    private val notification = Notification(itemView)
+
+    override val id: Int = menuItemDescriptor.itemId
+
+    override val text: CharSequence = menuItemDescriptor.text
+
+    override val activeColor: Int = menuItemDescriptor.activeColor
+
+    fun setAccessibleWith(prev: MenuItemImpl?,
+                          next: MenuItemImpl?) {
         setAccessibilityDelegate(itemView, object : AccessibilityDelegateCompat() {
             override fun onInitializeAccessibilityNodeInfo(host: View?, info: AccessibilityNodeInfoCompat?) {
                 info?.setTraversalAfter(prev?.itemView)
@@ -34,16 +45,35 @@ internal class ExpandableItemViewController(
         })
     }
 
-    fun notification(): ExpandableBottomBarNotification {
-        return ExpandableBottomBarNotification(itemView)
+    override val isShown: Boolean
+        get() {
+            return itemView.visibility == View.VISIBLE
+        }
+
+    override fun show() {
+        rootView.delayTransition()
+        itemView.show()
     }
 
-    fun unselect() {
-        itemView.deselect()
+    override fun hide() {
+        if (rootView.getSelected() == this) {
+            throw IllegalStateException("Cannot hide active tab")
+        }
+
+        rootView.delayTransition()
+        itemView.show(isShown = false)
+    }
+
+    override fun notification(): Notification {
+        return notification
     }
 
     fun select() {
         itemView.select()
+    }
+
+    fun deselect() {
+        itemView.deselect()
     }
 
     fun attachTo(parent: ConstraintLayout,
@@ -84,7 +114,7 @@ internal class ExpandableItemViewController(
     }
 
     //TODO(st235): separate this builder to view factory
-    class Builder(private val menuItem: ExpandableBottomBarMenuItem) {
+    class Builder(private val menuItemDescriptor: MenuItemDescriptor) {
 
         @Px
         private var itemVerticalPadding: Int = 0
@@ -103,7 +133,7 @@ internal class ExpandableItemViewController(
         private var notificationBadgeTextColor: Int = Color.WHITE
 
         private lateinit var styleController: StyleController
-        private lateinit var onItemClickListener: (View) -> Unit
+        private lateinit var onItemClickListener: (MenuItem, View) -> Unit
 
         fun itemMargins(
             @Px itemHorizontalPadding: Int,
@@ -126,7 +156,7 @@ internal class ExpandableItemViewController(
             return this
         }
 
-        fun onItemClickListener(onItemClickListener: (View) -> Unit): Builder {
+        fun onItemClickListener(onItemClickListener: (MenuItem, View) -> Unit): Builder {
             this.onItemClickListener = onItemClickListener
             return this
         }
@@ -148,41 +178,48 @@ internal class ExpandableItemViewController(
 
         private fun createHighlightedMenuShape(): Drawable {
             return styleController.createStateBackground(
-                menuItem.activeColor,
+                menuItemDescriptor.activeColor,
                 backgroundCornerRadius,
                 backgroundOpacity
             )
         }
 
-        private fun createMenuItemView(context: Context): ExpandableBottomBarMenuItemView {
-            return ExpandableBottomBarMenuItemView(context = context)
+        private fun createMenuItemView(context: Context): MenuItemView {
+            return MenuItemView(context = context)
         }
 
-        fun build(context: Context): ExpandableItemViewController {
+        fun build(rootView: ExpandableBottomBar): MenuItemImpl {
+            val context: Context = rootView.context
+
             val itemView = createMenuItemView(context)
+            val menuItem = MenuItemImpl(
+                    menuItemDescriptor,
+                    rootView,
+                    itemView
+            )
+
             val backgroundColorStateList = DrawableHelper.createSelectedUnselectedStateList(
-                menuItem.activeColor,
+                menuItemDescriptor.activeColor,
                 itemInactiveColor
             )
 
             with(itemView) {
-                id = menuItem.itemId
-                contentDescription = context.resources.getString(R.string.accessibility_item_description, menuItem.text)
+                id = menuItemDescriptor.itemId
+                contentDescription = context.resources.getString(R.string.accessibility_item_description, menuItemDescriptor.text)
                 setPadding(itemHorizontalPadding, itemVerticalPadding, itemHorizontalPadding, itemVerticalPadding)
 
-                setIcon(menuItem.iconId, backgroundColorStateList)
-                setText(menuItem.text, backgroundColorStateList)
-                setNotificationBadgeBackground(menuItem.badgeBackgroundColor ?: notificationBadgeColor)
-                setNotificationBadgeTextColor(menuItem.badgeTextColor ?: notificationBadgeTextColor)
+                setIcon(menuItemDescriptor.iconId, backgroundColorStateList)
+                setText(menuItemDescriptor.text, backgroundColorStateList)
+                notificationBadgeBackgroundColor = menuItemDescriptor.badgeBackgroundColor ?: notificationBadgeColor
+                notificationBadgeTextColor = menuItemDescriptor.badgeTextColor ?: notificationBadgeTextColor
 
                 background = createHighlightedMenuShape()
-                setOnClickListener(onItemClickListener)
+                setOnClickListener {
+                    onItemClickListener(menuItem, it)
+                }
             }
 
-            return ExpandableItemViewController(
-                menuItem,
-                itemView
-            )
+            return menuItem
         }
     }
 }

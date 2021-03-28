@@ -79,7 +79,7 @@ Then you should add menu items to your navigation component
         val bottomBar: ExpandableBottomBar = findViewById(R.id.expandable_bottom_bar)
 
         bottomBar.addItems(
-                ExpandableBottomBarMenuItem.Builder(context = this)
+                MenuItemDescriptor.Builder(context = this)
                         .addItem(R.id.icon_home, R.drawable.ic_bug, R.string.text, Color.GRAY)
                         .addItem(R.id.icon_go, R.drawable.ic_gift, R.string.text2, 0xFFFF77A9)
                         .addItem(R.id.icon_left, R.drawable.ic_one, R.string.text3, 0xFF58A5F0)
@@ -126,7 +126,7 @@ Firstly, you should declare menu items in xml
         android:id="@+id/bookmarks"
         android:title="@string/text3"
         android:icon="@drawable/ic_bookmarks"
-        app:exb_color="#fa2 />
+        app:exb_color="#fa2" />
 </menu>
 ```
 
@@ -185,7 +185,7 @@ Then you should reference this xml file at the view attributes
     /**
      * Returns notification object
      */
-    val notification = bottomBar.getNotificationFor(i.itemId) // itemId is R.id.action_id
+    val notification = bottomBar.getMenuItemFor(i.itemId).notification() // itemId is R.id.action_id
 
    notification.show() // shows simple dot-notification
    notification.show("string literal") // shows notification with counter. Counter could not exceed the 4 symbols length

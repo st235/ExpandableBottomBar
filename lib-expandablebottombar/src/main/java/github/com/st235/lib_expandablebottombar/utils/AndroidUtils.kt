@@ -1,6 +1,10 @@
 package github.com.st235.lib_expandablebottombar.utils
 
 import android.os.Build
+import android.transition.AutoTransition
+import android.transition.TransitionManager
+import android.view.View
+import android.view.ViewGroup
 
 typealias Scope = () -> Unit
 
@@ -9,3 +13,14 @@ internal inline fun applyForApiLAndHigher(scope: Scope) {
         scope()
     }
 }
+
+internal fun ViewGroup.delayTransition(duration: Long = -1L) {
+    val autoTransition = AutoTransition()
+    autoTransition.duration = duration
+    TransitionManager.beginDelayedTransition(this, autoTransition)
+}
+
+internal fun View.show(isShown: Boolean = false) {
+    this.visibility = if (isShown)  View.VISIBLE else View.GONE
+}
+

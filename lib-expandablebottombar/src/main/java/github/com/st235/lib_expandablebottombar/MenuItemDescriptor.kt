@@ -13,7 +13,7 @@ import java.lang.IllegalStateException
 /**
  * Menu item for expandable bottom bar
  */
-data class ExpandableBottomBarMenuItem(
+data class MenuItemDescriptor(
     @IdRes val itemId: Int,
     @DrawableRes val iconId: Int,
     val text: CharSequence,
@@ -21,7 +21,7 @@ data class ExpandableBottomBarMenuItem(
     @ColorInt val badgeBackgroundColor: Int?,
     @ColorInt val badgeTextColor: Int?
 ) {
-    class ItemBuildRequest internal constructor(
+    class BuildRequest internal constructor(
         private val builder: Builder,
         private val context: Context
     ) {
@@ -40,52 +40,52 @@ data class ExpandableBottomBarMenuItem(
         @ColorInt
         var badgeTextColor: Int? = null
 
-        fun id(@IdRes id: Int): ItemBuildRequest {
+        fun id(@IdRes id: Int): BuildRequest {
             this.itemId = id
             return this
         }
 
-        fun icon(@DrawableRes iconId: Int): ItemBuildRequest {
+        fun icon(@DrawableRes iconId: Int): BuildRequest {
             this.iconId = iconId
             return this
         }
 
-        fun text(text: CharSequence): ItemBuildRequest {
+        fun text(text: CharSequence): BuildRequest {
             this.text = text
             return this
         }
 
-        fun textRes(@StringRes textId: Int): ItemBuildRequest {
+        fun textRes(@StringRes textId: Int): BuildRequest {
             this.text = context.getText(textId)
             return this
         }
 
-        fun color(@ColorInt color: Int): ItemBuildRequest {
+        fun color(@ColorInt color: Int): BuildRequest {
             this.activeColor = color
             return this
         }
 
-        fun colorRes(@ColorRes colorId: Int): ItemBuildRequest {
+        fun colorRes(@ColorRes colorId: Int): BuildRequest {
             this.activeColor = ContextCompat.getColor(context, colorId)
             return this
         }
 
-        fun badgeBackgroundColor(@ColorInt badgeBackgroundColor: Int): ItemBuildRequest {
+        fun badgeBackgroundColor(@ColorInt badgeBackgroundColor: Int): BuildRequest {
             this.badgeBackgroundColor = badgeBackgroundColor
             return this
         }
 
-        fun badgeBackgroundColorRes(@ColorRes badgeBackgroundColorRes: Int): ItemBuildRequest {
+        fun badgeBackgroundColorRes(@ColorRes badgeBackgroundColorRes: Int): BuildRequest {
             this.badgeBackgroundColor = ContextCompat.getColor(context, badgeBackgroundColorRes)
             return this
         }
 
-        fun badgeTextColor(@ColorInt badgeTextColor: Int): ItemBuildRequest {
+        fun badgeTextColor(@ColorInt badgeTextColor: Int): BuildRequest {
             this.badgeTextColor = badgeTextColor
             return this
         }
 
-        fun badgeTextColorRes(@ColorRes badgeTextColorRes: Int): ItemBuildRequest {
+        fun badgeTextColorRes(@ColorRes badgeTextColorRes: Int): BuildRequest {
             this.badgeTextColor = ContextCompat.getColor(context, badgeTextColorRes)
             return this
         }
@@ -103,7 +103,7 @@ data class ExpandableBottomBarMenuItem(
         fun create(): Builder {
             assertValidity()
             builder.items.add(
-                ExpandableBottomBarMenuItem(
+                MenuItemDescriptor(
                     itemId,
                     iconId,
                     text!!,
@@ -120,21 +120,21 @@ data class ExpandableBottomBarMenuItem(
      * Class-helper to create expandable bottom bar menu items
      */
     class Builder(private val context: Context) {
-        internal val items = mutableListOf<ExpandableBottomBarMenuItem>()
+        internal val items = mutableListOf<MenuItemDescriptor>()
 
-        fun addItem() = ItemBuildRequest(this, context)
+        fun addItem() = BuildRequest(this, context)
 
         fun addItem(@IdRes itemId: Int, @DrawableRes iconId: Int) =
-            ItemBuildRequest(this, context).id(itemId).icon(iconId)
+            BuildRequest(this, context).id(itemId).icon(iconId)
 
         fun addItem(
             @IdRes itemId: Int,
             @DrawableRes iconId: Int,
             @StringRes textId: Int,
             @ColorInt activeColor: Int = Color.BLACK
-        ) = ItemBuildRequest(this, context).id(itemId).icon(iconId).textRes(textId)
+        ) = BuildRequest(this, context).id(itemId).icon(iconId).textRes(textId)
             .color(activeColor).create()
 
-        fun build(): List<ExpandableBottomBarMenuItem> = items
+        fun build(): List<MenuItemDescriptor> = items
     }
 }

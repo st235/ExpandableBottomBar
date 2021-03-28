@@ -10,14 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
 import github.com.st235.expandablebottombar.R
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBarNotification
+import github.com.st235.lib_expandablebottombar.Notification
 import kotlinx.android.synthetic.main.activity_xml_declared.*
 
 class NotificationBadgeActivity : AppCompatActivity() {
 
     private lateinit var bottomBar: ExpandableBottomBar
-
-    private val notificationsLookup = mutableMapOf<Int, ExpandableBottomBarNotification>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,10 +38,7 @@ class NotificationBadgeActivity : AppCompatActivity() {
         }
 
         bottomBar.onItemReselectedListener = { v, i ->
-            if (!notificationsLookup.containsKey(i.itemId)) {
-                notificationsLookup[i.itemId] = bottomBar.getNotificationFor(i.itemId)
-            }
-            val notification = notificationsLookup.getValue(i.itemId)
+            val notification = i.notification()
 
             if (v.tag == null) {
                 notification.show()
@@ -64,8 +59,8 @@ class NotificationBadgeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.clear -> {
-                for (notification in notificationsLookup.values) {
-                    notification.clear()
+                for (menuItem in bottomBar.getMenuItems()) {
+                    menuItem.notification().clear()
                 }
             }
         }
