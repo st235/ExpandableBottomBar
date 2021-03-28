@@ -2,6 +2,7 @@ package github.com.st235.expandablebottombar
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import github.com.st235.lib_expandablebottombar.MenuItemImpl
 import github.com.st235.lib_expandablebottombar.components.MenuItemView
@@ -14,13 +15,14 @@ import org.junit.runners.JUnit4
 class MenuItemImplTest {
 
     private val menuItem = MenuItemDescriptor(0, 0, "", 0, null, null)
+    private val rootView = mock<ExpandableBottomBar>()
     private val itemView = mock<MenuItemView>()
 
     private lateinit var menuItemImpl: MenuItemImpl
 
     @Before
     fun setUp() {
-        menuItemImpl = MenuItemImpl(menuItem, itemView)
+        menuItemImpl = MenuItemImpl(menuItem, rootView, itemView)
     }
 
     @Test
