@@ -8,7 +8,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.NavOptions
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem
+import github.com.st235.lib_expandablebottombar.MenuItem
 import github.com.st235.lib_expandablebottombar.R
 import java.lang.ref.WeakReference
 
@@ -36,18 +36,18 @@ object ExpandableBottomBarNavigationUI {
                         return
                     }
                     for (menuItem in view.getMenuItems()) {
-                        if (destination.matchDestination(menuItem.itemId)) {
-                            expandableBottomBar.select(menuItem.itemId)
+                        if (destination.matchDestination(menuItem.id)) {
+                            expandableBottomBar.select(menuItem.id)
                         }
                     }
                 }
             })
     }
 
-    //TODO(st235): https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-master-dev/navigation/navigation-ui/src/main/java/androidx/navigation/ui/NavigationUI.java?source=post_page---------------------------%2F%2F&autodive=0%2F#87
+    //TODO(st235): https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-main/navigation/navigation-ui/src/main/java/androidx/navigation/ui/NavigationUI.kt#85
     private fun onNavDestinationSelected(
-        item: ExpandableBottomBarMenuItem,
-        navController: NavController
+            item: MenuItem,
+            navController: NavController
     ): Boolean {
         val builder = NavOptions.Builder()
             .setLaunchSingleTop(true)
@@ -64,7 +64,7 @@ object ExpandableBottomBarNavigationUI {
 
         val options = builder.build()
         return try {
-            navController.navigate(item.itemId, null, options)
+            navController.navigate(item.id, null, options)
             true
         } catch (e: IllegalArgumentException) {
             false

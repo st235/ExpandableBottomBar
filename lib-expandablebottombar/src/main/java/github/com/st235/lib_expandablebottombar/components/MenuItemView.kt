@@ -7,16 +7,33 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBarNotificationBadge
+import github.com.st235.lib_expandablebottombar.NotificationBadge
 import github.com.st235.lib_expandablebottombar.R
 import github.com.st235.lib_expandablebottombar.state.MenuItemSavedState
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import kotlinx.android.synthetic.main.content_bottombar_menu_item.view.*
 
-internal class ExpandableBottomBarMenuItemView @JvmOverloads constructor(
+internal class MenuItemView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr), ExpandableBottomBarNotificationBadge {
+) : LinearLayout(context, attrs, defStyleAttr), NotificationBadge {
+
+    override var notificationBadgeBackgroundColor: Int
+        get() {
+            return iconView.badgeColor
+        }
+        set(@ColorInt value) {
+            iconView.badgeColor = value
+        }
+
+    override var notificationBadgeTextColor: Int
+        get() {
+            return iconView.badgeTextColor
+        }
+        set(@ColorInt value) {
+            iconView.badgeTextColor = value
+        }
 
     init {
         inflate(context, R.layout.content_bottombar_menu_item, this)
@@ -28,7 +45,7 @@ internal class ExpandableBottomBarMenuItemView @JvmOverloads constructor(
         clipChildren = false
     }
 
-    override fun onSaveInstanceState(): Parcelable? {
+    override fun onSaveInstanceState(): Parcelable {
         return MenuItemSavedState(iconView.getState(), super.onSaveInstanceState())
     }
 
@@ -89,11 +106,4 @@ internal class ExpandableBottomBarMenuItemView @JvmOverloads constructor(
         iconView.badgeText = null
     }
 
-    override fun setNotificationBadgeBackground(color: Int) {
-        iconView.badgeColor = color
-    }
-
-    override fun setNotificationBadgeTextColor(color: Int) {
-        iconView.badgeTextColor = color
-    }
 }

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
 import github.com.st235.expandablebottombar.R
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem
+import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 
 
 class ProgrammaticallyCreatedDemoActivity : AppCompatActivity() {
@@ -24,7 +24,7 @@ class ProgrammaticallyCreatedDemoActivity : AppCompatActivity() {
         color.setBackgroundColor(ColorUtils.setAlphaComponent(Color.GRAY, 60))
 
         bottomBar.addItems(
-                ExpandableBottomBarMenuItem.Builder(this)
+                MenuItemDescriptor.Builder(this)
                         .addItem(
                             R.id.icon_home,
                             R.drawable.ic_home,
@@ -57,7 +57,7 @@ class ProgrammaticallyCreatedDemoActivity : AppCompatActivity() {
         }
 
         bottomBar.onItemReselectedListener = { _, i ->
-            Log.d("ExpandableBottomBar", "OnReselected: ${i.itemId}")
+            Log.d("ExpandableBottomBar", "OnReselected: ${i.id}")
         }
     }
 }

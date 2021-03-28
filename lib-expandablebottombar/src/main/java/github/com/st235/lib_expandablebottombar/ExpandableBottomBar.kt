@@ -30,7 +30,7 @@ import github.com.st235.lib_expandablebottombar.ExpandableBottomBar.ItemStyle.Co
 import github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarBehavior
 import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
 import github.com.st235.lib_expandablebottombar.state.BottomBarSavedState
-import github.com.st235.lib_expandablebottombar.utils.AnimationHelper
+import github.com.st235.lib_expandablebottombar.utils.*
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import github.com.st235.lib_expandablebottombar.utils.StyleController
 import github.com.st235.lib_expandablebottombar.utils.applyForApiLAndHigher
@@ -41,7 +41,7 @@ import github.com.st235.lib_expandablebottombar.utils.toPx
 
 internal const val ITEM_NOT_SELECTED = -1
 
-typealias OnItemClickListener = (v: View, menuItem: ExpandableBottomBarMenuItem) -> Unit
+typealias OnItemClickListener = (v: View, menuItem: MenuItem) -> Unit
 
 /**
  * Widget, which implements bottom bar navigation pattern
@@ -88,8 +88,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
 
     @IdRes private var selectedItemId: Int = ITEM_NOT_SELECTED
 
-    private val menuItems = mutableListOf<ExpandableBottomBarMenuItem>()
-    private val viewControllers: MutableMap<Int, ExpandableItemViewController> = mutableMapOf()
+    private val menuItems: MutableMap<Int, MenuItemImpl> = mutableMapOf()
     private val stateController = ExpandableBottomBarStateController(this)
     private lateinit var styleController: StyleController
 
@@ -201,7 +200,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
         }
     }
 
-    override fun onSaveInstanceState(): Parcelable? {
+    override fun onSaveInstanceState(): Parcelable {
         val superState = super.onSaveInstanceState()
         return stateController.store(superState)
     }
@@ -221,32 +220,46 @@ class ExpandableBottomBar @JvmOverloads constructor(
     }
 
     /**
+     * Returns menu item for the given id value
+     *
+     * @throws NullPointerException when id doesn't exists
+     */
+    fun getMenuItemFor(@IdRes id: Int): MenuItem {
+        return menuItems.getValue(id)
+    }
+
+    /**
      * Returns notification for passed menu item
      *
      * @throws NullPointerException when id doesn't exists
      */
-    fun getNotificationFor(@IdRes id: Int): ExpandableBottomBarNotification {
-        return viewControllers.getValue(id).notification()
+    @Deprecated(
+            message = "This method was replaced with MenuItem#notification",
+            replaceWith = ReplaceWith(expression = "this.getMenuItemFor(id = id).notification()"),
+            level = DeprecationLevel.ERROR
+    )
+    fun getNotificationFor(@IdRes id: Int): Notification {
+        return menuItems.getValue(id).notification()
     }
 
     /**
      * Adds passed items to widget
      *
-     * @param items - bottom bar menu items
+     * @param itemDescriptors - bottom bar menu items
      */
-    fun addItems(items: List<ExpandableBottomBarMenuItem>) {
+    fun addItems(itemDescriptors: List<MenuItemDescriptor>) {
         menuItems.clear()
 
-        val firstItemId = items.first().itemId
-        val lastItemId = items.last().itemId
+        val firstItemId = itemDescriptors.first().itemId
+        val lastItemId = itemDescriptors.last().itemId
         selectedItemId = firstItemId
 
-        for ((i, item) in items.withIndex()) {
+        for ((i, item) in itemDescriptors.withIndex()) {
             val viewController = createItem(item)
-            viewControllers[item.itemId] = viewController
+            menuItems[item.itemId] = viewController
 
-            val prevIconId = if (i - 1 < 0) firstItemId else items[i - 1].itemId
-            val nextIconId = if (i + 1 >= items.size) lastItemId else items[i + 1].itemId
+            val prevIconId = if (i - 1 < 0) firstItemId else itemDescriptors[i - 1].itemId
+            val nextIconId = if (i + 1 >= itemDescriptors.size) lastItemId else itemDescriptors[i + 1].itemId
 
             viewController.attachTo(
                 this,
@@ -255,11 +268,13 @@ class ExpandableBottomBar @JvmOverloads constructor(
             )
         }
 
-        menuItems.addAll(items)
-        madeMenuItemsAccessible(items)
+        madeMenuItemsAccessible(itemDescriptors)
     }
 
-    internal fun getMenuItems(): List<ExpandableBottomBarMenuItem> = menuItems
+    /**
+     * Returns all menu items
+     */
+    fun getMenuItems(): List<MenuItem> = menuItems.values.toList()
 
     /**
      * Programmatically select item
@@ -267,14 +282,14 @@ class ExpandableBottomBar @JvmOverloads constructor(
      * @param id - identifier of menu item, which should be selected
      */
     fun select(@IdRes id: Int) {
-        val itemToSelect = viewControllers.getValue(id)
-        onItemSelected(itemToSelect.menuItem)
+        val itemToSelect = menuItems.getValue(id)
+        onItemSelected(itemToSelect)
     }
 
     /**
      * Returns currently selected item
      */
-    fun getSelected(): ExpandableBottomBarMenuItem = viewControllers.getValue(selectedItemId).menuItem
+    fun getSelected(): MenuItem = menuItems.getValue(selectedItemId)
 
     /**
      * Shows the bottom bar
@@ -308,25 +323,25 @@ class ExpandableBottomBar @JvmOverloads constructor(
         }
     }
 
-    private fun madeMenuItemsAccessible(items: List<ExpandableBottomBarMenuItem>) {
-        for ((i, item) in items.withIndex()) {
-            val prev = viewControllers[items.getOrNull(i - 1)?.itemId]
-            val next = viewControllers[items.getOrNull(i + 1)?.itemId]
+    private fun madeMenuItemsAccessible(itemDescriptors: List<MenuItemDescriptor>) {
+        for ((i, item) in itemDescriptors.withIndex()) {
+            val prev = menuItems[itemDescriptors.getOrNull(i - 1)?.itemId]
+            val next = menuItems[itemDescriptors.getOrNull(i + 1)?.itemId]
 
-            viewControllers[item.itemId]?.setAccessibleWith(prev = prev, next = next)
+            menuItems[item.itemId]?.setAccessibleWith(prev = prev, next = next)
         }
     }
 
-    private fun createItem(menuItem: ExpandableBottomBarMenuItem): ExpandableItemViewController {
-        val viewController =
-            ExpandableItemViewController.Builder(menuItem)
+    private fun createItem(menuItemDescriptor: MenuItemDescriptor): MenuItemImpl {
+        val menuItem =
+            MenuItemImpl.Builder(menuItemDescriptor)
                 .styleController(styleController)
                 .itemMargins(menuHorizontalPadding, menuVerticalPadding)
                 .itemBackground(itemBackgroundCornerRadius, itemBackgroundOpacity)
                 .itemInactiveColor(itemInactiveColor)
                 .notificationBadgeColor(globalBadgeColor)
                 .notificationBadgeTextColor(globalBadgeTextColor)
-                .onItemClickListener { v: View ->
+                .onItemClickListener { menuItem: MenuItem, v: View ->
                     if (!v.isSelected) {
                         onItemSelected(menuItem)
                         onItemSelectedListener?.invoke(v, menuItem)
@@ -334,36 +349,30 @@ class ExpandableBottomBar @JvmOverloads constructor(
                         onItemReselectedListener?.invoke(v, menuItem)
                     }
                 }
-                .build(context)
+                .build(this)
 
-        if (selectedItemId == menuItem.itemId) {
-            viewController.select()
+        if (selectedItemId == menuItemDescriptor.itemId) {
+            menuItem.select()
         }
 
-        return viewController
+        return menuItem
     }
 
-    private fun onItemSelected(activeMenuItem: ExpandableBottomBarMenuItem) {
-        if (selectedItemId == activeMenuItem.itemId) {
+    private fun onItemSelected(activeMenuItem: MenuItem) {
+        if (selectedItemId == activeMenuItem.id) {
             return
         }
 
-        applyTransition()
+        delayTransition(duration = transitionDuration.toLong())
 
         val set = ConstraintSet()
         set.clone(this)
 
-        viewControllers.getValue(activeMenuItem.itemId).select()
-        viewControllers.getValue(selectedItemId).unselect()
-        selectedItemId = activeMenuItem.itemId
+        menuItems.getValue(activeMenuItem.id).select()
+        menuItems.getValue(selectedItemId).deselect()
+        selectedItemId = activeMenuItem.id
 
         set.applyTo(this)
-    }
-
-    private fun applyTransition() {
-        val autoTransition = AutoTransition()
-        autoTransition.duration = transitionDuration.toLong()
-        TransitionManager.beginDelayedTransition(this, autoTransition)
     }
 
     internal class ExpandableBottomBarStateController(
@@ -374,8 +383,8 @@ class ExpandableBottomBar @JvmOverloads constructor(
 
         fun restore(stateBottomBar: BottomBarSavedState) {
             val selectedItemId = stateBottomBar.selectedItem
-            val viewController = expandableBottomBar.viewControllers.getValue(selectedItemId)
-            expandableBottomBar.onItemSelected(viewController.menuItem)
+            val menuItem = expandableBottomBar.menuItems.getValue(selectedItemId)
+            expandableBottomBar.onItemSelected(menuItem)
         }
     }
 
