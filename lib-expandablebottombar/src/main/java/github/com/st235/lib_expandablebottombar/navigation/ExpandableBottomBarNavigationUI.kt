@@ -16,8 +16,10 @@ object ExpandableBottomBarNavigationUI {
             expandableBottomBar: ExpandableBottomBar,
             navigationController: NavController
     ) {
-        expandableBottomBar.onItemSelectedListener = { _, menuItem ->
-            onNavDestinationSelected(menuItem, navigationController)
+        expandableBottomBar.onItemSelectedListener = { _, menuItem, byUser ->
+            if (byUser) {
+                onNavDestinationSelected(menuItem, navigationController)
+            }
         }
 
         val weakReference = WeakReference(expandableBottomBar)
@@ -32,9 +34,9 @@ object ExpandableBottomBarNavigationUI {
                             navigationController.removeOnDestinationChangedListener(this)
                             return
                         }
-                        for (menuItem in view.getMenuItems()) {
+                        for (menuItem in view.menu) {
                             if (destination.matchDestination(menuItem.id)) {
-                                expandableBottomBar.select(menuItem.id)
+                                view.menu.select(menuItem.id)
                             }
                         }
                     }

@@ -23,7 +23,7 @@ class XmlDeclaredActivity : AppCompatActivity() {
 
         color.setBackgroundColor(ColorUtils.setAlphaComponent(Color.GRAY, 60))
 
-        bottomBar.onItemSelectedListener = { v, i ->
+        bottomBar.onItemSelectedListener = { v, i, _ ->
             val anim = ViewAnimationUtils.createCircularReveal(color,
                     bottomBar.x.toInt() + v.x.toInt() + v.width / 2,
                     bottomBar.y.toInt() + v.y.toInt() + v.height / 2, 0F,
