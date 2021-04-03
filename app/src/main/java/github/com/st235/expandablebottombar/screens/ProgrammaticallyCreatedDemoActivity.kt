@@ -2,8 +2,6 @@ package github.com.st235.expandablebottombar.screens
 
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.ViewAnimationUtils

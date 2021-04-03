@@ -73,18 +73,22 @@ Firstly, you should declare your view in xml file
         app:layout_constraintStart_toStartOf="parent" />
 ```
 
-Then you should add menu items to your navigation component
+Then you should add menu items to your navigation menu
+To access menu call `bottomBar.menu` on your navigation view
 
 ```kotlin
         val bottomBar: ExpandableBottomBar = findViewById(R.id.expandable_bottom_bar)
+        val menu = bottomBar.menu
 
-        bottomBar.addItems(
-                MenuItemDescriptor.Builder(context = this)
-                        .addItem(R.id.icon_home, R.drawable.ic_bug, R.string.text, Color.GRAY)
-                        .addItem(R.id.icon_go, R.drawable.ic_gift, R.string.text2, 0xFFFF77A9)
-                        .addItem(R.id.icon_left, R.drawable.ic_one, R.string.text3, 0xFF58A5F0)
-                        .addItem(R.id.icon_right, R.drawable.ic_two, R.string.text4, 0xFFBE9C91)
-                        .build()
+        menu.add(
+            MenuItemDescriptor.Builder(
+                this,
+                R.id.icon_home,
+                R.drawable.ic_home,
+                R.string.text, 
+                Color.GRAY
+            )
+                .build()
         )
 
         bottomBar.onItemSelectedListener = { view, menuItem ->
@@ -185,7 +189,8 @@ Then you should reference this xml file at the view attributes
     /**
      * Returns notification object
      */
-    val notification = bottomBar.getMenuItemFor(i.itemId).notification() // itemId is R.id.action_id
+    val menu = bottomBar.menu
+    val notification = menu.findItemById(i.itemId).notification() // itemId is R.id.action_id
 
    notification.show() // shows simple dot-notification
    notification.show("string literal") // shows notification with counter. Counter could not exceed the 4 symbols length

@@ -33,21 +33,31 @@ interface Menu: Iterable<MenuItem> {
      * Programmatically select item
      *
      * @param id - identifier of menu item, which should be selected
+     * @throws IllegalArgumentException when menu item cannot be found
      */
     @Throws(IllegalArgumentException::class)
     fun select(@IdRes id: Int)
 
     fun deselect()
 
+    /**
+     * Removes the given menu item
+     *
+     * @param id - identifier of menu item, which should be selected
+     * @throws IllegalArgumentException when menu item cannot be found
+     */
     @Throws(IllegalArgumentException::class)
     fun remove(@IdRes id: Int)
 
+    /**
+     * Removes all menu items
+     */
     fun removeAll()
 
     /**
      * Returns menu item for the given id value
      *
-     * @throws NullPointerException when id doesn't exists
+     * @throws IllegalArgumentException when menu item cannot be found
      */
     @Throws(IllegalArgumentException::class)
     fun findItemById(@IdRes id: Int): MenuItem
