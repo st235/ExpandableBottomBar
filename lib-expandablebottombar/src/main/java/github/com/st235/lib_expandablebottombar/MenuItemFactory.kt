@@ -18,8 +18,8 @@ internal class MenuItemFactory(
     @Px private var backgroundCornerRadius: Float,
     @FloatRange(from = 0.0, to = 1.0) private var backgroundOpacity: Float,
     @ColorInt private var itemInactiveColor: Int,
-    @ColorInt private var notificationBadgeColor: Int,
-    @ColorInt private var notificationBadgeTextColor: Int
+    @ColorInt private var globalNotificationBadgeColor: Int,
+    @ColorInt private var globalNotificationBadgeTextColor: Int
 ) {
 
     fun build(
@@ -47,8 +47,8 @@ internal class MenuItemFactory(
 
             setIcon(menuItemDescriptor.iconId, backgroundColorStateList)
             setText(menuItemDescriptor.text, backgroundColorStateList)
-            notificationBadgeBackgroundColor = menuItemDescriptor.badgeBackgroundColor ?: notificationBadgeColor
-            notificationBadgeTextColor = menuItemDescriptor.badgeTextColor ?: notificationBadgeTextColor
+            notificationBadgeBackgroundColor = menuItemDescriptor.badgeBackgroundColor ?: globalNotificationBadgeColor
+            notificationBadgeTextColor = menuItemDescriptor.badgeTextColor ?: globalNotificationBadgeTextColor
 
             background = createHighlightedMenuShape(menuItemDescriptor)
             setOnClickListener {
