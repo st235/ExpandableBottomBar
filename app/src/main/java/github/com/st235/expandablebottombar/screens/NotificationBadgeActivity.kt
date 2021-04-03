@@ -27,7 +27,7 @@ class NotificationBadgeActivity : AppCompatActivity() {
 
         color.setBackgroundColor(ColorUtils.setAlphaComponent(Color.GRAY, 60))
 
-        bottomBar.onItemSelectedListener = { v, i ->
+        bottomBar.onItemSelectedListener = { v, i, _ ->
             val anim = ViewAnimationUtils.createCircularReveal(color,
                     bottomBar.x.toInt() + v.x.toInt() + v.width / 2,
                     bottomBar.y.toInt() + v.y.toInt() + v.height / 2, 0F,
@@ -37,7 +37,7 @@ class NotificationBadgeActivity : AppCompatActivity() {
             anim.start()
         }
 
-        bottomBar.onItemReselectedListener = { v, i ->
+        bottomBar.onItemReselectedListener = { v, i, _ ->
             val notification = i.notification()
 
             if (v.tag == null) {
@@ -59,7 +59,7 @@ class NotificationBadgeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.clear -> {
-                for (menuItem in bottomBar.getMenuItems()) {
+                for (menuItem in bottomBar.menu) {
                     menuItem.notification().clear()
                 }
             }

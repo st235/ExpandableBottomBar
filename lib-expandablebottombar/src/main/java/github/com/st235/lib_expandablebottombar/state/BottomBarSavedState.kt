@@ -5,6 +5,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 internal data class BottomBarSavedState(
-    val selectedItem: Int,
+    val selectedItem: Int?,
     val superState: Parcelable?
 ): Parcelable

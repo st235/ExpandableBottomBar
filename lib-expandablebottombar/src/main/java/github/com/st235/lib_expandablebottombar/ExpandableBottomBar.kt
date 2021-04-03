@@ -8,20 +8,13 @@ import android.graphics.Outline
 import android.graphics.Rect
 import android.os.Build
 import android.os.Parcelable
-import android.transition.AutoTransition
-import android.transition.TransitionManager
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.view.ViewOutlineProvider
-import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
-import androidx.annotation.FloatRange
-import androidx.annotation.DimenRes
-import androidx.annotation.IdRes
+import androidx.annotation.*
 import androidx.annotation.IntRange
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -31,17 +24,6 @@ import github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarBeha
 import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
 import github.com.st235.lib_expandablebottombar.state.BottomBarSavedState
 import github.com.st235.lib_expandablebottombar.utils.*
-import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
-import github.com.st235.lib_expandablebottombar.utils.StyleController
-import github.com.st235.lib_expandablebottombar.utils.applyForApiLAndHigher
-import github.com.st235.lib_expandablebottombar.utils.clamp
-import github.com.st235.lib_expandablebottombar.utils.min
-import github.com.st235.lib_expandablebottombar.utils.toPx
-
-
-internal const val ITEM_NOT_SELECTED = -1
-
-typealias OnItemClickListener = (v: View, menuItem: MenuItem) -> Unit
 
 /**
  * Widget, which implements bottom bar navigation pattern
@@ -63,14 +45,21 @@ class ExpandableBottomBar @JvmOverloads constructor(
 
     private val bounds = Rect()
 
-    @FloatRange(from = 0.0, to = 1.0) private var itemBackgroundOpacity: Float = 0F
-    @FloatRange(from = 0.0) private var itemBackgroundCornerRadius: Float = 0F
-    @IntRange(from = 0) private var menuItemHorizontalMargin: Int = 0
-    @IntRange(from = 0) private var menuItemVerticalMargin: Int = 0
-    @IntRange(from = 0) private var menuHorizontalPadding: Int = 0
-    @IntRange(from = 0) private var menuVerticalPadding: Int = 0
+    @FloatRange(from = 0.0, to = 1.0) private val itemBackgroundOpacity: Float
+    @FloatRange(from = 0.0) private val itemBackgroundCornerRadius: Float
+    @IntRange(from = 0) private val menuItemHorizontalMargin: Int
+    @IntRange(from = 0) private val menuItemVerticalMargin: Int
+    @IntRange(from = 0) private val menuHorizontalPadding: Int
+    @IntRange(from = 0) private val menuVerticalPadding: Int
+    @ColorInt private val itemInactiveColor: Int
+    @ColorInt private val globalBadgeColor: Int
+    @ColorInt private val globalBadgeTextColor: Int
+    private val transitionDuration: Int
+    private val menuImpl: MenuImpl
+    private val styleController: StyleController
+    private val stateController = ExpandableBottomBarStateController(this)
 
-    @ColorInt private var itemInactiveColor: Int = Color.BLACK
+
     @FloatRange(from = 0.0) private var backgroundCornerRadius: Float = 0F
     set(value) {
         field = value
@@ -79,44 +68,42 @@ class ExpandableBottomBar @JvmOverloads constructor(
         }
     }
 
-    @ColorInt
-    private var globalBadgeColor: Int = Color.RED
-    @ColorInt
-    private var globalBadgeTextColor: Int = Color.WHITE
+    val menu: Menu
+    get() {
+        return menuImpl
+    }
 
-    private var transitionDuration: Int = 0
+    var onItemSelectedListener: OnItemClickListener?
+    get() {
+        return menu.onItemSelectedListener
+    }
+    set(value) {
+        menu.onItemSelectedListener = value
+    }
 
-    @IdRes private var selectedItemId: Int = ITEM_NOT_SELECTED
-
-    private val menuItems: MutableMap<Int, MenuItemImpl> = mutableMapOf()
-    private val stateController = ExpandableBottomBarStateController(this)
-    private lateinit var styleController: StyleController
-
-    var onItemSelectedListener: OnItemClickListener? = null
-    var onItemReselectedListener: OnItemClickListener? = null
+    var onItemReselectedListener: OnItemClickListener?
+    get() {
+        return menu.onItemReselectedListener
+    }
+    set(value) {
+        menu.onItemReselectedListener = value
+    }
 
     private var animator: Animator? = null
 
     init {
-        initAttrs(context, attrs, defStyleAttr)
-    }
-
-    override fun getBehavior(): CoordinatorLayout.Behavior<*> =
-        ExpandableBottomBarBehavior<ExpandableBottomBar>()
-
-    private fun initAttrs(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
-        if (attrs == null) {
-            return
-        }
-
         if (id == View.NO_ID) {
             id = View.generateViewId()
         }
 
         contentDescription = resources.getString(R.string.accessibility_description)
 
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableBottomBar,
-            defStyleAttr, R.style.ExpandableBottomBar)
+        val typedArray = context.obtainStyledAttributes(
+            attrs,
+            R.styleable.ExpandableBottomBar,
+            defStyleAttr,
+            R.style.ExpandableBottomBar
+        )
 
         itemBackgroundOpacity = typedArray.getFloat(R.styleable.ExpandableBottomBar_exb_itemBackgroundOpacity, 0.2F)
         itemBackgroundCornerRadius = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_itemBackgroundCornerRadius, 30F.toPx())
@@ -145,15 +132,32 @@ class ExpandableBottomBar @JvmOverloads constructor(
             clipToOutline = true
         }
 
+        val menuItemFactory = MenuItemFactory(
+            this,
+            styleController,
+            menuVerticalPadding,
+            menuHorizontalPadding,
+            itemBackgroundCornerRadius,
+            itemBackgroundOpacity,
+            itemInactiveColor, globalBadgeColor,
+            globalBadgeTextColor
+        )
+        menuImpl = MenuImpl(this, menuItemFactory, menuItemHorizontalMargin, menuItemVerticalMargin, transitionDuration.toLong())
+
         val menuId = typedArray.getResourceId(R.styleable.ExpandableBottomBar_exb_items, View.NO_ID)
         if (menuId != View.NO_ID) {
             val barParser = ExpandableBottomBarParser(context)
             val items = barParser.inflate(menuId)
-            addItems(items)
+            for (item in items) {
+                menuImpl.add(item)
+            }
         }
 
         typedArray.recycle()
     }
+
+    override fun getBehavior(): CoordinatorLayout.Behavior<*> =
+        ExpandableBottomBarBehavior<ExpandableBottomBar>()
 
     override fun setBackgroundColor(@ColorInt color: Int) {
         setBackgroundColor(color, backgroundCornerRadius)
@@ -171,24 +175,6 @@ class ExpandableBottomBar @JvmOverloads constructor(
 
     fun setBackgroundColorRes(@ColorRes colorRes: Int, @DimenRes backgroundCornerRadiusRes: Int) {
         setBackgroundColor(ContextCompat.getColor(context, colorRes), resources.getDimension(backgroundCornerRadiusRes))
-    }
-
-    fun setNotificationBadgeBackgroundColor(@ColorInt color: Int) {
-        globalBadgeColor = color
-        invalidate()
-    }
-
-    fun setNotificationBadgeBackgroundColorRes(@ColorRes colorRes: Int) {
-        setNotificationBadgeBackgroundColor(ContextCompat.getColor(context, colorRes))
-    }
-
-    fun setNotificationBadgeTextColor(@ColorInt color: Int) {
-        globalBadgeTextColor = color
-        invalidate()
-    }
-
-    fun setNotificationBadgeTextColorRes(@ColorRes colorRes: Int) {
-        setNotificationBadgeTextColor(ContextCompat.getColor(context, colorRes))
     }
 
     override fun onAttachedToWindow() {
@@ -218,78 +204,6 @@ class ExpandableBottomBar @JvmOverloads constructor(
         super.onSizeChanged(w, h, oldw, oldh)
         bounds.set(0, 0, w, h)
     }
-
-    /**
-     * Returns menu item for the given id value
-     *
-     * @throws NullPointerException when id doesn't exists
-     */
-    fun getMenuItemFor(@IdRes id: Int): MenuItem {
-        return menuItems.getValue(id)
-    }
-
-    /**
-     * Returns notification for passed menu item
-     *
-     * @throws NullPointerException when id doesn't exists
-     */
-    @Deprecated(
-            message = "This method was replaced with MenuItem#notification",
-            replaceWith = ReplaceWith(expression = "this.getMenuItemFor(id = id).notification()"),
-            level = DeprecationLevel.ERROR
-    )
-    fun getNotificationFor(@IdRes id: Int): Notification {
-        return menuItems.getValue(id).notification()
-    }
-
-    /**
-     * Adds passed items to widget
-     *
-     * @param itemDescriptors - bottom bar menu items
-     */
-    fun addItems(itemDescriptors: List<MenuItemDescriptor>) {
-        menuItems.clear()
-
-        val firstItemId = itemDescriptors.first().itemId
-        val lastItemId = itemDescriptors.last().itemId
-        selectedItemId = firstItemId
-
-        for ((i, item) in itemDescriptors.withIndex()) {
-            val viewController = createItem(item)
-            menuItems[item.itemId] = viewController
-
-            val prevIconId = if (i - 1 < 0) firstItemId else itemDescriptors[i - 1].itemId
-            val nextIconId = if (i + 1 >= itemDescriptors.size) lastItemId else itemDescriptors[i + 1].itemId
-
-            viewController.attachTo(
-                this,
-                prevIconId, nextIconId,
-                menuItemHorizontalMargin, menuItemVerticalMargin
-            )
-        }
-
-        madeMenuItemsAccessible(itemDescriptors)
-    }
-
-    /**
-     * Returns all menu items
-     */
-    fun getMenuItems(): List<MenuItem> = menuItems.values.toList()
-
-    /**
-     * Programmatically select item
-     *
-     * @param id - identifier of menu item, which should be selected
-     */
-    fun select(@IdRes id: Int) {
-        val itemToSelect = menuItems.getValue(id)
-        onItemSelected(itemToSelect)
-    }
-
-    /**
-     * Returns currently selected item
-     */
-    fun getSelected(): MenuItem = menuItems.getValue(selectedItemId)
 
     /**
      * Shows the bottom bar
@@ -323,68 +237,39 @@ class ExpandableBottomBar @JvmOverloads constructor(
         }
     }
 
-    private fun madeMenuItemsAccessible(itemDescriptors: List<MenuItemDescriptor>) {
-        for ((i, item) in itemDescriptors.withIndex()) {
-            val prev = menuItems[itemDescriptors.getOrNull(i - 1)?.itemId]
-            val next = menuItems[itemDescriptors.getOrNull(i + 1)?.itemId]
-
-            menuItems[item.itemId]?.setAccessibleWith(prev = prev, next = next)
-        }
-    }
-
-    private fun createItem(menuItemDescriptor: MenuItemDescriptor): MenuItemImpl {
-        val menuItem =
-            MenuItemImpl.Builder(menuItemDescriptor)
-                .styleController(styleController)
-                .itemMargins(menuHorizontalPadding, menuVerticalPadding)
-                .itemBackground(itemBackgroundCornerRadius, itemBackgroundOpacity)
-                .itemInactiveColor(itemInactiveColor)
-                .notificationBadgeColor(globalBadgeColor)
-                .notificationBadgeTextColor(globalBadgeTextColor)
-                .onItemClickListener { menuItem: MenuItem, v: View ->
-                    if (!v.isSelected) {
-                        onItemSelected(menuItem)
-                        onItemSelectedListener?.invoke(v, menuItem)
-                    } else {
-                        onItemReselectedListener?.invoke(v, menuItem)
-                    }
-                }
-                .build(this)
-
-        if (selectedItemId == menuItemDescriptor.itemId) {
-            menuItem.select()
-        }
-
-        return menuItem
-    }
-
-    private fun onItemSelected(activeMenuItem: MenuItem) {
-        if (selectedItemId == activeMenuItem.id) {
-            return
-        }
-
-        delayTransition(duration = transitionDuration.toLong())
-
-        val set = ConstraintSet()
-        set.clone(this)
-
-        menuItems.getValue(activeMenuItem.id).select()
-        menuItems.getValue(selectedItemId).deselect()
-        selectedItemId = activeMenuItem.id
-
-        set.applyTo(this)
-    }
-
     internal class ExpandableBottomBarStateController(
         private val expandableBottomBar: ExpandableBottomBar
     ) {
 
-        fun store(superState: Parcelable?) = BottomBarSavedState(expandableBottomBar.selectedItemId, superState)
+        fun store(superState: Parcelable?): Parcelable {
+            val selectedItem = expandableBottomBar.menu.selectedItem
+            return BottomBarSavedState(selectedItem?.id, superState)
+        }
 
         fun restore(stateBottomBar: BottomBarSavedState) {
             val selectedItemId = stateBottomBar.selectedItem
-            val menuItem = expandableBottomBar.menuItems.getValue(selectedItemId)
-            expandableBottomBar.onItemSelected(menuItem)
+
+            expandableBottomBar.menu.doSilently { menu ->
+                if (selectedItemId != null) {
+                    try {
+                        menu.select(selectedItemId)
+                    } catch (e: IllegalArgumentException) {
+                        // catch exception here as it is possible that
+                        // menu item do not exists and should be added later
+                        menu.deselect()
+                    }
+                }
+            }
+        }
+
+        private inline fun Menu.doSilently(scope: (menu: Menu) -> Unit) {
+            val selectedItemListener = onItemSelectedListener
+            val reselectedItemListener = onItemReselectedListener
+            onItemSelectedListener = null
+            onItemReselectedListener = null
+            scope(this)
+            onItemSelectedListener = selectedItemListener
+            onItemReselectedListener = reselectedItemListener
         }
     }
 

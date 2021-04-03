@@ -15,6 +15,8 @@ interface MenuItem {
 
     val isShown: Boolean
 
+    val isAttached: Boolean
+
     /**
      * Shows item
      */
@@ -22,10 +24,7 @@ interface MenuItem {
 
     /**
      * Hides item
-     *
-     * @throws IllegalStateException when item is selected
      */
-    @Throws(IllegalStateException::class)
     fun hide()
 
     fun notification(): Notification

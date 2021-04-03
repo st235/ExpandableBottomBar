@@ -3,7 +3,6 @@ package github.com.st235.expandablebottombar.screens.navigation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
 import github.com.st235.expandablebottombar.R
 import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
 import kotlinx.android.synthetic.main.activiy_navigation.*
