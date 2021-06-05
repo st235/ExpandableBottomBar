@@ -2,7 +2,7 @@ package github.com.st235.lib_expandablebottombar
 
 import android.view.View
 import androidx.annotation.IdRes
-import github.com.st235.lib_expandablebottombar.utils.delayTransition
+import github.com.st235.lib_expandablebottombar.utils.TransitionHelper
 import kotlin.collections.ArrayList
 import kotlin.collections.LinkedHashMap
 
@@ -11,7 +11,8 @@ internal class MenuImpl(
     private val itemFactory: MenuItemFactory,
     private val menuItemHorizontalMargin: Int,
     private val menuItemVerticalMargin: Int,
-    private val transitionDuration: Long
+    private val transitionDuration: Long,
+    private val transitionHelper: TransitionHelper = TransitionHelper()
 ): Menu {
 
     private companion object {
@@ -46,7 +47,7 @@ internal class MenuImpl(
     }
 
     override fun add(descriptor: MenuItemDescriptor) {
-        rootView.delayTransition(duration = transitionDuration)
+        transitionHelper.apply(rootView, transitionDuration)
 
         if (selectedItemId == ITEM_NOT_SELECTED) {
             selectedItemId = descriptor.itemId
@@ -98,7 +99,7 @@ internal class MenuImpl(
             throw IllegalArgumentException("Cannot remove item with id $id because it was not found in the menu")
         }
 
-        rootView.delayTransition(duration = transitionDuration)
+        transitionHelper.apply(rootView, transitionDuration)
 
         val menuItemToRemove = itemsLookup.getValue(id)
         menuItemToRemove.removeFromSuperView()
@@ -127,7 +128,7 @@ internal class MenuImpl(
             return
         }
 
-        rootView.delayTransition(duration = transitionDuration)
+        transitionHelper.apply(rootView, transitionDuration)
 
         itemsLookup.getValue(activeMenuItem.id).select()
         // can be removed from the menu, that's why can be nullable

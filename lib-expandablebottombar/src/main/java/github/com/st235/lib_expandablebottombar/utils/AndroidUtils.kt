@@ -13,14 +13,3 @@ internal inline fun applyForApiLAndHigher(scope: Scope) {
         scope()
     }
 }
-
-internal fun ViewGroup.delayTransition(duration: Long = -1L) {
-    val autoTransition = AutoTransition()
-    autoTransition.duration = duration
-    TransitionManager.beginDelayedTransition(this, autoTransition)
-}
-
-internal fun View.show(isShown: Boolean = false) {
-    this.visibility = if (isShown)  View.VISIBLE else View.GONE
-}
-

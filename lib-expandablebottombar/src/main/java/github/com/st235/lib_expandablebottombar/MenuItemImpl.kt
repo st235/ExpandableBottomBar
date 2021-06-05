@@ -1,20 +1,20 @@
 package github.com.st235.lib_expandablebottombar
 
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
+import androidx.annotation.IdRes
 import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat.setAccessibilityDelegate
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import github.com.st235.lib_expandablebottombar.components.MenuItemView
-import github.com.st235.lib_expandablebottombar.utils.createChain
-import github.com.st235.lib_expandablebottombar.utils.delayTransition
-import github.com.st235.lib_expandablebottombar.utils.show
+import github.com.st235.lib_expandablebottombar.utils.ConstraintLayoutHelper
+import github.com.st235.lib_expandablebottombar.utils.TransitionHelper
 
 internal class MenuItemImpl(
         menuItemDescriptor: MenuItemDescriptor,
         private val rootView: ExpandableBottomBar,
-        private val itemView: MenuItemView
+        private val itemView: MenuItemView,
+        private val transitionHelper: TransitionHelper = TransitionHelper(),
+        private val constraintLayoutHelper: ConstraintLayoutHelper = ConstraintLayoutHelper()
 ): MenuItem {
 
     private val notification = Notification(itemView)
@@ -45,15 +45,15 @@ internal class MenuItemImpl(
     private set
 
     override fun show() {
-        rootView.delayTransition()
-        itemView.show()
+        transitionHelper.apply(rootView)
+        itemView.visibility = View.VISIBLE
     }
 
     override fun hide() {
         val menu = rootView.menu
 
-        rootView.delayTransition()
-        itemView.show(isShown = false)
+        transitionHelper.apply(rootView)
+        itemView.visibility = View.GONE
 
         if (menu.selectedItem == this) {
             menu.deselect()
@@ -82,13 +82,7 @@ internal class MenuItemImpl(
     ) {
         isAttached = true
 
-        val lp = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT
-        )
-
-        lp.setMargins(
-            menuItemHorizontalMargin,
-            menuItemVerticalMargin,
+        val lp = constraintLayoutHelper.layoutParams(
             menuItemHorizontalMargin,
             menuItemVerticalMargin
         )
@@ -102,29 +96,15 @@ internal class MenuItemImpl(
     }
 
     fun rebuildSiblingsConnection(
-        previousIconId: Int,
-        nextIconId: Int
+        @IdRes previousIconId: Int,
+        @IdRes nextIconId: Int
     ) {
-        val cl = ConstraintSet()
-        cl.clone(rootView)
-
-        cl.connect(itemView.id, ConstraintSet.TOP, rootView.id, ConstraintSet.TOP)
-        cl.connect(itemView.id, ConstraintSet.BOTTOM, rootView.id, ConstraintSet.BOTTOM)
-
-        if (previousIconId == itemView.id) {
-            cl.connect(itemView.id, ConstraintSet.START, rootView.id, ConstraintSet.START)
-        } else {
-            cl.connect(itemView.id, ConstraintSet.START, previousIconId, ConstraintSet.END)
-            cl.createChain(previousIconId, itemView.id, ConstraintSet.CHAIN_PACKED)
-        }
-
-        if (nextIconId == itemView.id) {
-            cl.connect(itemView.id, ConstraintSet.END, rootView.id, ConstraintSet.END)
-        } else {
-            cl.connect(itemView.id, ConstraintSet.END, nextIconId, ConstraintSet.START)
-            cl.createChain(itemView.id, nextIconId, ConstraintSet.CHAIN_PACKED)
-        }
-
-        cl.applyTo(rootView)
+        constraintLayoutHelper.applyNewConstraintSetFor(
+            itemView,
+            rootView,
+            previousIconId,
+            nextIconId
+        )
     }
+
 }
