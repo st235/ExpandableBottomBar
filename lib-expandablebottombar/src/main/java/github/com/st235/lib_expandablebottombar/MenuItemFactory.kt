@@ -6,11 +6,12 @@ import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
 import androidx.annotation.Px
+import androidx.annotation.VisibleForTesting
 import github.com.st235.lib_expandablebottombar.components.MenuItemView
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import github.com.st235.lib_expandablebottombar.utils.StyleController
 
-internal class MenuItemFactory(
+internal open class MenuItemFactory(
     private val rootView: ExpandableBottomBar,
     private val styleController: StyleController,
     @Px private val itemVerticalPadding: Int,
@@ -28,7 +29,7 @@ internal class MenuItemFactory(
     ): MenuItemImpl {
         val context: Context = rootView.context
 
-        val itemView = MenuItemView(context = context)
+        val itemView = createItemView(context = context)
         val menuItem = MenuItemImpl(
             menuItemDescriptor,
             rootView,
@@ -57,6 +58,13 @@ internal class MenuItemFactory(
         }
 
         return menuItem
+    }
+
+    @VisibleForTesting
+    internal open fun createItemView(
+        context: Context
+    ): MenuItemView {
+        return MenuItemView(context = context)
     }
 
     private fun createHighlightedMenuShape(menuItemDescriptor: MenuItemDescriptor): Drawable {

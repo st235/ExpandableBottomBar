@@ -120,7 +120,7 @@ data class MenuItemDescriptor(
                 text == null ||
                 activeColor == null
             ) {
-                throw IllegalStateException("Menu Item not constructed properly")
+                throw IllegalStateException("Menu Item is not constructed properly")
             }
         }
 
