@@ -4,8 +4,8 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.content_showcase_item.view.*
 
 typealias OnItemClickListener = (info: ShowCaseInfo) -> Unit
 
@@ -27,8 +27,8 @@ class ShowCaseAdapter(
     override fun getItemCount(): Int = items.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        val title = itemView.title
-        val description = itemView.description
+        val title: TextView = itemView.findViewById(R.id.title)
+        val description: TextView = itemView.findViewById(R.id.description)
 
         init {
             itemView.isClickable = true
