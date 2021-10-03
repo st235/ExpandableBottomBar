@@ -12,15 +12,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import github.com.st235.expandablebottombar.R
-import kotlinx.android.synthetic.main.activity_coordinator_layout.*
 
 class ScrollableCoordinatorLayoutActivity : AppCompatActivity() {
+
+    private lateinit var fab: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scrollable_coordinator_layout)
+
+        fab = findViewById(R.id.fab)
 
         val rc = findViewById<RecyclerView>(R.id.recycler_view)
 

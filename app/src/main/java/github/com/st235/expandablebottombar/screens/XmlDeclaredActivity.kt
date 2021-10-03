@@ -6,16 +6,21 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.graphics.ColorUtils
 import github.com.st235.expandablebottombar.R
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-import kotlinx.android.synthetic.main.activity_xml_declared.*
 
 class XmlDeclaredActivity : AppCompatActivity() {
+
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_xml_declared)
+
+        toolbar = findViewById(R.id.toolbar)
+
         setSupportActionBar(toolbar)
 
         val color: View = findViewById(R.id.color)
