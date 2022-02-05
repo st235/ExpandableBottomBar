@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.navigation.*
 import androidx.navigation.NavController.OnDestinationChangedListener
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import github.com.st235.lib_expandablebottombar.MenuItem
 import github.com.st235.lib_expandablebottombar.R
@@ -66,10 +67,14 @@ object ExpandableBottomBarNavigationUI {
                     .setPopExitAnim(R.animator.nav_default_pop_exit_anim)
         }
 
-        val topDestination = navController.findStartDestination()
+        val topDestination = navController.graph.findStartDestination()
 
-        topDestination?.let {
-            builder.setPopUpTo(it.id, false)
+        topDestination.let {
+            builder.setPopUpTo(
+                it.id,
+                inclusive = false,
+                saveState = true
+            )
         }
 
         val options = builder.build()
@@ -87,17 +92,6 @@ object ExpandableBottomBarNavigationUI {
             currentDestination = currentDestination.parent
         }
         return currentDestination.id == destId
-    }
-
-    private fun NavController.findStartDestination(): NavDestination? {
-        var startDestination: NavDestination? = graph
-
-        while (startDestination is NavGraph) {
-            val parent = startDestination
-            startDestination = parent.findNode(parent.startDestination)
-        }
-
-        return startDestination
     }
 
 }
