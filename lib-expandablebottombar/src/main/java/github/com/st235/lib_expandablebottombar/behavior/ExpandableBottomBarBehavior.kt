@@ -1,5 +1,6 @@
 package github.com.st235.lib_expandablebottombar.behavior
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
@@ -20,9 +21,17 @@ open class ExpandableBottomBarBehavior<V: View>: CoordinatorLayout.Behavior<V> {
         return super.layoutDependsOn(parent, child, dependency)
     }
 
+    /**
+     * Lint is suppressed to modify
+     * snackbar default behaviour. Snackbar is
+     * overlaying [ExpandableBottomBar] without
+     * this changes.
+     */
+    @SuppressLint("RestrictedApi")
     private fun updateSnackbar(child: View, snackbarLayout: Snackbar.SnackbarLayout) {
-        if (snackbarLayout.layoutParams is CoordinatorLayout.LayoutParams) {
-            val params = snackbarLayout.layoutParams as CoordinatorLayout.LayoutParams
+        val params = snackbarLayout.layoutParams
+
+        if (params is CoordinatorLayout.LayoutParams) {
 
             params.anchorId = child.id
             params.anchorGravity = Gravity.TOP

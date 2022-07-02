@@ -5,12 +5,12 @@
     tools:orientation="horizontal">
 
     <github.com.st235.lib_expandablebottombar.components.notifications.ExpandableBottomBarNotificationBadgeView
-        android:id="@+id/iconView"
+        android:id="@+id/icon_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/titleView"
+        android:id="@+id/title_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

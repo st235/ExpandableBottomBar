@@ -28,9 +28,9 @@ internal class MenuItemImpl(
     fun setAccessibleWith(prev: MenuItemImpl?,
                           next: MenuItemImpl?) {
         setAccessibilityDelegate(itemView, object : AccessibilityDelegateCompat() {
-            override fun onInitializeAccessibilityNodeInfo(host: View?, info: AccessibilityNodeInfoCompat?) {
-                info?.setTraversalAfter(prev?.itemView)
-                info?.setTraversalBefore(next?.itemView)
+            override fun onInitializeAccessibilityNodeInfo(host: View, info: AccessibilityNodeInfoCompat) {
+                info.setTraversalAfter(prev?.itemView)
+                info.setTraversalBefore(next?.itemView)
                 super.onInitializeAccessibilityNodeInfo(host, info)
             }
         })

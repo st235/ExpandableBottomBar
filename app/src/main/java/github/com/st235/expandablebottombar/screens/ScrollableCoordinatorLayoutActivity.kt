@@ -1,7 +1,6 @@
 package github.com.st235.expandablebottombar.screens
 
 import android.graphics.BitmapFactory
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import github.com.st235.expandablebottombar.R
+import java.util.concurrent.Executors
 
 class ScrollableCoordinatorLayoutActivity : AppCompatActivity() {
 
@@ -39,20 +40,9 @@ class ScrollableCoordinatorLayoutActivity : AppCompatActivity() {
     }
 
     internal fun loadBitmap(@DrawableRes id: Int, view: AppCompatImageView) {
-        AsyncTask.THREAD_POOL_EXECUTOR.execute {
-            val options = BitmapFactory.Options()
-            options.inJustDecodeBounds = true
-            BitmapFactory.decodeResource(resources, id, options)
-            val inSampleSize = calculateInSampleSize(options, 320, 320)
-
-            options.inJustDecodeBounds = false
-            options.inSampleSize = inSampleSize
-            val cat = BitmapFactory.decodeResource(resources, id, options)
-
-            runOnUiThread {
-                view.setImageBitmap(cat)
-            }
-        }
+        Picasso.get()
+            .load(id)
+            .into(view)
     }
 
     @WorkerThread

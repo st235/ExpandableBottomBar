@@ -9,15 +9,19 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
+import androidx.appcompat.widget.AppCompatTextView
 import github.com.st235.lib_expandablebottombar.NotificationBadge
 import github.com.st235.lib_expandablebottombar.R
+import github.com.st235.lib_expandablebottombar.components.notifications.ExpandableBottomBarNotificationBadgeView
 import github.com.st235.lib_expandablebottombar.state.MenuItemSavedState
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
-import kotlinx.android.synthetic.main.content_bottombar_menu_item.view.*
 
 internal class MenuItemView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), NotificationBadge {
+
+    private val iconView: ExpandableBottomBarNotificationBadgeView
+    private val titleView: AppCompatTextView
 
     override var notificationBadgeBackgroundColor: Int
         get() {
@@ -37,6 +41,9 @@ internal class MenuItemView @JvmOverloads constructor(
 
     init {
         inflate(context, R.layout.content_bottombar_menu_item, this)
+
+        iconView = findViewById(R.id.icon_view)
+        titleView = findViewById(R.id.title_view)
 
         orientation =  HORIZONTAL
         gravity = Gravity.CENTER
