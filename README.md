@@ -4,6 +4,7 @@
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.st235/expandablebottombar/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.st235/expandablebottombar)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/st235/ExpandableBottomBar.svg)
+![Lines of code](https://img.shields.io/tokei/lines/github/st235/ExpandableBottomBar)
 [![CircleCI](https://circleci.com/gh/st235/ExpandableBottomBar.svg?style=svg)](https://circleci.com/gh/st235/ExpandableBottomBar)
 
 A new way to improve navigation in your app
