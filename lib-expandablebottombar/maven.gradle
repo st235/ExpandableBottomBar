@@ -23,6 +23,10 @@ def getRepositoryPassword() {
     return hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : ""
 }
 
+def retrieveArtifactId() {
+    return hasProperty('ARTIFACT_ID') ? ARTIFACT_ID : project.name
+}
+
 afterEvaluate {
     publishing {
         publications {
@@ -30,7 +34,7 @@ afterEvaluate {
                 from components.release
 
                 groupId = GROUP
-                artifactId = project.name
+                artifactId = retrieveArtifactId()
                 version = VERSION_NAME
 
                 repositories {
