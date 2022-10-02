@@ -4,11 +4,11 @@ apply plugin: 'kotlin-parcelize'
 apply from: './maven.gradle'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode project.property('VERSION_CODE') as int
         versionName project.property('VERSION_NAME')
 
