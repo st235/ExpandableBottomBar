@@ -2,7 +2,6 @@ package github.com.st235.expandablebottombar
 
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.nhaarman.mockitokotlin2.*
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import github.com.st235.lib_expandablebottombar.Menu
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
@@ -10,11 +9,19 @@ import github.com.st235.lib_expandablebottombar.MenuItemImpl
 import github.com.st235.lib_expandablebottombar.components.MenuItemView
 import github.com.st235.lib_expandablebottombar.utils.ConstraintLayoutHelper
 import github.com.st235.lib_expandablebottombar.utils.TransitionHelper
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 @RunWith(JUnit4::class)
 class MenuItemImplTest {

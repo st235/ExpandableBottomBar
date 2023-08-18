@@ -1,16 +1,16 @@
 package github.com.st235.expandablebottombar
 
 import android.graphics.Color
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 import github.com.st235.lib_expandablebottombar.Notification
 import github.com.st235.lib_expandablebottombar.NotificationBadge
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 @RunWith(JUnit4::class)
 class NotificationTest {
