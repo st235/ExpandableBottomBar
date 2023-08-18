@@ -12,6 +12,10 @@ android {
         versionCode 1
     }
 
+    lint {
+        baseline = file('lint-baseline.txt')
+    }
+
     buildTypes {
         release {
             minifyEnabled false
