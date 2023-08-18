@@ -64,12 +64,10 @@ internal class ExpandableBottomBarNotificationBadgeView @JvmOverloads constructo
         viewBounds.set(0F, 0F, w.toFloat(), h.toFloat())
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        if (canvas != null) {
-            badgeDrawer?.draw(paint, viewBounds, canvas)
-        }
+        badgeDrawer?.draw(paint, viewBounds, canvas)
     }
 
     fun getState() = stateController.store(onSaveInstanceState())
