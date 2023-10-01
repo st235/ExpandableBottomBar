@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        android:contentDescription="@string/coordinator_scroll_fab_content_description"
         app:srcCompat="@drawable/ic_meow" />
 
     <github.com.st235.lib_expandablebottombar.ExpandableBottomBar

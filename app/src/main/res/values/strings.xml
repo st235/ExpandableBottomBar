@@ -17,9 +17,11 @@
 
     <string name="coordinator_base_title">Base coordinator features</string>
     <string name="coordinator_base_description">Demonstrates usage of ExpandableBottomBarBehavior. Allows FAB and Snackbar messages anchor to ExpandableBottomBar.\n See: https://github.com/st235/ExpandableBottomBar#coordinator-layout-support</string>
+    <string name="coordinator_base_fab_content_description">Floating Action Button: on top of the ExpandableBottomBar</string>
 
     <string name="coordinator_scroll_title">Scroll coordinator features</string>
     <string name="coordinator_scroll_description">Advanced coordinator layout features like hide on scroll are demonstrated here. Behaviour usage can be found at screens/ScrollableCoordinatorLayoutActivity.kt</string>
+    <string name="coordinator_scroll_fab_content_description">Floating Action Button: follows ExpandableBottomBar</string>
 
     <string name="navigation_components_title">Navigation components</string>
     <string name="navigation_components_description">ExpandableBottomBar brings support of Navigation Components system. Starting from now you are able to attach bottom menu in a one line of code.\n See: https://github.com/st235/ExpandableBottomBar#navigation-components-support</string>
