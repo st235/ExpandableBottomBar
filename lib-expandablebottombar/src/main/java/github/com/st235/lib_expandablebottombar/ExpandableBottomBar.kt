@@ -63,7 +63,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
     @FloatRange(from = 0.0) private var backgroundCornerRadius: Float = 0F
     set(value) {
         field = value
-        applyForApiLAndHigher {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             invalidateOutline()
         }
     }
@@ -126,7 +126,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
         background =
             DrawableHelper.createShapeDrawable(color = backgroundColor, cornerRadius = backgroundCornerRadius, opacity = 1.0F)
 
-        applyForApiLAndHigher {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             elevation = typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_elevation, 16F.toPx())
             outlineProvider = ExpandableBottomBarOutlineProvider()
             clipToOutline = true
