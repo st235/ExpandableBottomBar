@@ -13,7 +13,7 @@
         android:id="@+id/normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/_8dp"
         app:exb_itemInactiveColor="#CCCCCC"
         app:exb_items="@menu/bottom_bar"
         app:exb_itemStyle="normal"
@@ -24,7 +24,7 @@
     <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/_8dp"
         app:exb_itemInactiveColor="#CCCCCC"
         app:exb_items="@menu/bottom_bar"
         app:exb_itemStyle="outline"
@@ -35,7 +35,7 @@
     <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/_8dp"
         app:exb_itemInactiveColor="#CCCCCC"
         app:exb_items="@menu/bottom_bar"
         app:exb_itemStyle="stroked"

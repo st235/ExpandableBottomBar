@@ -1,0 +1,16 @@
+<resources>
+    <dimen name="_0dp">0dp</dimen>
+    <dimen name="_4dp">4dp</dimen>
+    <dimen name="_6dp">6dp</dimen>
+    <dimen name="_8dp">8dp</dimen>
+    <dimen name="_16dp">16dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_25dp">25dp</dimen>
+    <dimen name="_36dp">36dp</dimen>
+    <dimen name="_22sp">22sp</dimen>
+    <dimen name="_18sp">18sp</dimen>
+
+
+
+
+</resources>

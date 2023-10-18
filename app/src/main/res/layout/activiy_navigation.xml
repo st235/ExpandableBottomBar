@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/navigationHost"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="@dimen/_0dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -20,7 +20,7 @@
 
     <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
         android:id="@+id/bottomNavigation"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/_0dp"
         android:layout_height="wrap_content"
         app:backgroundTint="#fff"
         app:exb_items="@menu/navigation_menu"

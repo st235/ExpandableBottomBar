@@ -9,10 +9,10 @@
 
     <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
             android:id="@+id/expandable_bottom_bar"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            app:exb_backgroundCornerRadius="25dp"
+            android:layout_margin="@dimen/_20dp"
+            app:exb_backgroundCornerRadius="@dimen/_25dp"
             app:exb_backgroundColor="#2e2e2e"
             app:exb_itemInactiveColor="#fff"
             app:layout_constraintBottom_toBottomOf="parent"
