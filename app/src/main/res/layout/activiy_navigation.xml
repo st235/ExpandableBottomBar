@@ -22,7 +22,7 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="@dimen/_0dp"
         android:layout_height="wrap_content"
-        app:backgroundTint="#fff"
+        app:backgroundTint="@color/white"
         app:exb_items="@menu/navigation_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

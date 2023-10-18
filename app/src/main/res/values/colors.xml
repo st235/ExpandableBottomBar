@@ -6,4 +6,6 @@
 
     <color name="colorSettings">#2270DE</color>
     <color name="colorLike">#ff77a9</color>
+    <color name="black">#000</color>
+    <color name="white">#fff</color>
 </resources>

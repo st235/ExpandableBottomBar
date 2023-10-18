@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello Fragment 3"
-        android:textColor="#000"
+        android:textColor="@color/black"
         android:layout_gravity="center"
         android:textSize="@dimen/_22sp"
         tools:ignore="HardcodedText" />

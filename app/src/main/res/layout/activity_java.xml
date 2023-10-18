@@ -14,7 +14,7 @@
             android:layout_margin="@dimen/_20dp"
             app:exb_backgroundCornerRadius="@dimen/_25dp"
             app:exb_backgroundColor="#2e2e2e"
-            app:exb_itemInactiveColor="#fff"
+            app:exb_itemInactiveColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
