@@ -3,7 +3,6 @@ package github.com.st235.expandablebottombar.screens
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.annotation.WorkerThread
@@ -11,31 +10,29 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import github.com.st235.expandablebottombar.R
-import java.util.concurrent.Executors
+import github.com.st235.expandablebottombar.databinding.ActivityScrollableCoordinatorLayoutBinding
+import github.com.st235.expandablebottombar.databinding.ItemCatBinding
 
 class ScrollableCoordinatorLayoutActivity : AppCompatActivity() {
 
-    private lateinit var fab: FloatingActionButton
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_scrollable_coordinator_layout)
 
-        fab = findViewById(R.id.fab)
+        val binding = ActivityScrollableCoordinatorLayoutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val rc = findViewById<RecyclerView>(R.id.recycler_view)
+        with(binding) {
+            recyclerView.apply {
+                layoutManager = GridLayoutManager(context, 2)
+                adapter = Adapter()
+            }
 
-        rc.apply {
-            layoutManager = GridLayoutManager(context, 2)
-            adapter = Adapter()
-        }
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Meow", Snackbar.LENGTH_LONG).show()
+            fab.setOnClickListener { view ->
+                Snackbar.make(view, "Meow", Snackbar.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -66,15 +63,10 @@ class ScrollableCoordinatorLayoutActivity : AppCompatActivity() {
         return inSampleSize
     }
 
-    private inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val image = itemView.findViewById<AppCompatImageView>(R.id.item_iv)
-
+    private inner class ViewHolder(val binding: ItemCatBinding) : RecyclerView.ViewHolder(binding.root) {
         fun setResource(@DrawableRes id: Int) {
-            loadBitmap(id, image)
+            loadBitmap(id, binding.itemIv)
         }
-
-
     }
 
     private inner class Adapter : RecyclerView.Adapter<ViewHolder>() {
@@ -92,7 +84,7 @@ class ScrollableCoordinatorLayoutActivity : AppCompatActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val ctx = parent.context
-            val v = LayoutInflater.from(ctx).inflate(R.layout.item_cat, parent, false)
+            val v = ItemCatBinding.inflate(LayoutInflater.from(ctx), parent, false)
             return ViewHolder(v)
         }
 

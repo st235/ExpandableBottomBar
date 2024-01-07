@@ -3,9 +3,8 @@ package github.com.st235.expandablebottombar
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import github.com.st235.expandablebottombar.databinding.ActivityShowcaseBinding
 import github.com.st235.expandablebottombar.screens.*
 import github.com.st235.expandablebottombar.screens.navigation.NavigationComponentActivity
 
@@ -48,28 +47,26 @@ class ShowCaseActivity : AppCompatActivity() {
         )
     }
 
-    private lateinit var toolbar: Toolbar
-    private lateinit var recyclerView: RecyclerView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_showcase)
 
-        toolbar = findViewById(R.id.toolbar)
-        recyclerView = findViewById(R.id.recyclerView)
+        val binding = ActivityShowcaseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setSupportActionBar(toolbar)
+        with(binding) {
+            setSupportActionBar(toolbar)
 
-        val adapter = ShowCaseAdapter(showCaseInfos) { info ->
-            val intent = Intent(this@ShowCaseActivity, info.toClass)
-            intent.putExtra(ARGS_SCREEN_TITLE, title)
-            startActivity(intent)
+            val adapter = ShowCaseAdapter(showCaseInfos) { info ->
+                val intent = Intent(this@ShowCaseActivity, info.toClass)
+                intent.putExtra(ARGS_SCREEN_TITLE, title)
+                startActivity(intent)
+            }
+
+            val layoutManager = LinearLayoutManager(this@ShowCaseActivity)
+
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = layoutManager
         }
-
-        val layoutManager = LinearLayoutManager(this)
-
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = layoutManager
     }
 
     companion object {
