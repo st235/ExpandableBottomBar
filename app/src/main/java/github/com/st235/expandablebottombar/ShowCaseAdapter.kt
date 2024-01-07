@@ -4,8 +4,8 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import github.com.st235.expandablebottombar.databinding.ContentShowcaseItemBinding
 
 typealias OnItemClickListener = (info: ShowCaseInfo) -> Unit
 
@@ -16,7 +16,7 @@ class ShowCaseAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
-        val v = LayoutInflater.from(context).inflate(R.layout.content_showcase_item, parent, false)
+        val v = ContentShowcaseItemBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(v)
     }
 
@@ -26,21 +26,18 @@ class ShowCaseAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        val title: TextView = itemView.findViewById(R.id.title)
-        val description: TextView = itemView.findViewById(R.id.description)
-
+    inner class ViewHolder(private val binding: ContentShowcaseItemBinding) :RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         init {
             itemView.isClickable = true
             itemView.isFocusable = true
             itemView.setOnClickListener(this)
 
-            description.movementMethod = LinkMovementMethod.getInstance()
+            binding.description.movementMethod = LinkMovementMethod.getInstance()
         }
 
         fun bind(showCaseInfo: ShowCaseInfo) {
-            title.text = showCaseInfo.title
-            description.text = showCaseInfo.description
+            binding.title.text = showCaseInfo.title
+            binding.description.text = showCaseInfo.description
         }
 
         override fun onClick(v: View?) {

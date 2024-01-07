@@ -7,9 +7,8 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import github.com.st235.expandablebottombar.R;
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar;
+import github.com.st235.expandablebottombar.databinding.ActivityJavaBinding;
 import github.com.st235.lib_expandablebottombar.Menu;
-import github.com.st235.lib_expandablebottombar.MenuItem;
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor;
 
 public class JavaActivity extends AppCompatActivity {
@@ -19,10 +18,11 @@ public class JavaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_java);
 
-        ExpandableBottomBar bottomBar = findViewById(R.id.expandable_bottom_bar);
-        Menu menu = bottomBar.getMenu();
+        ActivityJavaBinding binding = ActivityJavaBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        Menu menu = binding.expandableBottomBar.getMenu();
 
         menu.add(
                 new MenuItemDescriptor.Builder(this, R.id.icon_home, R.drawable.ic_home, R.string.text, Color.GRAY).build()
@@ -40,12 +40,12 @@ public class JavaActivity extends AppCompatActivity {
                 new MenuItemDescriptor.Builder(this, R.id.icon_settings, R.drawable.ic_settings, R.string.text4, 0xffbe9c91).build()
         );
 
-        bottomBar.setOnItemSelectedListener((view, item, byUser) -> {
+        binding.expandableBottomBar.setOnItemSelectedListener((view, item, byUser) -> {
             Log.d(TAG, "selected: " + item.toString());
             return null;
         });
 
-        bottomBar.setOnItemReselectedListener((view, item, byUser) -> {
+        binding.expandableBottomBar.setOnItemReselectedListener((view, item, byUser) -> {
             Log.d(TAG, "reselected: " + item.toString());
             return null;
         });

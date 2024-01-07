@@ -7,49 +7,46 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.graphics.ColorUtils
 import github.com.st235.expandablebottombar.R
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+import github.com.st235.expandablebottombar.databinding.ActivityNotificationBadgeBinding
 
 class NotificationBadgeActivity : AppCompatActivity() {
 
-    private lateinit var toolbar: Toolbar
-    private lateinit var bottomBar: ExpandableBottomBar
+    private lateinit var binding: ActivityNotificationBadgeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_notification_badge)
 
-        toolbar = findViewById(R.id.toolbar)
+        binding = ActivityNotificationBadgeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setSupportActionBar(toolbar)
+        with(binding) {
+            setSupportActionBar(toolbar)
 
-        val color: View = findViewById(R.id.color)
-        bottomBar = findViewById(R.id.expandable_bottom_bar)
+            color.setBackgroundColor(ColorUtils.setAlphaComponent(Color.GRAY, 60))
 
-        color.setBackgroundColor(ColorUtils.setAlphaComponent(Color.GRAY, 60))
-
-        bottomBar.onItemSelectedListener = { v, i, _ ->
-            val anim = ViewAnimationUtils.createCircularReveal(color,
-                    bottomBar.x.toInt() + v.x.toInt() + v.width / 2,
-                    bottomBar.y.toInt() + v.y.toInt() + v.height / 2, 0F,
+            expandableBottomBar.onItemSelectedListener = { v, i, _ ->
+                val anim = ViewAnimationUtils.createCircularReveal(color,
+                    expandableBottomBar.x.toInt() + v.x.toInt() + v.width / 2,
+                    expandableBottomBar.y.toInt() + v.y.toInt() + v.height / 2, 0F,
                     findViewById<View>(android.R.id.content).height.toFloat())
-            color.setBackgroundColor(ColorUtils.setAlphaComponent(i.activeColor, 60))
-            anim.duration = 420
-            anim.start()
-        }
+                color.setBackgroundColor(ColorUtils.setAlphaComponent(i.activeColor, 60))
+                anim.duration = 420
+                anim.start()
+            }
 
-        bottomBar.onItemReselectedListener = { v, i, _ ->
-            val notification = i.notification()
+            expandableBottomBar.onItemReselectedListener = { v, i, _ ->
+                val notification = i.notification()
 
-            if (v.tag == null) {
-                notification.show()
-                v.tag = 0
-            } else {
-                val counter = (v.tag as Int) + 1
-                notification.show(counter.toString())
-                v.tag = counter
+                if (v.tag == null) {
+                    notification.show()
+                    v.tag = 0
+                } else {
+                    val counter = (v.tag as Int) + 1
+                    notification.show(counter.toString())
+                    v.tag = counter
+                }
             }
         }
     }
@@ -62,7 +59,7 @@ class NotificationBadgeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.clear -> {
-                for (menuItem in bottomBar.menu) {
+                for (menuItem in binding.expandableBottomBar.menu) {
                     menuItem.notification().clear()
                 }
             }
