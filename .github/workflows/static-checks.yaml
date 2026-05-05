@@ -45,5 +45,8 @@ jobs:
       - name: Run Android Linter
         run: ./gradlew lint
 
+      - name: Run Detekt
+        run: ./gradlew detekt
+
       - name: Run unit tests
         run: ./gradlew test

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.graphics.ColorUtils
 import github.com.st235.expandablebottombar.R
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+import github.com.st235.expandablebottombar.ExpandableBottomBar
 
 class NotificationBadgeActivity : AppCompatActivity() {
 

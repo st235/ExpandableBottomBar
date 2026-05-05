@@ -8,8 +8,8 @@ import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
 import github.com.st235.expandablebottombar.R
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
+import github.com.st235.expandablebottombar.ExpandableBottomBar
+import github.com.st235.expandablebottombar.MenuItemDescriptor
 
 
 class ProgrammaticallyCreatedDemoActivity : AppCompatActivity() {

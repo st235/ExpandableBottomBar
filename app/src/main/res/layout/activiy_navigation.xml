@@ -18,7 +18,7 @@
         app:navGraph="@navigation/navigation"
         tools:ignore="FragmentTagUsage" />
 
-    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+    <github.com.st235.expandablebottombar.ExpandableBottomBar
         android:id="@+id/bottomNavigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

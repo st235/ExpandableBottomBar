@@ -7,10 +7,9 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import github.com.st235.expandablebottombar.R;
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar;
-import github.com.st235.lib_expandablebottombar.Menu;
-import github.com.st235.lib_expandablebottombar.MenuItem;
-import github.com.st235.lib_expandablebottombar.MenuItemDescriptor;
+import github.com.st235.expandablebottombar.ExpandableBottomBar;
+import github.com.st235.expandablebottombar.Menu;
+import github.com.st235.expandablebottombar.MenuItemDescriptor;
 
 public class JavaActivity extends AppCompatActivity {
 

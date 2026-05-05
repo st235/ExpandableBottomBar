@@ -1,0 +1,71 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'io.gitlab.arturbosch.detekt'
+apply plugin: 'com.dropbox.dependency-guard'
+apply plugin: 'org.jetbrains.kotlinx.binary-compatibility-validator'
+apply from: './maven.gradle'
+
+android {
+    namespace 'github.com.st235.expandablebottombar'
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 34
+        compileSdk 34
+        versionCode project.property('VERSION_CODE') as int
+        versionName project.property('VERSION_NAME')
+
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            versionNameSuffix '-debug'
+        }
+
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    kotlin {
+        jvmToolchain(17)
+    }
+}
+
+dependencyGuard {
+    configuration("releaseRuntimeClasspath")
+}
+
+dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22'
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.3'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:5.3.1'
+    testImplementation 'org.hamcrest:hamcrest-library:2.2'
+    testImplementation 'androidx.test:core:1.5.0'
+    testImplementation 'org.mockito.kotlin:mockito-kotlin:5.1.0'
+    testImplementation 'org.robolectric:robolectric:4.8.1'
+
+}
