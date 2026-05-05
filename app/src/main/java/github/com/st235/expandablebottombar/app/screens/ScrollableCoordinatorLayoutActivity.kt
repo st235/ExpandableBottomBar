@@ -1,4 +1,4 @@
-package github.com.st235.expandablebottombar.screens
+package github.com.st235.expandablebottombar.app.screens
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import github.com.st235.expandablebottombar.R
+import github.com.st235.expandablebottombar.app.R
 import java.util.concurrent.Executors
 
 class ScrollableCoordinatorLayoutActivity : AppCompatActivity() {

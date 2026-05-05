@@ -15,6 +15,7 @@ open class ExpandableBottomBarBehavior<V: View>: CoordinatorLayout.Behavior<V> {
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet)
 
     override fun layoutDependsOn(parent: CoordinatorLayout, child: V, dependency: View): Boolean {
+        @SuppressLint("RestrictedApi")
         if (dependency is Snackbar.SnackbarLayout) {
             updateSnackbar(child, dependency)
         }
@@ -25,7 +26,7 @@ open class ExpandableBottomBarBehavior<V: View>: CoordinatorLayout.Behavior<V> {
      * Lint is suppressed to modify
      * snackbar default behaviour. Snackbar is
      * overlaying [ExpandableBottomBar] without
-     * this changes.
+     * the changes.
      */
     @SuppressLint("RestrictedApi")
     private fun updateSnackbar(child: View, snackbarLayout: Snackbar.SnackbarLayout) {

@@ -1,4 +1,4 @@
-package github.com.st235.expandablebottombar.screens
+package github.com.st235.expandablebottombar.app.screens
 
 import android.content.Context
 import android.util.AttributeSet
