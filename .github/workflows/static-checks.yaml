@@ -1,0 +1,50 @@
+name: Android Static Checks
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    types: [ opened, synchronize ]
+
+jobs:
+  static-analysis:
+    name: Static Checks
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    permissions:
+      contents: read
+      pull-requests: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setting up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: Cache Gradle and wrapper
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Run ABI Check
+        run: ./gradlew apiCheck
+
+      - name: Run Dependency Check
+        run: ./gradlew dependencyGuard
+
+      - name: Run Android Linter
+        run: ./gradlew lint
+
+      - name: Run unit tests
+        run: ./gradlew test
