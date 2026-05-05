@@ -102,7 +102,7 @@ internal class MenuItemView @JvmOverloads constructor(
     }
 
     override fun showNotification(text: String) {
-        require(text.length > DEFAULT_NOTIFICATION_TEXT_LENGTH) {
+        require(text.length < DEFAULT_NOTIFICATION_TEXT_LENGTH) {
             "Notifications support text no longer than $DEFAULT_NOTIFICATION_TEXT_LENGTH characters only."
         }
 

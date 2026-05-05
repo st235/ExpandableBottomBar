@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'io.gitlab.arturbosch.detekt'
 apply plugin: 'com.dropbox.dependency-guard'
-apply plugin: 'org.jetbrains.kotlinx.binary-compatibility-validator'
 apply from: './maven.gradle'
 
 android {
