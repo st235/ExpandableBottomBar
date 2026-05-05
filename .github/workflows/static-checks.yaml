@@ -1,10 +1,9 @@
 name: Android Static Checks
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    types: [ opened, synchronize ]
+  push:
+    branches: [main]
 
 jobs:
   static-analysis:
