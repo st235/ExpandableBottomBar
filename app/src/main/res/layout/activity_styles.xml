@@ -9,7 +9,7 @@
     android:gravity="bottom"
     tools:context=".screens.StylesActivity">
 
-    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+    <github.com.st235.expandablebottombar.ExpandableBottomBar
         android:id="@+id/normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+    <github.com.st235.expandablebottombar.ExpandableBottomBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+    <github.com.st235.expandablebottombar.ExpandableBottomBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

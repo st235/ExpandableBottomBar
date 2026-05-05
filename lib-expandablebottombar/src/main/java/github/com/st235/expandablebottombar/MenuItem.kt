@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar
+package github.com.st235.expandablebottombar
 
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes

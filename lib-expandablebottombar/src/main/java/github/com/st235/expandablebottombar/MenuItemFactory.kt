@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar
+package github.com.st235.expandablebottombar
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -7,9 +7,9 @@ import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
 import androidx.annotation.Px
 import androidx.annotation.VisibleForTesting
-import github.com.st235.lib_expandablebottombar.components.MenuItemView
-import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
-import github.com.st235.lib_expandablebottombar.utils.StyleController
+import github.com.st235.expandablebottombar.components.MenuItemView
+import github.com.st235.expandablebottombar.utils.DrawableHelper
+import github.com.st235.expandablebottombar.utils.StyleController
 
 internal open class MenuItemFactory @Suppress("LongParameterList") constructor(
     private val rootView: ExpandableBottomBar,

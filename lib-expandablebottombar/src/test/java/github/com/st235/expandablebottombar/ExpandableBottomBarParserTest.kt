@@ -3,11 +3,10 @@ package github.com.st235.expandablebottombar
 import android.content.Context
 import android.graphics.Color
 import androidx.test.platform.app.InstrumentationRegistry
-import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
-import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
+import github.com.st235.expandablebottombar.parsers.ExpandableBottomBarParser
 import org.junit.Before
 import org.junit.runner.RunWith
-import github.com.st235.lib_expandablebottombar.test.R
+import github.com.st235.expandablebottombar.test.R
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.IsEmptyCollection.empty
 import org.hamcrest.collection.IsIterableContainingInOrder.contains

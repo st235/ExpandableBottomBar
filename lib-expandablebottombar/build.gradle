@@ -5,7 +5,7 @@ apply plugin: 'io.gitlab.arturbosch.detekt'
 apply from: './maven.gradle'
 
 android {
-    namespace 'github.com.st235.lib_expandablebottombar'
+    namespace 'github.com.st235.expandablebottombar'
 
     defaultConfig {
         minSdkVersion 19

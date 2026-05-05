@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar.state
+package github.com.st235.expandablebottombar.state
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar
+package github.com.st235.expandablebottombar
 
 import android.content.Context
 import android.graphics.Color
@@ -117,10 +117,10 @@ data class MenuItemDescriptor(
 
         private fun assertValidity() {
             check(
-                itemId == 0 ||
-                        iconId == 0 ||
-                        text == null ||
-                        activeColor == null
+                itemId != 0 &&
+                        iconId != 0 &&
+                        text != null &&
+                        activeColor != null
             ) {
                 "Menu Item is not constructed properly"
             }

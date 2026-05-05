@@ -3,13 +3,9 @@ package github.com.st235.expandablebottombar
 import android.content.Context
 import android.view.View
 import androidx.test.core.app.ApplicationProvider
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-import github.com.st235.lib_expandablebottombar.MenuItem
-import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
-import github.com.st235.lib_expandablebottombar.MenuItemFactory
-import github.com.st235.lib_expandablebottombar.components.MenuItemView
-import github.com.st235.lib_expandablebottombar.test.R
-import github.com.st235.lib_expandablebottombar.utils.StyleController
+import github.com.st235.expandablebottombar.components.MenuItemView
+import github.com.st235.expandablebottombar.test.R
+import github.com.st235.expandablebottombar.utils.StyleController
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

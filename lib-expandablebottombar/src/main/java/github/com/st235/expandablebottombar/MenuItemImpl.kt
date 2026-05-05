@@ -1,13 +1,13 @@
-package github.com.st235.lib_expandablebottombar
+package github.com.st235.expandablebottombar
 
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat.setAccessibilityDelegate
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
-import github.com.st235.lib_expandablebottombar.components.MenuItemView
-import github.com.st235.lib_expandablebottombar.utils.ConstraintLayoutHelper
-import github.com.st235.lib_expandablebottombar.utils.TransitionHelper
+import github.com.st235.expandablebottombar.components.MenuItemView
+import github.com.st235.expandablebottombar.utils.ConstraintLayoutHelper
+import github.com.st235.expandablebottombar.utils.TransitionHelper
 
 internal class MenuItemImpl(
         menuItemDescriptor: MenuItemDescriptor,

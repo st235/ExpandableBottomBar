@@ -1,8 +1,8 @@
-package github.com.st235.lib_expandablebottombar.components.notifications.badges
+package github.com.st235.expandablebottombar.components.notifications.badges
 
 import android.graphics.Paint
 import androidx.annotation.Px
-import github.com.st235.lib_expandablebottombar.utils.toPx
+import github.com.st235.expandablebottombar.utils.toPx
 
 internal abstract class CharacterDrawer(
     protected val text: String

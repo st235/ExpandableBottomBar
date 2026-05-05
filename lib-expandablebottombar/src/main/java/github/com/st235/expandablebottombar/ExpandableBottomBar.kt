@@ -1,4 +1,5 @@
-package github.com.st235.lib_expandablebottombar
+@file:Suppress("MagicNumber")
+package github.com.st235.expandablebottombar
 
 import android.animation.Animator
 import android.annotation.TargetApi
@@ -22,15 +23,15 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.marginBottom
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar.ItemStyle.Companion.toItemStyle
-import github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarBehavior
-import github.com.st235.lib_expandablebottombar.parsers.ExpandableBottomBarParser
-import github.com.st235.lib_expandablebottombar.state.BottomBarSavedState
-import github.com.st235.lib_expandablebottombar.utils.AnimationHelper
-import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
-import github.com.st235.lib_expandablebottombar.utils.StyleController
-import github.com.st235.lib_expandablebottombar.utils.clamp
-import github.com.st235.lib_expandablebottombar.utils.toPx
+import github.com.st235.expandablebottombar.ExpandableBottomBar.ItemStyle.Companion.toItemStyle
+import github.com.st235.expandablebottombar.behavior.ExpandableBottomBarBehavior
+import github.com.st235.expandablebottombar.parsers.ExpandableBottomBarParser
+import github.com.st235.expandablebottombar.state.BottomBarSavedState
+import github.com.st235.expandablebottombar.utils.AnimationHelper
+import github.com.st235.expandablebottombar.utils.DrawableHelper
+import github.com.st235.expandablebottombar.utils.StyleController
+import github.com.st235.expandablebottombar.utils.clamp
+import github.com.st235.expandablebottombar.utils.toPx
 import kotlin.math.min
 
 /**

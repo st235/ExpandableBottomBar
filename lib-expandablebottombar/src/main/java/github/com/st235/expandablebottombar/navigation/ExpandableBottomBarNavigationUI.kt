@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar.navigation
+package github.com.st235.expandablebottombar.navigation
 
 import android.os.Bundle
 import androidx.annotation.IdRes
@@ -8,9 +8,9 @@ import androidx.navigation.NavController.OnDestinationChangedListener
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-import github.com.st235.lib_expandablebottombar.MenuItem
-import github.com.st235.lib_expandablebottombar.R
+import github.com.st235.expandablebottombar.ExpandableBottomBar
+import github.com.st235.expandablebottombar.MenuItem
+import github.com.st235.expandablebottombar.R
 import java.lang.ref.WeakReference
 
 object ExpandableBottomBarNavigationUI {

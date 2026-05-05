@@ -1,7 +1,6 @@
 package github.com.st235.expandablebottombar
 
 import android.content.Context
-import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4

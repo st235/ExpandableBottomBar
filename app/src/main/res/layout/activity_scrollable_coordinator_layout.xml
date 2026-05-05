@@ -20,12 +20,12 @@
         android:contentDescription="@string/coordinator_scroll_fab_content_description"
         app:srcCompat="@drawable/ic_meow" />
 
-    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+    <github.com.st235.expandablebottombar.ExpandableBottomBar
         android:id="@+id/expandable_bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:exb_items="@menu/bottom_bar"
-        app:layout_behavior="github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior" />
+        app:layout_behavior="github.com.st235.expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

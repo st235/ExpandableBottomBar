@@ -1,10 +1,10 @@
-package github.com.st235.lib_expandablebottombar.utils
+package github.com.st235.expandablebottombar.utils
 
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.StateListDrawable
 import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+import github.com.st235.expandablebottombar.ExpandableBottomBar
 
 internal abstract class StyleController {
 

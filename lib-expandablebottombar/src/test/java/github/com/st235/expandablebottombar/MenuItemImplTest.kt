@@ -2,13 +2,9 @@ package github.com.st235.expandablebottombar
 
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-import github.com.st235.lib_expandablebottombar.Menu
-import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
-import github.com.st235.lib_expandablebottombar.MenuItemImpl
-import github.com.st235.lib_expandablebottombar.components.MenuItemView
-import github.com.st235.lib_expandablebottombar.utils.ConstraintLayoutHelper
-import github.com.st235.lib_expandablebottombar.utils.TransitionHelper
+import github.com.st235.expandablebottombar.components.MenuItemView
+import github.com.st235.expandablebottombar.utils.ConstraintLayoutHelper
+import github.com.st235.expandablebottombar.utils.TransitionHelper
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue

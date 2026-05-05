@@ -15,7 +15,7 @@
         android:contentDescription="@string/coordinator_base_fab_content_description"
         app:srcCompat="@drawable/ic_meow" />
 
-    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+    <github.com.st235.expandablebottombar.ExpandableBottomBar
         android:id="@+id/expandable_bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar.behavior
+package github.com.st235.expandablebottombar.behavior
 
 import android.annotation.SuppressLint
 import android.content.Context

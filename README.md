@@ -60,7 +60,7 @@ Really simple as I wrote earlier
 Firstly, you should declare your view in xml file
 
 ```xml
-    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+    <github.com.st235.expandablebottombar.ExpandableBottomBar
         android:id="@+id/expandable_bottom_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -134,23 +134,23 @@ Firstly, you should declare menu items in xml
 </menu>
 ```
 
-each item tag has following attributes:
+each item tag has the following attributes:
 
-| property | type | description |
-| ----- | ----- | ----- |
-| **id** | reference | an id of menu item |
-| **exb_color** | reference/color | color of element, it may be color reference or color |
-| **icon** | reference | icon reference (vector drawables supported) |
-| **title** | reference/text | item title |
-| **exb_badgeColor** | color | notification badge background color. **It will override the color from layout attribute** |
-| **exb_badgeTextColor** | color | notification badge text color. **It will override the color from layout attribute** |
+| property               | type            | description                                                                               |
+|------------------------|-----------------|-------------------------------------------------------------------------------------------|
+| **id**                 | reference       | an id of menu item                                                                        |
+| **exb_color**          | reference/color | color of element, it may be color reference or color                                      |
+| **icon**               | reference       | icon reference (vector drawables supported)                                               |
+| **title**              | reference/text  | item title                                                                                |
+| **exb_badgeColor**     | color           | notification badge background color. **It will override the color from layout attribute** |
+| **exb_badgeTextColor** | color           | notification badge text color. **It will override the color from layout attribute**       |
 
 Just like any Android menu 😉
 
 Then you should reference this xml file at the view attributes
 
 ```xml
-    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+    <github.com.st235.expandablebottombar.ExpandableBottomBar
         android:id="@+id/expandable_bottom_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -165,23 +165,23 @@ Then you should reference this xml file at the view attributes
 
 ## Xml attributes
 
-| property | type | description |
-| ----- | ----- | ----- |
-| **exb_elevation** | dimen | component elevation (important: api 21+) |
-| **exb_backgroundColor** | color | bottom bar background color |
-| **exb_transitionDuration** | integer | time between one item collapsed and another item expanded |
-| **exb_backgroundCornerRadius** | dimen | bottom bar background corners radius |
-| **exb_itemInactiveColor** | color | item menu color, when its inactive |
-| **exb_itemBackgroundCornerRadius** | dimen | item background corner radius |
-| **exb_itemStyle** | enum: normal, outline, stroke | controls the style of items. **normal** = items are filled with solid color; **outline** = no fill, only border; **stroke** = fill + border |
-| **exb_itemBackgroundOpacity** | float | item background opacity (important: final color alpha calculates by next formulae alpha = opacity * 255) |
-| **exb_item_vertical_margin** | dimen | top & bottom item margins |
-| **exb_item_horizontal_margin** | dimen | left & right item margins |
-| **exb_item_vertical_padding** | dimen | top & bottom item padding |
-| **exb_item_horizontal_padding** | dimen | left & right item padding |
-| **exb_items** | reference | xml supported menu format |
-| **exb_notificationBadgeBackgroundColor** | color | notification badge background color. **Will be applied to all menu items** |
-| **exb_notificationBadgeTextColor** | color | notification badge text color. **Will be applied to all menu items** |
+| property                                 | type                          | description                                                                                                                                 |
+|------------------------------------------|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| **exb_elevation**                        | dimen                         | component elevation (important: api 21+)                                                                                                    |
+| **exb_backgroundColor**                  | color                         | bottom bar background color                                                                                                                 |
+| **exb_transitionDuration**               | integer                       | time between one item collapsed and another item expanded                                                                                   |
+| **exb_backgroundCornerRadius**           | dimen                         | bottom bar background corners radius                                                                                                        |
+| **exb_itemInactiveColor**                | color                         | item menu color, when its inactive                                                                                                          |
+| **exb_itemBackgroundCornerRadius**       | dimen                         | item background corner radius                                                                                                               |
+| **exb_itemStyle**                        | enum: normal, outline, stroke | controls the style of items. **normal** = items are filled with solid color; **outline** = no fill, only border; **stroke** = fill + border |
+| **exb_itemBackgroundOpacity**            | float                         | item background opacity (important: final color alpha calculates by next formulae alpha = opacity * 255)                                    |
+| **exb_item_vertical_margin**             | dimen                         | top & bottom item margins                                                                                                                   |
+| **exb_item_horizontal_margin**           | dimen                         | left & right item margins                                                                                                                   |
+| **exb_item_vertical_padding**            | dimen                         | top & bottom item padding                                                                                                                   |
+| **exb_item_horizontal_padding**          | dimen                         | left & right item padding                                                                                                                   |
+| **exb_items**                            | reference                     | xml supported menu format                                                                                                                   |
+| **exb_notificationBadgeBackgroundColor** | color                         | notification badge background color. **Will be applied to all menu items**                                                                  |
+| **exb_notificationBadgeTextColor**       | color                         | notification badge text color. **Will be applied to all menu items**                                                                        |
 
 ## Notification badges
 
@@ -220,13 +220,12 @@ But... if you need to support hiding the menu by list/grid scroll - then you are
 This functionality is very simple to implement. You need to redeclare custom `Coordinator Layout Behavoir` to `ExpandableBottomBarScrollableBehavior`.
 
 ```xml
-    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-            android:id="@+id/expandable_bottom_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:layout_behavior="github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior"
-            app:items="@menu/bottom_bar" />
+
+<github.com.st235.expandablebottombar.ExpandableBottomBar
+    android:id="@+id/expandable_bottom_bar" android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:layout_gravity="bottom"
+    app:layout_behavior="github.com.st235.expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior"
+    app:items="@menu/bottom_bar" />
 ```
 
 Really easy ;D 

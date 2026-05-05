@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar.components
+package github.com.st235.expandablebottombar.components
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -10,11 +10,13 @@ import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatTextView
-import github.com.st235.lib_expandablebottombar.NotificationBadge
-import github.com.st235.lib_expandablebottombar.R
-import github.com.st235.lib_expandablebottombar.components.notifications.ExpandableBottomBarNotificationBadgeView
-import github.com.st235.lib_expandablebottombar.state.MenuItemSavedState
-import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
+import github.com.st235.expandablebottombar.NotificationBadge
+import github.com.st235.expandablebottombar.R
+import github.com.st235.expandablebottombar.components.notifications.ExpandableBottomBarNotificationBadgeView
+import github.com.st235.expandablebottombar.state.MenuItemSavedState
+import github.com.st235.expandablebottombar.utils.DrawableHelper
+
+private const val DEFAULT_NOTIFICATION_TEXT_LENGTH = 4
 
 internal class MenuItemView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -88,7 +90,7 @@ internal class MenuItemView @JvmOverloads constructor(
     }
 
     fun deselect() {
-        titleView.visibility = View.GONE
+        titleView.visibility = GONE
         titleView.isSelected = false
         iconView.isSelected = false
         isSelected = false
@@ -100,8 +102,8 @@ internal class MenuItemView @JvmOverloads constructor(
     }
 
     override fun showNotification(text: String) {
-        require(text.length > 4) {
-            "Text is longer than 4 symbols, which is not acceptable"
+        require(text.length > DEFAULT_NOTIFICATION_TEXT_LENGTH) {
+            "Notifications support text no longer than $DEFAULT_NOTIFICATION_TEXT_LENGTH characters only."
         }
 
         iconView.showBadge = true

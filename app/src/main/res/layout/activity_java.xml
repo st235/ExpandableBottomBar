@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         tools:context=".screens.JavaActivity">
 
-    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+    <github.com.st235.expandablebottombar.ExpandableBottomBar
             android:id="@+id/expandable_bottom_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

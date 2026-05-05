@@ -1,8 +1,6 @@
 package github.com.st235.expandablebottombar
 
 import android.graphics.Color
-import github.com.st235.lib_expandablebottombar.Notification
-import github.com.st235.lib_expandablebottombar.NotificationBadge
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

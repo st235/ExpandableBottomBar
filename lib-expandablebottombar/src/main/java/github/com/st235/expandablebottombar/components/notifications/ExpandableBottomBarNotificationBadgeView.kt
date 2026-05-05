@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar.components.notifications
+package github.com.st235.expandablebottombar.components.notifications
 
 import android.content.Context
 import android.graphics.Canvas
@@ -10,9 +10,9 @@ import android.text.TextPaint
 import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatImageView
-import github.com.st235.lib_expandablebottombar.components.notifications.badges.BadgeDrawer
-import github.com.st235.lib_expandablebottombar.state.NotificationBadgeSavedState
-import github.com.st235.lib_expandablebottombar.utils.toPx
+import github.com.st235.expandablebottombar.components.notifications.badges.BadgeDrawer
+import github.com.st235.expandablebottombar.state.NotificationBadgeSavedState
+import github.com.st235.expandablebottombar.utils.toPx
 
 internal class ExpandableBottomBarNotificationBadgeView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

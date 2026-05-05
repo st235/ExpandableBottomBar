@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar.utils
+package github.com.st235.expandablebottombar.utils
 
 import android.animation.Animator
 import android.animation.ValueAnimator

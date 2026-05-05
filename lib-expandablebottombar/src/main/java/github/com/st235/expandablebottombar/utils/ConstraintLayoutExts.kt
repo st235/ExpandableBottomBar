@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar.utils
+package github.com.st235.expandablebottombar.utils
 
 import androidx.annotation.IdRes
 import androidx.constraintlayout.widget.ConstraintSet

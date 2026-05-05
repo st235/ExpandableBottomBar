@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar.behavior
+package github.com.st235.expandablebottombar.behavior
 
 import android.animation.Animator
 import android.content.Context
@@ -9,9 +9,11 @@ import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.marginBottom
-import github.com.st235.lib_expandablebottombar.utils.AnimationHelper
-import github.com.st235.lib_expandablebottombar.utils.clamp
+import github.com.st235.expandablebottombar.utils.AnimationHelper
+import github.com.st235.expandablebottombar.utils.clamp
 import kotlin.math.abs
+
+private const val DEFAULT_ANIMATION_DELAY_MS = 500L
 
 class ExpandableBottomBarScrollableBehavior<V : View> :
     ExpandableBottomBarBehavior<V> {
@@ -80,7 +82,10 @@ class ExpandableBottomBarScrollableBehavior<V : View> :
         val delayedAnimationRunnable = Runnable {
             animateWithDirection(child)
         }
-        handler.postDelayed(delayedAnimationRunnable, 500L)
+        handler.postDelayed(
+            delayedAnimationRunnable,
+            DEFAULT_ANIMATION_DELAY_MS,
+        )
         lastKnownRunnable = delayedAnimationRunnable
     }
 

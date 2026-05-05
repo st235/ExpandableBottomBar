@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import github.com.st235.expandablebottombar.R
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
+import github.com.st235.expandablebottombar.ExpandableBottomBar
+import github.com.st235.expandablebottombar.navigation.ExpandableBottomBarNavigationUI
 
 class NavigationComponentActivity: AppCompatActivity() {
 

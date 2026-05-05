@@ -1,11 +1,11 @@
-package github.com.st235.lib_expandablebottombar.parsers
+package github.com.st235.expandablebottombar.parsers
 
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Xml
-import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
-import github.com.st235.lib_expandablebottombar.R
+import github.com.st235.expandablebottombar.MenuItemDescriptor
+import github.com.st235.expandablebottombar.R
 import org.xmlpull.v1.XmlPullParser
 
 internal class ExpandableBottomBarParser(private val context: Context) {

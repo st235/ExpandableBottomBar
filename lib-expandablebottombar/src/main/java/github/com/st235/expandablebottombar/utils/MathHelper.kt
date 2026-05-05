@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar.utils
+package github.com.st235.expandablebottombar.utils
 
 internal fun <T: Comparable<T>> clamp(value: T, min: T, max: T): T {
     return max(min, min(value, max))

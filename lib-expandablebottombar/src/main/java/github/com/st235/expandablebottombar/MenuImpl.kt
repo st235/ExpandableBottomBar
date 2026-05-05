@@ -1,8 +1,8 @@
-package github.com.st235.lib_expandablebottombar
+package github.com.st235.expandablebottombar
 
 import android.view.View
 import androidx.annotation.IdRes
-import github.com.st235.lib_expandablebottombar.utils.TransitionHelper
+import github.com.st235.expandablebottombar.utils.TransitionHelper
 import kotlin.collections.ArrayList
 import kotlin.collections.LinkedHashMap
 

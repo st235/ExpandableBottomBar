@@ -1,4 +1,4 @@
-package github.com.st235.lib_expandablebottombar.utils
+package github.com.st235.expandablebottombar.utils
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -12,11 +12,14 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.DrawableCompat
 
 internal object DrawableHelper {
-    fun createShapeDrawable(@ColorInt color: Int,
-                                     shouldFill: Boolean = true,
-                                     shouldStroke: Boolean = false,
-                                     @FloatRange(from = 0.0) cornerRadius: Float,
-                                     @FloatRange(from = 0.0, to = 1.0) opacity: Float): Drawable {
+    @Suppress("MagicNumber")
+    fun createShapeDrawable(
+        @ColorInt color: Int,
+        shouldFill: Boolean = true,
+        shouldStroke: Boolean = false,
+        @FloatRange(from = 0.0) cornerRadius: Float,
+        @FloatRange(from = 0.0, to = 1.0) opacity: Float
+    ): Drawable {
         val footerBackground = GradientDrawable()
 
         val radii = FloatArray(8)
@@ -49,9 +52,11 @@ internal object DrawableHelper {
         )
     }
 
-    fun createDrawable(context: Context,
-                                @DrawableRes menuItem: Int,
-                                stateList: ColorStateList): Drawable {
+    fun createDrawable(
+        context: Context,
+        @DrawableRes menuItem: Int,
+        stateList: ColorStateList
+    ): Drawable {
         val iconDrawable = DrawableCompat.wrap(
             ContextCompat.getDrawable(context, menuItem).deepCopy()
         )
