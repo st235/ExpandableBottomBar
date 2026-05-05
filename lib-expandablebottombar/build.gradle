@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
+apply plugin: 'io.gitlab.arturbosch.detekt'
 apply from: './maven.gradle'
 
 android {
