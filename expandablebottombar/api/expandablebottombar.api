@@ -1,0 +1,126 @@
+public final class github/com/st235/expandablebottombar/ExpandableBottomBar : androidx/constraintlayout/widget/ConstraintLayout, androidx/coordinatorlayout/widget/CoordinatorLayout$AttachedBehavior {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getBehavior ()Landroidx/coordinatorlayout/widget/CoordinatorLayout$Behavior;
+	public final fun getMenu ()Lgithub/com/st235/expandablebottombar/Menu;
+	public final fun getOnItemReselectedListener ()Lkotlin/jvm/functions/Function3;
+	public final fun getOnItemSelectedListener ()Lkotlin/jvm/functions/Function3;
+	public final fun hide ()V
+	public fun setBackgroundColor (I)V
+	public final fun setBackgroundColor (IF)V
+	public final fun setBackgroundColorRes (I)V
+	public final fun setBackgroundColorRes (II)V
+	public final fun setOnItemReselectedListener (Lkotlin/jvm/functions/Function3;)V
+	public final fun setOnItemSelectedListener (Lkotlin/jvm/functions/Function3;)V
+	public final fun show ()V
+}
+
+public abstract interface class github/com/st235/expandablebottombar/Menu : java/lang/Iterable, kotlin/jvm/internal/markers/KMappedMarker {
+	public abstract fun add (Lgithub/com/st235/expandablebottombar/MenuItemDescriptor;)V
+	public abstract fun deselect ()V
+	public abstract fun findItemById (I)Lgithub/com/st235/expandablebottombar/MenuItem;
+	public abstract fun getItems ()Ljava/util/List;
+	public abstract fun getOnItemReselectedListener ()Lkotlin/jvm/functions/Function3;
+	public abstract fun getOnItemSelectedListener ()Lkotlin/jvm/functions/Function3;
+	public abstract fun getSelectedItem ()Lgithub/com/st235/expandablebottombar/MenuItem;
+	public abstract fun remove (I)V
+	public abstract fun removeAll ()V
+	public abstract fun select (I)V
+	public abstract fun setOnItemReselectedListener (Lkotlin/jvm/functions/Function3;)V
+	public abstract fun setOnItemSelectedListener (Lkotlin/jvm/functions/Function3;)V
+}
+
+public abstract interface class github/com/st235/expandablebottombar/MenuItem {
+	public abstract fun getActiveColor ()I
+	public abstract fun getId ()I
+	public abstract fun getText ()Ljava/lang/CharSequence;
+	public abstract fun hide ()V
+	public abstract fun isAttached ()Z
+	public abstract fun isShown ()Z
+	public abstract fun notification ()Lgithub/com/st235/expandablebottombar/Notification;
+	public abstract fun show ()V
+}
+
+public final class github/com/st235/expandablebottombar/MenuItemDescriptor {
+	public fun <init> (IILjava/lang/CharSequence;ILjava/lang/Integer;Ljava/lang/Integer;)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()Ljava/lang/CharSequence;
+	public final fun component4 ()I
+	public final fun component5 ()Ljava/lang/Integer;
+	public final fun component6 ()Ljava/lang/Integer;
+	public final fun copy (IILjava/lang/CharSequence;ILjava/lang/Integer;Ljava/lang/Integer;)Lgithub/com/st235/expandablebottombar/MenuItemDescriptor;
+	public static synthetic fun copy$default (Lgithub/com/st235/expandablebottombar/MenuItemDescriptor;IILjava/lang/CharSequence;ILjava/lang/Integer;Ljava/lang/Integer;ILjava/lang/Object;)Lgithub/com/st235/expandablebottombar/MenuItemDescriptor;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getActiveColor ()I
+	public final fun getBadgeBackgroundColor ()Ljava/lang/Integer;
+	public final fun getBadgeTextColor ()Ljava/lang/Integer;
+	public final fun getIconId ()I
+	public final fun getItemId ()I
+	public final fun getText ()Ljava/lang/CharSequence;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class github/com/st235/expandablebottombar/MenuItemDescriptor$Builder {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;II)V
+	public fun <init> (Landroid/content/Context;IIII)V
+	public synthetic fun <init> (Landroid/content/Context;IIIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun badgeBackgroundColor (I)Lgithub/com/st235/expandablebottombar/MenuItemDescriptor$Builder;
+	public final fun badgeBackgroundColorRes (I)Lgithub/com/st235/expandablebottombar/MenuItemDescriptor$Builder;
+	public final fun badgeTextColor (I)Lgithub/com/st235/expandablebottombar/MenuItemDescriptor$Builder;
+	public final fun badgeTextColorRes (I)Lgithub/com/st235/expandablebottombar/MenuItemDescriptor$Builder;
+	public final fun build ()Lgithub/com/st235/expandablebottombar/MenuItemDescriptor;
+	public final fun color (I)Lgithub/com/st235/expandablebottombar/MenuItemDescriptor$Builder;
+	public final fun colorRes (I)Lgithub/com/st235/expandablebottombar/MenuItemDescriptor$Builder;
+	public final fun getActiveColor ()Ljava/lang/Integer;
+	public final fun getBadgeBackgroundColor ()Ljava/lang/Integer;
+	public final fun getBadgeTextColor ()Ljava/lang/Integer;
+	public final fun getText ()Ljava/lang/CharSequence;
+	public final fun icon (I)Lgithub/com/st235/expandablebottombar/MenuItemDescriptor$Builder;
+	public final fun id (I)Lgithub/com/st235/expandablebottombar/MenuItemDescriptor$Builder;
+	public final fun setActiveColor (Ljava/lang/Integer;)V
+	public final fun setBadgeBackgroundColor (Ljava/lang/Integer;)V
+	public final fun setBadgeTextColor (Ljava/lang/Integer;)V
+	public final fun setText (Ljava/lang/CharSequence;)V
+	public final fun text (Ljava/lang/CharSequence;)Lgithub/com/st235/expandablebottombar/MenuItemDescriptor$Builder;
+	public final fun textRes (I)Lgithub/com/st235/expandablebottombar/MenuItemDescriptor$Builder;
+}
+
+public final class github/com/st235/expandablebottombar/Notification {
+	public final fun clear ()V
+	public final fun getBadgeColor ()I
+	public final fun getBadgeTextColor ()I
+	public final fun setBadgeColor (I)V
+	public final fun setBadgeTextColor (I)V
+	public final fun show ()V
+	public final fun show (Ljava/lang/String;)V
+}
+
+public class github/com/st235/expandablebottombar/behavior/ExpandableBottomBarBehavior : androidx/coordinatorlayout/widget/CoordinatorLayout$Behavior {
+	public fun <init> ()V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun layoutDependsOn (Landroidx/coordinatorlayout/widget/CoordinatorLayout;Landroid/view/View;Landroid/view/View;)Z
+}
+
+public final class github/com/st235/expandablebottombar/behavior/ExpandableBottomBarScrollableBehavior : github/com/st235/expandablebottombar/behavior/ExpandableBottomBarBehavior {
+	public fun <init> ()V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun onNestedScroll (Landroidx/coordinatorlayout/widget/CoordinatorLayout;Landroid/view/View;Landroid/view/View;IIIII[I)V
+	public fun onStartNestedScroll (Landroidx/coordinatorlayout/widget/CoordinatorLayout;Landroid/view/View;Landroid/view/View;Landroid/view/View;II)Z
+	public fun onStopNestedScroll (Landroidx/coordinatorlayout/widget/CoordinatorLayout;Landroid/view/View;Landroid/view/View;I)V
+}
+
+public final class github/com/st235/expandablebottombar/navigation/ExpandableBottomBarNavigationUI {
+	public static final field INSTANCE Lgithub/com/st235/expandablebottombar/navigation/ExpandableBottomBarNavigationUI;
+	public static final fun setupWithNavController (Lgithub/com/st235/expandablebottombar/ExpandableBottomBar;Landroidx/navigation/NavController;)V
+}
+
+public final class github/com/st235/expandablebottombar/utils/AnimationHelper {
+	public static final field INSTANCE Lgithub/com/st235/expandablebottombar/utils/AnimationHelper;
+	public final fun translateViewTo (Landroid/view/View;F)Landroid/animation/Animator;
+}
+

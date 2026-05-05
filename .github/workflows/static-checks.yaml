@@ -36,6 +36,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Run ABI Check
+        run: ./gradlew apiCheck
+
       - name: Run Dependency Check
         run: ./gradlew dependencyGuard
 
