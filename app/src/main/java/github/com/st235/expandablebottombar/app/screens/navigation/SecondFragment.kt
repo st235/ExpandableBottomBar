@@ -1,11 +1,11 @@
-package github.com.st235.expandablebottombar.screens.navigation
+package github.com.st235.expandablebottombar.app.screens.navigation
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import github.com.st235.expandablebottombar.R
+import github.com.st235.expandablebottombar.app.R
 
 class SecondFragment: Fragment() {
 

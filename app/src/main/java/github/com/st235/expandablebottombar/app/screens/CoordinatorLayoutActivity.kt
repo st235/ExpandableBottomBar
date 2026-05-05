@@ -1,10 +1,10 @@
-package github.com.st235.expandablebottombar.screens
+package github.com.st235.expandablebottombar.app.screens
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import github.com.st235.expandablebottombar.R
+import github.com.st235.expandablebottombar.app.R
 
 class CoordinatorLayoutActivity : AppCompatActivity() {
 

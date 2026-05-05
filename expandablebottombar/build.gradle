@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'io.gitlab.arturbosch.detekt'
 apply plugin: 'com.dropbox.dependency-guard'
@@ -11,8 +10,8 @@ android {
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 34
-        compileSdk 34
+        targetSdkVersion 37
+        compileSdk 37
         versionCode project.property('VERSION_CODE') as int
         versionName project.property('VERSION_NAME')
 
@@ -41,9 +40,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
     kotlin {
         jvmToolchain(17)
     }
@@ -54,7 +50,7 @@ dependencyGuard {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.10'
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'

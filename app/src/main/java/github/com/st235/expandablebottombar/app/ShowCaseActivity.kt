@@ -1,4 +1,4 @@
-package github.com.st235.expandablebottombar
+package github.com.st235.expandablebottombar.app
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,8 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import github.com.st235.expandablebottombar.screens.*
-import github.com.st235.expandablebottombar.screens.navigation.NavigationComponentActivity
+import github.com.st235.expandablebottombar.app.screens.navigation.NavigationComponentActivity
+import github.com.st235.expandablebottombar.app.screens.CoordinatorLayoutActivity
+import github.com.st235.expandablebottombar.app.screens.JavaActivity
+import github.com.st235.expandablebottombar.app.screens.NotificationBadgeActivity
+import github.com.st235.expandablebottombar.app.screens.ProgrammaticallyCreatedDemoActivity
+import github.com.st235.expandablebottombar.app.screens.ScrollableCoordinatorLayoutActivity
+import github.com.st235.expandablebottombar.app.screens.StylesActivity
+import github.com.st235.expandablebottombar.app.screens.XmlDeclaredActivity
 
 class ShowCaseActivity : AppCompatActivity() {
 

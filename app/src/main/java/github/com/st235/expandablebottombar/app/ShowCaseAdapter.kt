@@ -1,4 +1,4 @@
-package github.com.st235.expandablebottombar
+package github.com.st235.expandablebottombar.app
 
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater

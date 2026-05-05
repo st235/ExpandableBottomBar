@@ -1,14 +1,13 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 
 android {
-    namespace 'github.com.st235.expandablebottombar'
+    namespace 'github.com.st235.expandablebottombar.app'
 
     defaultConfig {
         applicationId 'github.com.st235.expandablebottombar'
         minSdkVersion 21
-        targetSdkVersion 34
-        compileSdk 34
+        targetSdkVersion 37
+        compileSdk 37
         versionCode 1
     }
 
@@ -26,9 +25,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
     kotlin {
         jvmToolchain(17)
     }
@@ -36,7 +32,7 @@ android {
 
 dependencies {
     implementation project(':expandablebottombar')
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.10'
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'

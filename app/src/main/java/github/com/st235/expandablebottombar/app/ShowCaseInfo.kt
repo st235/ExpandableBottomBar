@@ -1,4 +1,4 @@
-package github.com.st235.expandablebottombar
+package github.com.st235.expandablebottombar.app
 
 data class ShowCaseInfo(
     val title: String,

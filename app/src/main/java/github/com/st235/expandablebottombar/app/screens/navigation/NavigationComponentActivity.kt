@@ -1,9 +1,9 @@
-package github.com.st235.expandablebottombar.screens.navigation
+package github.com.st235.expandablebottombar.app.screens.navigation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
-import github.com.st235.expandablebottombar.R
+import github.com.st235.expandablebottombar.app.R
 import github.com.st235.expandablebottombar.ExpandableBottomBar
 import github.com.st235.expandablebottombar.navigation.ExpandableBottomBarNavigationUI
 
