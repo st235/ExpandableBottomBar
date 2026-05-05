@@ -61,6 +61,6 @@ internal object DrawableHelper {
 
     private fun Drawable?.deepCopy(): Drawable {
         return this?.mutate()?.constantState?.newDrawable()
-            ?: throw IllegalStateException("Cannot clone existing drawable")
+            ?: error("Cannot clone existing drawable")
     }
 }

@@ -15,34 +15,33 @@ class Notification internal constructor(
     }
 
     /**
-     * background color of a badge
+     * Background color of the badge.
      *
-     * * @throws IllegalStateException when view is destroyed
+     * @throws IllegalStateException if view is destroyed.
      */
     @get:ColorInt
-    @get:Throws(IllegalStateException::class)
     var badgeColor: Int
-    set(@ColorInt value: Int) {
+    set(@ColorInt value) {
         view?.notificationBadgeBackgroundColor = value
     }
     get() {
-        val view = view ?: throw IllegalStateException("View is not longer active")
+        val view = view ?: error("View is not longer active")
         return view.notificationBadgeBackgroundColor
     }
 
     /**
-     * text color of a badge
+     * Text color of the badge.
      *
-     * @throws IllegalStateException when view is destroyed
+     * @throws IllegalStateException if view is destroyed.
      */
     @get:ColorInt
     @get:Throws(IllegalStateException::class)
     var badgeTextColor: Int
-        set(@ColorInt value: Int) {
+        set(@ColorInt value) {
             view?.notificationBadgeTextColor = value
         }
         get() {
-            val view = view ?: throw IllegalStateException("View is not longer active")
+            val view = view ?: error("View is not longer active")
             return view.notificationBadgeTextColor
         }
 

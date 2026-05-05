@@ -100,8 +100,8 @@ internal class MenuItemView @JvmOverloads constructor(
     }
 
     override fun showNotification(text: String) {
-        if (text.length > 4) {
-            throw IllegalArgumentException("Text is longer than 4 symbols, which is not acceptable")
+        require(text.length > 4) {
+            "Text is longer than 4 symbols, which is not acceptable"
         }
 
         iconView.showBadge = true

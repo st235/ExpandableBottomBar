@@ -14,6 +14,7 @@ import kotlin.jvm.Throws
 /**
  * Menu item for expandable bottom bar
  */
+@Suppress("TooManyFunctions")
 data class MenuItemDescriptor(
     @IdRes val itemId: Int,
     @DrawableRes val iconId: Int,
@@ -115,12 +116,13 @@ data class MenuItemDescriptor(
         }
 
         private fun assertValidity() {
-            if (itemId == 0 ||
-                iconId == 0 ||
-                text == null ||
-                activeColor == null
+            check(
+                itemId == 0 ||
+                        iconId == 0 ||
+                        text == null ||
+                        activeColor == null
             ) {
-                throw IllegalStateException("Menu Item is not constructed properly")
+                "Menu Item is not constructed properly"
             }
         }
 

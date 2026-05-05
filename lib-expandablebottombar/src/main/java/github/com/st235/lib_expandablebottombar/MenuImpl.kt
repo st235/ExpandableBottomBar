@@ -6,6 +6,7 @@ import github.com.st235.lib_expandablebottombar.utils.TransitionHelper
 import kotlin.collections.ArrayList
 import kotlin.collections.LinkedHashMap
 
+@Suppress("TooManyFunctions")
 internal class MenuImpl(
     private val rootView: ExpandableBottomBar,
     private val itemFactory: MenuItemFactory,
@@ -75,8 +76,8 @@ internal class MenuImpl(
     }
 
     override fun select(@IdRes id: Int) {
-        if (!itemsLookup.containsKey(id)) {
-            throw IllegalArgumentException("Cannot select item with id $id because it was not found in the menu")
+        require(itemsLookup.containsKey(id)) {
+            "Cannot select item with id $id because it was not found in the menu"
         }
 
         selectItemInternal(itemsLookup.getValue(id))
@@ -95,10 +96,9 @@ internal class MenuImpl(
     }
 
     override fun remove(@IdRes id: Int) {
-        if (!itemsLookup.containsKey(id)) {
-            throw IllegalArgumentException("Cannot remove item with id $id because it was not found in the menu")
+        require(itemsLookup.containsKey(id)) {
+            "Cannot remove item with id $id because it was not found in the menu"
         }
-
         transitionHelper.apply(rootView, transitionDuration)
 
         val menuItemToRemove = itemsLookup.getValue(id)
@@ -116,8 +116,8 @@ internal class MenuImpl(
     }
 
     override fun findItemById(@IdRes id: Int): MenuItem {
-        if (!itemsLookup.containsKey(id)) {
-            throw IllegalArgumentException("Cannot find item with id $id")
+        require(itemsLookup.containsKey(id)) {
+            "Cannot find item with id $id"
         }
 
         return itemsLookup.getValue(id)

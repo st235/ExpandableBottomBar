@@ -5,8 +5,8 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Xml
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
-import org.xmlpull.v1.XmlPullParser
 import github.com.st235.lib_expandablebottombar.R
+import org.xmlpull.v1.XmlPullParser
 
 internal class ExpandableBottomBarParser(private val context: Context) {
     companion object {
@@ -17,6 +17,8 @@ internal class ExpandableBottomBarParser(private val context: Context) {
         private const val MENU_TAG = "menu"
         private const val MENU_ITEM_TAG = "item"
     }
+
+    internal class ParsingException(message: String) : RuntimeException(message)
 
     // We don't use namespaces
     private val namespace: String? = null
@@ -29,8 +31,10 @@ internal class ExpandableBottomBarParser(private val context: Context) {
         }
     }
 
-    private fun readBottomBar(parser: XmlPullParser,
-                              attrs: AttributeSet): List<MenuItemDescriptor> {
+    private fun readBottomBar(
+        parser: XmlPullParser,
+        attrs: AttributeSet
+    ): List<MenuItemDescriptor> {
         val items = mutableListOf<MenuItemDescriptor>()
         var eventType = parser.eventType
         var tagName: String
@@ -45,7 +49,7 @@ internal class ExpandableBottomBarParser(private val context: Context) {
                     eventType = parser.next()
                     break
                 }
-                throw RuntimeException("Expecting menu, got $tagName")
+                throw ParsingException("Expect menu, but got '$tagName'.")
             }
             eventType = parser.next()
         } while (eventType != XmlPullParser.END_DOCUMENT)
@@ -72,17 +76,23 @@ internal class ExpandableBottomBarParser(private val context: Context) {
         return items
     }
 
-    private fun readBottomBarItem(parser: XmlPullParser,
-                                  attrs: AttributeSet): MenuItemDescriptor {
+    private fun readBottomBarItem(
+        parser: XmlPullParser,
+        attrs: AttributeSet
+    ): MenuItemDescriptor {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableBottomBarItem)
 
         val id = typedArray.getResourceId(R.styleable.ExpandableBottomBarItem_android_id, NO_ID)
-        val iconId = typedArray.getResourceId(R.styleable.ExpandableBottomBarItem_android_icon, NO_ID)
+        val iconId =
+            typedArray.getResourceId(R.styleable.ExpandableBottomBarItem_android_icon, NO_ID)
         val color = typedArray.getColor(R.styleable.ExpandableBottomBarItem_exb_color, NO_COLOR)
-        val text = typedArray.getString(R.styleable.ExpandableBottomBarItem_android_title) ?: NO_TEXT
+        val text =
+            typedArray.getString(R.styleable.ExpandableBottomBarItem_android_title) ?: NO_TEXT
 
-        var badgeBackgroundColor: Int? = typedArray.getColor(R.styleable.ExpandableBottomBarItem_exb_badgeColor, NO_COLOR)
-        var badgeTextColor: Int? = typedArray.getColor(R.styleable.ExpandableBottomBarItem_exb_badgeTextColor, NO_COLOR)
+        var badgeBackgroundColor: Int? =
+            typedArray.getColor(R.styleable.ExpandableBottomBarItem_exb_badgeColor, NO_COLOR)
+        var badgeTextColor: Int? =
+            typedArray.getColor(R.styleable.ExpandableBottomBarItem_exb_badgeTextColor, NO_COLOR)
 
         if (badgeBackgroundColor == NO_COLOR) {
             badgeBackgroundColor = null

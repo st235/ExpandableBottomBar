@@ -74,30 +74,60 @@ class MenuItemFactoryTest {
 
     @Before
     fun setUp() {
-        whenever(rootView.context).thenReturn(ApplicationProvider.getApplicationContext())
+        whenever(rootView.context).thenReturn(
+            ApplicationProvider.getApplicationContext()
+        )
     }
 
     @Test
     fun `test that build without notification info will build item menu with global notification info`() {
         menuItemFactory.build(menuItemDescriptorWithoutNotificationInfo, onItemClick)
 
-        verify(itemView, times(1)).id = menuItemDescriptorWithoutNotificationInfo.itemId
-        verify(itemView, times(1)).setPadding(itemHorizontalPadding, itemVerticalPadding, itemHorizontalPadding, itemVerticalPadding)
-        verify(itemView, times(1)).setIcon(eq(menuItemDescriptorWithoutNotificationInfo.iconId), anyOrNull())
-        verify(itemView, times(1)).setText(eq(menuItemDescriptorWithoutNotificationInfo.text), anyOrNull())
-        verify(itemView, times(1)).notificationBadgeBackgroundColor = globalNotificationBadgeColor
-        verify(itemView, times(1)).notificationBadgeTextColor = globalNotificationBadgeTextColor
+        verify(itemView, times(1)).id =
+            menuItemDescriptorWithoutNotificationInfo.itemId
+        verify(itemView, times(1)).setPadding(
+            itemHorizontalPadding,
+            itemVerticalPadding,
+            itemHorizontalPadding,
+            itemVerticalPadding
+        )
+        verify(itemView, times(1)).setIcon(
+            eq(menuItemDescriptorWithoutNotificationInfo.iconId),
+            anyOrNull()
+        )
+        verify(itemView, times(1)).setText(
+            eq(menuItemDescriptorWithoutNotificationInfo.text),
+            anyOrNull()
+        )
+        verify(itemView, times(1)).notificationBadgeBackgroundColor =
+            globalNotificationBadgeColor
+        verify(itemView, times(1)).notificationBadgeTextColor =
+            globalNotificationBadgeTextColor
     }
 
     @Test
     fun `test that build with notification info will build item menu with local info`() {
         menuItemFactory.build(menuItemDescriptorWithNotificationInfo, onItemClick)
 
-        verify(itemView, times(1)).id = menuItemDescriptorWithNotificationInfo.itemId
-        verify(itemView, times(1)).setPadding(itemHorizontalPadding, itemVerticalPadding, itemHorizontalPadding, itemVerticalPadding)
-        verify(itemView, times(1)).setIcon(eq(menuItemDescriptorWithNotificationInfo.iconId), anyOrNull())
-        verify(itemView, times(1)).setText(eq(menuItemDescriptorWithNotificationInfo.text), anyOrNull())
-        verify(itemView, times(1)).notificationBadgeBackgroundColor = menuItemDescriptorWithNotificationInfo.badgeBackgroundColor!!
-        verify(itemView, times(1)).notificationBadgeTextColor = menuItemDescriptorWithNotificationInfo.badgeTextColor!!
+        verify(itemView, times(1)).id =
+            menuItemDescriptorWithNotificationInfo.itemId
+        verify(itemView, times(1)).setPadding(
+            itemHorizontalPadding,
+            itemVerticalPadding,
+            itemHorizontalPadding,
+            itemVerticalPadding
+        )
+        verify(itemView, times(1)).setIcon(
+            eq(menuItemDescriptorWithNotificationInfo.iconId),
+            anyOrNull()
+        )
+        verify(itemView, times(1)).setText(
+            eq(menuItemDescriptorWithNotificationInfo.text),
+            anyOrNull()
+        )
+        verify(itemView, times(1)).notificationBadgeBackgroundColor =
+            menuItemDescriptorWithNotificationInfo.badgeBackgroundColor!!
+        verify(itemView, times(1)).notificationBadgeTextColor =
+            menuItemDescriptorWithNotificationInfo.badgeTextColor!!
     }
 }

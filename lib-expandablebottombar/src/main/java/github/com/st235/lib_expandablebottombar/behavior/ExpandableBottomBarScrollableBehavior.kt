@@ -13,7 +13,7 @@ import github.com.st235.lib_expandablebottombar.utils.AnimationHelper
 import github.com.st235.lib_expandablebottombar.utils.clamp
 import kotlin.math.abs
 
-class ExpandableBottomBarScrollableBehavior<V: View>:
+class ExpandableBottomBarScrollableBehavior<V : View> :
     ExpandableBottomBarBehavior<V> {
 
     private val handler = Handler(Looper.getMainLooper())
@@ -22,18 +22,43 @@ class ExpandableBottomBarScrollableBehavior<V: View>:
     private var animator: Animator? = null
     private var lastKnownDirection: Int? = null
 
-    constructor(): super()
+    constructor() : super()
 
-    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet)
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet)
 
     override fun onStartNestedScroll(
-        coordinatorLayout: CoordinatorLayout, child: V, directTargetChild: View, target: View, axes: Int, type: Int
+        coordinatorLayout: CoordinatorLayout,
+        child: V,
+        directTargetChild: View,
+        target: View,
+        axes: Int,
+        type: Int
     ): Boolean {
         return axes == ViewCompat.SCROLL_AXIS_VERTICAL
     }
 
-    override fun onNestedScroll(coordinatorLayout: CoordinatorLayout, child: V, target: View, dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int, type: Int, consumed: IntArray) {
-        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type, consumed)
+    override fun onNestedScroll(
+        coordinatorLayout: CoordinatorLayout,
+        child: V,
+        target: View,
+        dxConsumed: Int,
+        dyConsumed: Int,
+        dxUnconsumed: Int,
+        dyUnconsumed: Int,
+        type: Int,
+        consumed: IntArray
+    ) {
+        super.onNestedScroll(
+            coordinatorLayout,
+            child,
+            target,
+            dxConsumed,
+            dyConsumed,
+            dxUnconsumed,
+            dyUnconsumed,
+            type,
+            consumed
+        )
 
         removeActiveRunnable()
         cancelAnimation()
@@ -42,7 +67,12 @@ class ExpandableBottomBarScrollableBehavior<V: View>:
         child.translationY = getScrollRange(child, dyConsumed)
     }
 
-    override fun onStopNestedScroll(coordinatorLayout: CoordinatorLayout, child: V, target: View, type: Int) {
+    override fun onStopNestedScroll(
+        coordinatorLayout: CoordinatorLayout,
+        child: V,
+        target: View,
+        type: Int
+    ) {
         super.onStopNestedScroll(coordinatorLayout, child, target, type)
 
         removeActiveRunnable()

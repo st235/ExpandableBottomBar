@@ -11,7 +11,7 @@ import github.com.st235.lib_expandablebottombar.components.MenuItemView
 import github.com.st235.lib_expandablebottombar.utils.DrawableHelper
 import github.com.st235.lib_expandablebottombar.utils.StyleController
 
-internal open class MenuItemFactory(
+internal open class MenuItemFactory @Suppress("LongParameterList") constructor(
     private val rootView: ExpandableBottomBar,
     private val styleController: StyleController,
     @Px private val itemVerticalPadding: Int,
@@ -43,13 +43,26 @@ internal open class MenuItemFactory(
 
         with(itemView) {
             id = menuItemDescriptor.itemId
-            contentDescription = context.resources.getString(R.string.accessibility_item_description, menuItemDescriptor.text)
-            setPadding(itemHorizontalPadding, itemVerticalPadding, itemHorizontalPadding, itemVerticalPadding)
+            contentDescription = context.resources.getString(
+                R.string.accessibility_item_description,
+                menuItemDescriptor.text
+            )
+            setPadding(
+                itemHorizontalPadding,
+                itemVerticalPadding,
+                itemHorizontalPadding,
+                itemVerticalPadding
+            )
 
-            setIcon(menuItemDescriptor.iconId, backgroundColorStateList)
+            setIcon(
+                menuItemDescriptor.iconId,
+                backgroundColorStateList
+            )
             setText(menuItemDescriptor.text, backgroundColorStateList)
-            notificationBadgeBackgroundColor = menuItemDescriptor.badgeBackgroundColor ?: globalNotificationBadgeColor
-            notificationBadgeTextColor = menuItemDescriptor.badgeTextColor ?: globalNotificationBadgeTextColor
+            notificationBadgeBackgroundColor =
+                menuItemDescriptor.badgeBackgroundColor ?: globalNotificationBadgeColor
+            notificationBadgeTextColor =
+                menuItemDescriptor.badgeTextColor ?: globalNotificationBadgeTextColor
 
             background = createHighlightedMenuShape(menuItemDescriptor)
             setOnClickListener {

@@ -2,9 +2,12 @@ package github.com.st235.lib_expandablebottombar.navigation
 
 import android.os.Bundle
 import androidx.annotation.IdRes
-import androidx.navigation.*
+import androidx.navigation.ActivityNavigator
+import androidx.navigation.NavController
 import androidx.navigation.NavController.OnDestinationChangedListener
+import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavOptions
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import github.com.st235.lib_expandablebottombar.MenuItem
 import github.com.st235.lib_expandablebottombar.R
@@ -15,7 +18,7 @@ object ExpandableBottomBarNavigationUI {
     @JvmStatic
     fun setupWithNavController(
             expandableBottomBar: ExpandableBottomBar,
-            navigationController: NavController
+            navigationController: NavController,
     ) {
         expandableBottomBar.onItemSelectedListener = { _, menuItem, byUser ->
             if (byUser) {
@@ -27,8 +30,8 @@ object ExpandableBottomBarNavigationUI {
         navigationController.addOnDestinationChangedListener(
                 object : OnDestinationChangedListener {
                     override fun onDestinationChanged(
-                            controller: NavController,
-                            destination: NavDestination, arguments: Bundle?
+                        controller: NavController,
+                        destination: NavDestination, arguments: Bundle?
                     ) {
                         val view = weakReference.get()
                         if (view == null) {
@@ -81,7 +84,7 @@ object ExpandableBottomBarNavigationUI {
         return try {
             navController.navigate(item.id, null, options)
             true
-        } catch (e: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
             false
         }
     }
