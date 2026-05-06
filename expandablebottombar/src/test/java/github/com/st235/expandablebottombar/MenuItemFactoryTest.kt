@@ -9,6 +9,7 @@ import github.com.st235.expandablebottombar.utils.StyleController
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.any
 import org.mockito.kotlin.anyOrNull
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
@@ -93,7 +94,7 @@ class MenuItemFactoryTest {
         )
         verify(itemView, times(1)).setText(
             eq(menuItemDescriptorWithoutNotificationInfo.text),
-            anyOrNull()
+            any()
         )
         verify(itemView, times(1)).notificationBadgeBackgroundColor =
             globalNotificationBadgeColor
@@ -119,7 +120,7 @@ class MenuItemFactoryTest {
         )
         verify(itemView, times(1)).setText(
             eq(menuItemDescriptorWithNotificationInfo.text),
-            anyOrNull()
+            any()
         )
         verify(itemView, times(1)).notificationBadgeBackgroundColor =
             menuItemDescriptorWithNotificationInfo.badgeBackgroundColor!!

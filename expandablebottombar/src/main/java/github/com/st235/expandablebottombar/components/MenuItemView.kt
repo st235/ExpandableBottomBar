@@ -4,10 +4,11 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Parcelable
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.Gravity
-import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
+import androidx.annotation.Dimension
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatTextView
 import github.com.st235.expandablebottombar.NotificationBadge
@@ -21,6 +22,11 @@ private const val DEFAULT_NOTIFICATION_TEXT_LENGTH = 4
 internal class MenuItemView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), NotificationBadge {
+
+    data class TextStyle(
+        val backgroundColor: ColorStateList,
+        @param:Dimension(unit = Dimension.PX) val size: Float? = null,
+    )
 
     private val iconView: ExpandableBottomBarNotificationBadgeView
     private val titleView: AppCompatTextView
@@ -77,13 +83,16 @@ internal class MenuItemView @JvmOverloads constructor(
         )
     }
 
-    fun setText(text: CharSequence, textColorSelector: ColorStateList) {
+    fun setText(text: CharSequence, style: TextStyle) {
         titleView.text = text
-        titleView.setTextColor(textColorSelector)
+        titleView.setTextColor(style.backgroundColor)
+        style.size?.let {
+            titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, it)
+        }
     }
 
     fun select() {
-        titleView.visibility = View.VISIBLE
+        titleView.visibility = VISIBLE
         titleView.isSelected = true
         iconView.isSelected = true
         isSelected = true

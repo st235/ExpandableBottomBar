@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.annotation.Dimension
 import androidx.annotation.FloatRange
 import androidx.annotation.Px
 import androidx.annotation.VisibleForTesting
@@ -15,12 +16,13 @@ internal open class MenuItemFactory @Suppress("LongParameterList") constructor(
     private val rootView: ExpandableBottomBar,
     private val styleController: StyleController,
     @Px private val itemVerticalPadding: Int,
-    @Px private var itemHorizontalPadding: Int,
-    @Px private var backgroundCornerRadius: Float,
-    @FloatRange(from = 0.0, to = 1.0) private var backgroundOpacity: Float,
-    @ColorInt private var itemInactiveColor: Int,
-    @ColorInt private var globalNotificationBadgeColor: Int,
-    @ColorInt private var globalNotificationBadgeTextColor: Int
+    @Px private val itemHorizontalPadding: Int,
+    @Px private val backgroundCornerRadius: Float,
+    @FloatRange(from = 0.0, to = 1.0) private val backgroundOpacity: Float,
+    @ColorInt private val itemInactiveColor: Int,
+    @ColorInt private val globalNotificationBadgeColor: Int,
+    @ColorInt private val globalNotificationBadgeTextColor: Int,
+    @param:Dimension(Dimension.PX) private val textSize: Float? = null,
 ) {
 
     fun build(
@@ -58,7 +60,13 @@ internal open class MenuItemFactory @Suppress("LongParameterList") constructor(
                 menuItemDescriptor.iconId,
                 backgroundColorStateList
             )
-            setText(menuItemDescriptor.text, backgroundColorStateList)
+            setText(
+                text = menuItemDescriptor.text,
+                style = MenuItemView.TextStyle(
+                    backgroundColor = backgroundColorStateList,
+                    size = textSize,
+                )
+            )
             notificationBadgeBackgroundColor =
                 menuItemDescriptor.badgeBackgroundColor ?: globalNotificationBadgeColor
             notificationBadgeTextColor =
