@@ -18,9 +18,11 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.getFloatOrThrow
 import androidx.core.view.ViewCompat
 import androidx.core.view.marginBottom
 import github.com.st235.expandablebottombar.ExpandableBottomBar.ItemStyle.Companion.toItemStyle
@@ -171,6 +173,12 @@ class ExpandableBottomBar @JvmOverloads constructor(
         backgroundCornerRadius =
             typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_backgroundCornerRadius, 0F)
 
+        val textSize = if (typedArray.hasValue(R.styleable.ExpandableBottomBar_exb_textSize)) {
+            typedArray.getDimension(R.styleable.ExpandableBottomBar_exb_textSize, 0F)
+        } else {
+            null
+        }
+
         background =
             DrawableHelper.createShapeDrawable(
                 color = backgroundColor,
@@ -193,7 +201,8 @@ class ExpandableBottomBar @JvmOverloads constructor(
             itemBackgroundCornerRadius,
             itemBackgroundOpacity,
             itemInactiveColor, globalBadgeColor,
-            globalBadgeTextColor
+            globalBadgeTextColor,
+            textSize,
         )
         menuImpl = MenuImpl(
             this,
@@ -342,7 +351,7 @@ class ExpandableBottomBar @JvmOverloads constructor(
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private inner class ExpandableBottomBarOutlineProvider : ViewOutlineProvider() {
         override fun getOutline(view: View?, outline: Outline?) {
             outline?.setRoundRect(

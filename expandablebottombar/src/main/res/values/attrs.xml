@@ -32,6 +32,8 @@
 
         <attr name="exb_notificationBadgeBackgroundColor" format="color" />
         <attr name="exb_notificationBadgeTextColor" format="color" />
+
+        <attr name="exb_textSize" format="dimension" />
     </declare-styleable>
 
     <attr name="exb_expandableButtonBarDefaultStyle" format="reference" />
